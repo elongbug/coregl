@@ -1345,6 +1345,16 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 	void *ret = NULL;
 	EGLContext real_ctx = EGL_NO_CONTEXT;
 	EGLClientBuffer real_obj;
+	GL_Object_Type type = 0;
+
+	if((EGLint)buffer & GL_OBJECT_TYPE_TEXTURE)
+		type = GL_OBJECT_TYPE_TEXTURE;
+	else if((EGLint)buffer & GL_OBJECT_TYPE_RENDERBUFFER)
+		type = GL_OBJECT_TYPE_RENDERBUFFER;
+	else {
+		COREGL_ERR("\E[40;31;1m fastpath_eglCreateImageKHR buffer type error \E[0m\n");
+		goto finish;
+	}
 
 	_COREGL_FASTPATH_FUNC_BEGIN();
 
@@ -1373,8 +1383,7 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 				real_obj = NULL;
 			} else {
 				real_obj = (EGLClientBuffer)(uintptr_t)fastpath_ostate_get_object(&gctx->ostate,
-						GL_OBJECT_TYPE_TEXTURE,
-						(GLuint)(uintptr_t)buffer);
+						type, (GLuint)(uintptr_t)buffer);
 			}
 			break;
 		default:
@@ -1449,6 +1458,7 @@ fastpath_eglGetProcAddress(const char *procname)
 #include "../../headers/sym_gl1.h"
 #include "../../headers/sym_gl2.h"
 #include "../../headers/sym_gl_common.h"
+
 #undef _COREGL_EXT_SYMBOL_FASTPATH_PASS
 #undef _COREGL_EXT_SYMBOL_FASTPATH_BLOCK
 
