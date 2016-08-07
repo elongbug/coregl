@@ -154,6 +154,81 @@ GLUE_STATE(GLsizeiptr, gl_atomic_counter_buffer_binding_array_size,
 	   INITIAL_CTX->gl_atomic_counter_buffer_binding_num[0], MAX_ATOMIC_COUNTER_BUFFER_BINDING,
 	   _state_get_atomic_counter_buffer_bindings_size(value); /* DEFAULT NOT EFFECT */,
 	   _state_get_atomic_counter_buffer_bindings_size(value);)
+
+GLUE_STATE(GLuint, gl_uniform_buffer_range_binding_array,
+	   INITIAL_CTX->gl_uniform_buffer_binding_num[0], MAX_UNIFORM_BUFFER_BINDINGS,
+	   _state_get_uniform_buffer_bindings(value); /* DEFAULT NOT EFFECT */,
+	   _state_get_uniform_buffer_bindings(value);)
+
+GLUE_STATE(GLintptr, gl_uniform_buffer_range_binding_array_offset,
+	   INITIAL_CTX->gl_uniform_buffer_binding_num[0], MAX_UNIFORM_BUFFER_BINDINGS,
+	   _state_get_uniform_buffer_bindings_offset(value); /* DEFAULT NOT EFFECT */,
+	   _state_get_uniform_buffer_bindings_offset(value);)
+
+GLUE_STATE(GLsizeiptr, gl_uniform_buffer_range_binding_array_size,
+	   INITIAL_CTX->gl_uniform_buffer_binding_num[0], MAX_UNIFORM_BUFFER_BINDINGS,
+	   _state_get_uniform_buffer_bindings_size(value); /* DEFAULT NOT EFFECT */,
+	   _state_get_uniform_buffer_bindings_size(value);)
+
+GLUE_STATE(GLuint, gl_transform_feedback_buffer_range_binding_array,
+	   INITIAL_CTX->gl_transform_feedback_buffer_binding_num[0],
+	   MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
+	   _state_get_transform_feedback_buffer_bindings(value); /* DEFAULT NOT EFFECT */,
+	   _state_get_transform_feedback_buffer_bindings(value);)
+
+GLUE_STATE(GLintptr, gl_transform_feedback_buffer_range_binding_array_offset,
+	   INITIAL_CTX->gl_transform_feedback_buffer_binding_num[0],
+	   MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
+	   _state_get_transform_feedback_buffer_bindings_offset(
+		   value); /* DEFAULT NOT EFFECT */,
+	   _state_get_transform_feedback_buffer_bindings_offset(value);)
+
+GLUE_STATE(GLsizeiptr, gl_transform_feedback_buffer_range_binding_array_size,
+	   INITIAL_CTX->gl_transform_feedback_buffer_binding_num[0],
+	   MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
+	   _state_get_transform_feedback_buffer_bindings_size(
+		   value); /* DEFAULT NOT EFFECT */,
+	   _state_get_transform_feedback_buffer_bindings_size(value);)
+
+GLUE_STATE(GLuint, gl_shader_storage_buffer_range_binding_array,
+	   INITIAL_CTX->gl_shader_storage_buffer_binding_num[0],
+	   MAX_SHADER_STORAGE_BUFFER_BINDINGS,
+	   _state_get_shader_storage_buffer_bindings(value); /* DEFAULT NOT EFFECT */,
+	   _state_get_shader_storage_buffer_bindings(value);)
+
+GLUE_STATE(GLintptr, gl_shader_storage_buffer_range_binding_array_offset,
+	   INITIAL_CTX->gl_shader_storage_buffer_binding_num[0],
+	   MAX_SHADER_STORAGE_BUFFER_BINDINGS,
+	   _state_get_shader_storage_buffer_bindings_offset(
+		   value); /* DEFAULT NOT EFFECT */,
+	   _state_get_shader_storage_buffer_bindings_offset(value);)
+
+GLUE_STATE(GLsizeiptr, gl_shader_storage_buffer_range_binding_array_size,
+	   INITIAL_CTX->gl_shader_storage_buffer_binding_num[0],
+	   MAX_SHADER_STORAGE_BUFFER_BINDINGS,
+	   _state_get_shader_storage_buffer_bindings_size(
+		   value); /* DEFAULT NOT EFFECT */,
+	   _state_get_shader_storage_buffer_bindings_size(value);)
+
+GLUE_STATE(GLuint, gl_atomic_counter_buffer_range_binding_array,
+	   INITIAL_CTX->gl_atomic_counter_buffer_binding_num[0],
+	   MAX_ATOMIC_COUNTER_BUFFER_BINDING,
+	   _state_get_atomic_counter_buffer_bindings(value); /* DEFAULT NOT EFFECT */,
+	   _state_get_atomic_counter_buffer_bindings(value);)
+
+GLUE_STATE(GLintptr, gl_atomic_counter_buffer_range_binding_array_offset,
+	   INITIAL_CTX->gl_atomic_counter_buffer_binding_num[0],
+	   MAX_ATOMIC_COUNTER_BUFFER_BINDING,
+	   _state_get_atomic_counter_buffer_bindings_offset(
+		   value); /* DEFAULT NOT EFFECT */,
+	   _state_get_atomic_counter_buffer_bindings_offset(value);)
+
+GLUE_STATE(GLsizeiptr, gl_atomic_counter_buffer_range_binding_array_size,
+	   INITIAL_CTX->gl_atomic_counter_buffer_binding_num[0],
+	   MAX_ATOMIC_COUNTER_BUFFER_BINDING,
+	   _state_get_atomic_counter_buffer_bindings_size(
+		   value); /* DEFAULT NOT EFFECT */,
+	   _state_get_atomic_counter_buffer_bindings_size(value);)
 _COREGL_END_API(COREGL_GLAPI_3)
 
 GLUE_STATE(GLuint, gl_framebuffer_binding, 1, 1, SET_1(0),
@@ -246,6 +321,10 @@ GLUE_STATE(GLuint, gl_tex_2d_multisample_state, INITIAL_CTX->gl_tex_units_num[0]
 	   MAX_TEXTURE_UNITS,
 	   SET_N(INITIAL_CTX->gl_tex_units_num[0], 1, SET_1(0)),
 	   _state_get_texture_states(GL_TEXTURE_2D_MULTISAMPLE, (GLint *)value);)
+GLUE_STATE(GLuint, gl_tex_cube_map_array_ext_state, INITIAL_CTX->gl_tex_units_num[0],
+	   MAX_TEXTURE_UNITS,
+	   SET_N(INITIAL_CTX->gl_tex_units_num[0], 1, SET_1(0)),
+	   _state_get_texture_states(GL_TEXTURE_CUBE_MAP_ARRAY_EXT, (GLint *)value);)
 GLUE_STATE(GLuint, gl_tex_2d_multisample_array_oes_state, INITIAL_CTX->gl_tex_units_num[0],
 	   MAX_TEXTURE_UNITS,
 	   SET_N(INITIAL_CTX->gl_tex_units_num[0], 1, SET_1(0)),
