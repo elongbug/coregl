@@ -394,21 +394,6 @@ finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
 
-void
-fastpath_glVertexPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glVertexPointer(size, type, stride, pointer);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
 GLenum
 fastpath_glGetError(void)
 {
@@ -4068,22 +4053,6 @@ finish:
 }
 
 void
-fastpath_glGetBooleanv(GLenum pname, GLboolean *params)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	IF_GL_SUCCESS(_orig_fastpath_glGetBooleanv(pname, params)) {
-		_modify_get_value(pname, params, GL_BOOL, GL_FALSE);
-	}
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
 fastpath_glGetFloatv(GLenum pname, GLfloat *params)
 {
 	DEFINE_FASTPAH_GL_FUNC();
@@ -7072,54 +7041,6 @@ finish:
 }
 
 void
-fastpath_glMemoryBarrier (GLbitfield barriers)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glMemoryBarrier(barriers);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glMemoryBarrierByRegion (GLbitfield barriers)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glMemoryBarrierByRegion(barriers);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glTexStorage2DMultisample (GLenum target, GLsizei samples,
-				    GLenum internalformat, GLsizei width, GLsizei height,
-				    GLboolean fixedsamplelocations)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glTexStorage2DMultisample (target, samples, internalformat,
-			width, height, fixedsamplelocations);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
 fastpath_glGetMultisamplefv (GLenum pname, GLuint index, GLfloat *val)
 {
 	DEFINE_FASTPAH_GL_FUNC();
@@ -7127,21 +7048,6 @@ fastpath_glGetMultisamplefv (GLenum pname, GLuint index, GLfloat *val)
 	INIT_FASTPATH_GL_FUNC();
 
 	_orig_fastpath_glGetMultisamplefv (pname, index, val);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glSampleMaski (GLuint maskNumber, GLbitfield mask)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glSampleMaski(maskNumber, mask);
 
 	goto finish;
 
@@ -7197,68 +7103,6 @@ finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
 
-void
-fastpath_glVertexAttribFormat (GLuint attribindex, GLint size, GLenum type,
-			       GLboolean normalized, GLuint relativeoffset)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glVertexAttribFormat (attribindex, size, type, normalized,
-					     relativeoffset);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glVertexAttribIFormat (GLuint attribindex, GLint size, GLenum type,
-				GLuint relativeoffset)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glVertexAttribIFormat (attribindex, size, type, relativeoffset);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glVertexAttribBinding (GLuint attribindex, GLuint bindingindex)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glVertexAttribBinding (attribindex, bindingindex);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glVertexBindingDivisor(GLuint bindingindex, GLuint divisor)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	_orig_fastpath_glVertexBindingDivisor (bindingindex, divisor);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
 void
 fastpath_glBindFramebufferOES(GLenum target, GLuint framebuffer)
 {
@@ -7365,92 +7209,6 @@ fastpath_glBindRenderbufferOES(GLenum target, GLuint renderbuffer)
 		_set_gl_error(GL_INVALID_ENUM);
 		goto finish;
 	}
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-
-void
-fastpath_glClearBufferfi(GLenum buffer, GLint drawbuffer, GLfloat depth,
-			 GLint stencil)
-{
-	GLuint real_obj;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
-		goto finish;
-	}
-
-	_orig_fastpath_glClearBufferfi(real_obj, drawbuffer, depth, stencil);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glClearBufferfv(GLenum buffer, GLint drawbuffer, GLfloat const *value)
-{
-	GLuint real_obj;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
-		goto finish;
-	}
-
-	_orig_fastpath_glClearBufferfv(buffer, drawbuffer, value);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glClearBufferiv(GLenum buffer, GLint drawbuffer, GLint const *value)
-{
-	GLuint real_obj;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
-		goto finish;
-	}
-
-	_orig_fastpath_glClearBufferiv(buffer, drawbuffer, value);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glClearBufferuiv(GLenum buffer, GLint drawbuffer, GLuint const *value)
-{
-	GLuint real_obj;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
-		goto finish;
-	}
-
-	_orig_fastpath_glClearBufferuiv(buffer, drawbuffer, value);
 
 	goto finish;
 
@@ -7634,90 +7392,6 @@ fastpath_glDepthRangexOES(GLclampx zNear, GLclampx zFar)
 			CURR_STATE_UPDATE(gl_depth_range, 1, zFar)
 		}
 	}
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glFramebufferParameteri(GLenum target, GLenum pname, GLint param)
-{
-	GLint real_obj = 0, fa_type = 0;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	switch (pname) {
-	case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME:
-		param = 0;
-		_orig_fastpath_glFramebufferParameteri(target, pname, real_obj);
-		_orig_fastpath_glFramebufferParameteri(target,
-						       GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE, fa_type);
-		switch (fa_type) {
-		case GL_TEXTURE:
-			if (GET_GLUE_OBJ(GL_OBJECT_TYPE_TEXTURE, real_obj, (GLuint *)&param) != 1) {
-				param = 0;
-				goto finish;
-			}
-			break;
-		case GL_RENDERBUFFER:
-			if (GET_GLUE_OBJ(GL_OBJECT_TYPE_RENDERBUFFER, real_obj,
-					 (GLuint *)&param) != 1) {
-				param = 0;
-				goto finish;
-			}
-			break;
-		}
-		break;
-	default:
-		_orig_fastpath_glFramebufferParameteri(target, pname, param);
-		break;
-	}
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-void
-fastpath_glGetFramebufferParameteriv(GLenum target, GLenum pname, GLint *params)
-{
-	GLint real_obj = 0, fa_type = 0;;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	switch (pname) {
-	case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME:
-		params[0] = 0;
-		_orig_fastpath_glGetFramebufferParameteriv(target, pname, &real_obj);
-		_orig_fastpath_glGetFramebufferParameteriv(target,
-				GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE, &fa_type);
-		switch (fa_type) {
-		case GL_TEXTURE:
-			if (GET_GLUE_OBJ(GL_OBJECT_TYPE_TEXTURE, real_obj, (GLuint *)params) != 1) {
-				params[0] = 0;
-				goto finish;
-			}
-			break;
-		case GL_RENDERBUFFER:
-			if (GET_GLUE_OBJ(GL_OBJECT_TYPE_RENDERBUFFER, real_obj,
-					 (GLuint *)params) != 1) {
-				params[0] = 0;
-				goto finish;
-			}
-			break;
-		}
-		break;
-	default:
-		_orig_fastpath_glGetFramebufferParameteriv(target, pname, params);
-		break;
-	}
-
 	goto finish;
 
 finish:

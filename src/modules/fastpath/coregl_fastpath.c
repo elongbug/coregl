@@ -361,7 +361,6 @@ fastpath_apply_overrides_gl(int enable)
 		if (driver_gl_version >= COREGL_GLAPI_1) {
 			COREGL_OVERRIDE(fastpath_, glClientActiveTexture);
 			COREGL_OVERRIDE(fastpath_, glSampleCoveragex);
-			COREGL_OVERRIDE(fastpath_, glVertexPointer);
 		}
 
 		COREGL_OVERRIDE(fastpath_, glGetError);
@@ -369,7 +368,6 @@ fastpath_apply_overrides_gl(int enable)
 
 		COREGL_OVERRIDE(fastpath_, glGetIntegerv);
 		COREGL_OVERRIDE(fastpath_, glGetFloatv);
-		COREGL_OVERRIDE(fastpath_, glGetBooleanv);
 
 		COREGL_OVERRIDE(fastpath_, glActiveTexture);
 		COREGL_OVERRIDE(fastpath_, glGenTextures);
@@ -495,16 +493,10 @@ fastpath_apply_overrides_gl(int enable)
 
 		COREGL_OVERRIDE(fastpath_, glBindFramebufferOES);
 		COREGL_OVERRIDE(fastpath_, glBindRenderbufferOES);
-		COREGL_OVERRIDE(fastpath_, glClearBufferfi);
-		COREGL_OVERRIDE(fastpath_, glClearBufferfv);
-		COREGL_OVERRIDE(fastpath_, glClearBufferiv);
-		COREGL_OVERRIDE(fastpath_, glClearBufferuiv);
 		COREGL_OVERRIDE(fastpath_, glDeleteFramebuffersOES);
 		COREGL_OVERRIDE(fastpath_, glDeleteRenderbuffersOES);
 		COREGL_OVERRIDE(fastpath_, glDepthRangefOES);
 		COREGL_OVERRIDE(fastpath_, glDepthRangexOES);
-		COREGL_OVERRIDE(fastpath_, glFramebufferParameteri);
-		COREGL_OVERRIDE(fastpath_, glGetFramebufferParameteriv);
 		COREGL_OVERRIDE(fastpath_, glFramebufferRenderbufferOES);
 		COREGL_OVERRIDE(fastpath_, glFramebufferTexture2DOES);
 		COREGL_OVERRIDE(fastpath_, glGenFramebuffersOES);
@@ -532,8 +524,8 @@ fastpath_apply_overrides_gl(int enable)
 		COREGL_OVERRIDE(fastpath_, glDeleteVertexArraysOES);
 		COREGL_OVERRIDE(fastpath_, glGenVertexArraysOES);
 		COREGL_OVERRIDE(fastpath_, glIsVertexArrayOES);
-		COREGL_OVERRIDE(fastpath_, glClearDepthfOES );
-		COREGL_OVERRIDE(fastpath_, glClearDepthxOES );
+		COREGL_OVERRIDE(fastpath_, glClearDepthfOES);
+		COREGL_OVERRIDE(fastpath_, glClearDepthxOES);
 		/* Start overriding GLES 3.0 */
 		if (driver_gl_version >= COREGL_GLAPI_3) {
 			COREGL_OVERRIDE(fastpath_, glReadBuffer);
@@ -648,18 +640,10 @@ fastpath_apply_overrides_gl(int enable)
 			COREGL_OVERRIDE(fastpath_, glProgramUniformMatrix4x3fv);
 			COREGL_OVERRIDE(fastpath_, glBindImageTexture);
 			COREGL_OVERRIDE(fastpath_, glGetBooleani_v);
-			COREGL_OVERRIDE(fastpath_, glMemoryBarrier);
-			COREGL_OVERRIDE(fastpath_, glMemoryBarrierByRegion);
-			COREGL_OVERRIDE(fastpath_, glTexStorage2DMultisample);
 			COREGL_OVERRIDE(fastpath_, glGetMultisamplefv);
-			COREGL_OVERRIDE(fastpath_, glSampleMaski);
 			COREGL_OVERRIDE(fastpath_, glGetTexLevelParameteriv);
 			COREGL_OVERRIDE(fastpath_, glGetTexLevelParameterfv);
 			COREGL_OVERRIDE(fastpath_, glBindVertexBuffer);
-			COREGL_OVERRIDE(fastpath_, glVertexAttribFormat);
-			COREGL_OVERRIDE(fastpath_, glVertexAttribIFormat);
-			COREGL_OVERRIDE(fastpath_, glVertexAttribBinding);
-			COREGL_OVERRIDE(fastpath_, glVertexBindingDivisor);
 		}
 
 		if(driver_gl_version >= COREGL_GLAPI_32) {
