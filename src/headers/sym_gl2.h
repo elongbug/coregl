@@ -181,6 +181,30 @@ _COREGL_EXT_SYMBOL(void, glFramebufferRenderbufferOES, (GLenum target,
 		   GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer))
 _COREGL_EXT_SYMBOL(void, glFramebufferTexture2DOES, (GLenum target,
 		   GLenum attachment, GLenum textarget, GLuint texture, GLint level))
+_COREGL_EXT_SYMBOL(void, glFramebufferTextureOES, (GLenum target, GLenum attachment, GLuint texture, GLint level))
+_COREGL_EXT_SYMBOL(void, glTexBufferRangeOES, (GLenum target, GLenum internalformat, GLuint buffer,GLintptr offset, GLsizeiptr size))
+_COREGL_EXT_SYMBOL(void, glSamplerParameterIuivOES, (GLuint sampler, GLenum pname, GLuint const *params))
+_COREGL_EXT_SYMBOL(void, glSamplerParameterIivOES, (GLuint sampler, GLenum pname, GLint const *params))
+_COREGL_EXT_SYMBOL(void, glGetSamplerParameterIuivOES,(GLuint sampler, GLenum pname, GLuint *params))
+_COREGL_EXT_SYMBOL(void, glGetSamplerParameterIivOES,(GLuint sampler, GLenum pname, GLint *params))
+_COREGL_EXT_SYMBOL(void, glGetTexParameterIuivOES,(GLenum target, GLenum pname, GLuint *params))
+_COREGL_EXT_SYMBOL(void, glGetTexParameterIivOES,(GLenum target, GLenum pname, GLint *params))
+_COREGL_EXT_SYMBOL(void, glPatchParameteriOES,(GLenum pname, GLint value))
+_COREGL_EXT_SYMBOL(void, glTexParameterIivOES,(GLenum target, GLenum pname, GLint const *params))
+_COREGL_EXT_SYMBOL(void, glTexParameterIuivOES,(GLenum target, GLenum pname, GLuint const *params))
+_COREGL_EXT_SYMBOL(void, glGetSamplerParameterIivEXT,(GLuint sampler, GLenum pname, GLint *params))
+_COREGL_EXT_SYMBOL(void, glGetSamplerParameterIuivEXT,(GLuint sampler, GLenum pname, GLuint *params))
+_COREGL_EXT_SYMBOL(void, glSamplerParameterIivEXT, (GLuint sampler, GLenum pname, GLint const *params))
+_COREGL_EXT_SYMBOL(void, glFramebufferTextureEXT, (GLenum target, GLenum attachment, GLuint texture, GLint level))
+_COREGL_EXT_SYMBOL(void, glTexBufferRangeEXT, (GLenum target, GLenum internalformat, GLuint buffer,GLintptr offset, GLsizeiptr size))
+_COREGL_EXT_SYMBOL(void, glSamplerParameterIuivEXT, (GLuint sampler, GLenum pname, GLuint const *params))
+_COREGL_EXT_SYMBOL(void, glGetTexParameterIuivEXT,(GLenum target, GLenum pname, GLuint *params))
+_COREGL_EXT_SYMBOL(void, glGetTexParameterIivEXT,(GLenum target, GLenum pname, GLint *params))
+_COREGL_EXT_SYMBOL(void, glPatchParameteriEXT,(GLenum pname, GLint value))
+_COREGL_EXT_SYMBOL(void, glTexParameterIivEXT,(GLenum target, GLenum pname, GLint const *params))
+_COREGL_EXT_SYMBOL(void, glTexParameterIuivEXT,(GLenum target, GLenum pname, GLuint const *params))
+
+
 _COREGL_EXT_SYMBOL(void, glGenFramebuffersOES, (GLsizei n,
 		   GLuint *framebuffers))
 _COREGL_EXT_SYMBOL(void, glGenRenderbuffersOES, (GLsizei n,
@@ -303,6 +327,8 @@ _COREGL_EXT_SYMBOL(void, glTexStorage3DMultisampleOES, (GLenum target,
 		   GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height,
 		   GLsizei depth, GLboolean fixedsamplelocations))
 _COREGL_EXT_SYMBOL(void, glTranslatexOES, (GLfixed x, GLfixed y, GLfixed z))
+_COREGL_EXT_SYMBOL(void, glTexBufferOES, (GLenum target, GLenum internalformat, GLuint buffer))
+_COREGL_EXT_SYMBOL(void, glTexBufferEXT, (GLenum target, GLenum internalformat, GLuint buffer))
 _COREGL_END_API(COREGL_GLAPI_2)
 
 /* OpenGL ES 3.0 */
@@ -810,7 +836,6 @@ _COREGL_EXT_SYMBOL(void, glCompressedTexSubImage3DOES, (GLenum target,
 		   GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize,
 		   const GLvoid *data))
 
-
 /*
 _COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_ANGLE_framebuffer_blit", 1.1, -1)
 _COREGL_EXT_SYMBOL(void, glBlitFramebufferANGLE, (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter))
@@ -937,7 +962,6 @@ _COREGL_EXT_SYMBOL_FASTPATH_PASS(glGetSamplerParameterIivOES)
 _COREGL_EXT_SYMBOL_FASTPATH_PASS(glGetSamplerParameterIuivOES)
 
 _COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_texture_buffer", 2.0, -1)
-_COREGL_EXT_SYMBOL_FASTPATH_PASS(glTexBufferOES)
 _COREGL_EXT_SYMBOL_FASTPATH_PASS(glTexBufferRangeOES)
 
 _COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_NV_internalformat_sample_query", 2.0, -1)

@@ -137,8 +137,7 @@ _COREGL_EXT_SYMBOL(void, glMultiDrawArraysEXT, (GLenum mode, const GLint *first,
 _COREGL_EXT_SYMBOL(void, glMultiDrawElementsEXT, (GLenum mode, const GLsizei *count, GLenum type,
 			const void *const*indices, GLsizei primcount))
 
-_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_EXT_multisampled_render_to_texture",
-				     2.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_EXT_multisampled_render_to_texture",2.0, -1)
 _COREGL_EXT_SYMBOL(void, glRenderbufferStorageMultisampleEXT, (GLenum target,
 		   GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height))
 _COREGL_EXT_SYMBOL(void, glFramebufferTexture2DMultisampleEXT, (GLenum target,
@@ -185,6 +184,20 @@ _COREGL_EXT_SYMBOL_FASTPATH_BLOCK(glExtIsProgramBinaryQCOM)
 _COREGL_EXT_SYMBOL_FASTPATH_BLOCK(glExtGetProgramBinarySourceQCOM)
 _COREGL_END_API(COREGL_GLAPI_1_2_COMMON)
 
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_texture_storage_multisample_2d_array", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_sample_variables", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_shader_multisample_interpolation", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_KHR_blend_equation_advanced", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_KHR_blend_equation_advanced_coherent", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_shader_image_atomic", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_gpu_shader5", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_EXT_gpu_shader5", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_texture_cube_map_array", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_EXT_texture_cube_map_array", 1.0, -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_EXT_draw_elements_base_vertex", 1.0, -1)
+_COREGL_EXT_SYMBOL_FASTPATH_PASS(glDrawElementsBaseVertexEXT)
+_COREGL_EXT_SYMBOL_FASTPATH_PASS(glDrawElementsInstancedBaseVertexEXT)
+_COREGL_EXT_SYMBOL_FASTPATH_PASS(glDrawRangeElementsBaseVertexEXT)
 
 #ifdef _COREGL_EXT_SYMBOL_NOT_DEFINED
 #undef _COREGL_EXT_SYMBOL_NOT_DEFINED

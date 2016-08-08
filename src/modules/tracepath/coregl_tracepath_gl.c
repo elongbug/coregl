@@ -2340,6 +2340,18 @@ finish:
 }
 
 void
+tracepath_glTexBufferOES(GLenum target, GLenum internalformat, GLuint buffer)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexBufferOES(target, internalformat, buffer);
+
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
 tracepath_glGetVertexAttribPointerv(GLuint index, GLenum pname, void **pointer)
 {
 	_COREGL_TRACEPATH_FUNC_BEGIN();
@@ -8779,6 +8791,279 @@ tracepath_glTexStorage3DMultisample(GLenum target, GLsizei samples, GLenum inter
 {
 	_COREGL_TRACEPATH_FUNC_BEGIN();
 	_orig_tracepath_glTexStorage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glFramebufferTextureOES(GLenum target, GLenum attachment, GLuint texture, GLint level)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+
+#ifdef COREGL_TRACEPATH_TRACE_SURFACE_INFO
+	tracepath_fbdump_update(0);
+#endif
+
+	_orig_tracepath_glFramebufferTextureOES(target, attachment,texture, level);
+
+#ifdef COREGL_TRACEPATH_TRACE_SURFACE_INFO
+	tracepath_fbdump_update(1);
+#endif
+
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glTexBufferRangeOES(GLenum target, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexBufferRangeOES(target, internalformat, buffer, offset, size);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glSamplerParameterIuivOES(GLuint sampler, GLenum pname, const GLuint *param)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glSamplerParameterIuivOES(sampler, pname, param);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glSamplerParameterIivOES(GLuint sampler, GLenum pname, const GLint *param)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glSamplerParameterIivOES(sampler, pname, param);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetSamplerParameterIuivOES(GLuint sampler, GLenum pname, GLuint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetSamplerParameterIuivOES(sampler, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetSamplerParameterIivOES(GLuint sampler, GLenum pname, GLint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetSamplerParameterIivOES(sampler, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetTexParameterIuivOES(GLenum target, GLenum pname, GLuint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetTexParameterIuivOES(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glTexParameterIivOES(GLenum target, GLenum pname, const GLint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexParameterIivOES(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glPatchParameteriOES(GLenum pname, GLint value)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glPatchParameteriOES(pname, value);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glTexParameterIuivOES(GLenum target, GLenum pname, const GLuint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexParameterIuivOES(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetTexParameterIivOES(GLenum target, GLenum pname, GLint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetTexParameterIivOES(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetSamplerParameterIivEXT(GLuint sampler, GLenum pname, GLint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetSamplerParameterIivEXT(sampler, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetSamplerParameterIuivEXT(GLuint sampler, GLenum pname, GLuint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetSamplerParameterIuivEXT(sampler, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glSamplerParameterIivEXT(GLuint sampler, GLenum pname, const GLint *param)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glSamplerParameterIivEXT(sampler, pname, param);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glFramebufferTextureEXT(GLenum target, GLenum attachment, GLuint texture, GLint level)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+
+#ifdef COREGL_TRACEPATH_TRACE_SURFACE_INFO
+	tracepath_fbdump_update(0);
+#endif
+
+	_orig_tracepath_glFramebufferTextureEXT(target, attachment,texture, level);
+
+#ifdef COREGL_TRACEPATH_TRACE_SURFACE_INFO
+	tracepath_fbdump_update(1);
+#endif
+
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glTexBufferRangeEXT(GLenum target, GLenum internalformat, GLuint buffer, GLintptr offset, GLsizeiptr size)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexBufferRangeEXT(target, internalformat, buffer, offset, size);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glSamplerParameterIuivEXT(GLuint sampler, GLenum pname, const GLuint *param)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glSamplerParameterIuivEXT(sampler, pname, param);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetTexParameterIuivEXT(GLenum target, GLenum pname, GLuint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetTexParameterIuivEXT(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glGetTexParameterIivEXT(GLenum target, GLenum pname, GLint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glGetTexParameterIivEXT(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glPatchParameteriEXT(GLenum pname, GLint value)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glPatchParameteriEXT(pname, value);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glTexParameterIivEXT(GLenum target, GLenum pname, const GLint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexParameterIivEXT(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glTexParameterIuivEXT(GLenum target, GLenum pname, const GLuint *params)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexParameterIuivEXT(target, pname, params);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+void
+tracepath_glTexBufferEXT(GLenum target, GLenum internalformat, GLuint buffer)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glTexBufferOES(target, internalformat, buffer);
+
 	goto finish;
 
 finish:
