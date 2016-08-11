@@ -1320,63 +1320,52 @@ fastpath_glBindFramebuffer(GLenum target, GLuint framebuffer)
 		goto finish;
 	}
 
-	if (target == GL_FRAMEBUFFER) {
-		if (current_ctx->gl_framebuffer_binding_read_used == 1) {
-			if CURR_STATE_COMPARE(gl_framebuffer_binding_read, 0, real_obj) {
-				IF_GL_SUCCESS(_orig_fastpath_glBindFramebuffer(target, real_obj)) {
-					if (real_obj == 0)
-						current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_read);
-					else
-						current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_read;
-					CURR_STATE_UPDATE(gl_framebuffer_binding_read, 0, real_obj)
-				}
-			}
-			if CURR_STATE_COMPARE(gl_framebuffer_binding_draw, 0, real_obj) {
-				IF_GL_SUCCESS(_orig_fastpath_glBindFramebuffer(target, real_obj)) {
-					if (real_obj == 0)
-						current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_draw);
-					else
-						current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_draw;
-					CURR_STATE_UPDATE(gl_framebuffer_binding_draw, 0, real_obj)
-				}
-			}
-		} else {
-			if CURR_STATE_COMPARE(gl_framebuffer_binding, 0, real_obj) {
-				IF_GL_SUCCESS(_orig_fastpath_glBindFramebuffer(target, real_obj)) {
-					if (real_obj == 0)
-						current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding);
-					else
-						current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding;
-					CURR_STATE_UPDATE(gl_framebuffer_binding, 0, real_obj)
-				}
-			}
-		}
-	} else if (target == GL_READ_FRAMEBUFFER &&
-		   current_ctx->gl_framebuffer_binding_read_used) {
-		if CURR_STATE_COMPARE(gl_framebuffer_binding_read, 0, real_obj) {
-			IF_GL_SUCCESS(_orig_fastpath_glBindFramebuffer(target, real_obj)) {
-				if (real_obj == 0)
-					current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_read);
-				else
-					current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_read;
-				CURR_STATE_UPDATE(gl_framebuffer_binding_read, 0, real_obj)
-			}
-		}
-	} else if (target == GL_DRAW_FRAMEBUFFER &&
-		   current_ctx->gl_framebuffer_binding_draw_used) {
-		if CURR_STATE_COMPARE(gl_framebuffer_binding_draw, 0, real_obj) {
-			IF_GL_SUCCESS(_orig_fastpath_glBindFramebuffer(target, real_obj)) {
-				if (real_obj == 0)
-					current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_draw);
-				else
-					current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_draw;
-				CURR_STATE_UPDATE(gl_framebuffer_binding_draw, 0, real_obj)
-			}
-		}
-	} else {
-		_set_gl_error(GL_INVALID_ENUM);
-		goto finish;
+#define STATE_PROC(gl_state, flagid, flagbit) \
+	{	\
+		if(real_obj == 0) {	\
+			IF_GL_SUCCESS(_orig_fastpath_glBindFramebuffer(target, real_obj)) { \
+				current_ctx->flagid &= (~flagbit##_##gl_state);	\
+				CURR_STATE_CLEAR(gl_state, 0);					\
+			}													\
+		}\
+		else if CURR_STATE_COMPARE(gl_state, 0, real_obj) {			\
+			IF_GL_SUCCESS(_orig_fastpath_glBindFramebuffer(target, real_obj)) {	\
+				if (real_obj == 0)													\
+					current_ctx->flagid &= (~flagbit##_##gl_state);					\
+				else																\
+					current_ctx->flagid |= flagbit##_##gl_state;					\
+				CURR_STATE_UPDATE(gl_state, 0, real_obj)							\
+				if((target == GL_FRAMEBUFFER || target == GL_READ_FRAMEBUFFER) &&	\
+					current_ctx->gl_framebuffer_binding_read_used)					\
+					CURR_STATE_CLEAR(gl_read_buffer, 0)								\
+			}																		\
+		}																			\
 	}
+
+	switch(target) {
+		case GL_FRAMEBUFFER:
+			if (current_ctx->gl_framebuffer_binding_read_used)
+				STATE_PROC(gl_framebuffer_binding_read, _bind_flag1, _BIND_FLAG1_BIT)
+			if (current_ctx->gl_framebuffer_binding_draw_used)
+				STATE_PROC(gl_framebuffer_binding_draw, _bind_flag1, _BIND_FLAG1_BIT)
+			if(!current_ctx->gl_framebuffer_binding_read_used && !current_ctx->gl_framebuffer_binding_draw_used)
+				STATE_PROC(gl_framebuffer_binding, _bind_flag1, _BIND_FLAG1_BIT)
+			break;
+		case GL_READ_FRAMEBUFFER:
+			if (current_ctx->gl_framebuffer_binding_read_used)
+				STATE_PROC(gl_framebuffer_binding_read, _bind_flag1, _BIND_FLAG1_BIT)
+			break;
+		case GL_DRAW_FRAMEBUFFER:
+			if (current_ctx->gl_framebuffer_binding_draw_used)
+				STATE_PROC(gl_framebuffer_binding_draw, _bind_flag1, _BIND_FLAG1_BIT)
+			break;
+		default:
+			_set_gl_error(GL_INVALID_ENUM);
+			goto finish;
+	}
+
+#undef STATE_PROC
+
 	goto finish;
 
 finish:
@@ -7292,63 +7281,41 @@ fastpath_glBindFramebufferOES(GLenum target, GLuint framebuffer)
 		goto finish;
 	}
 
-	if (target == GL_FRAMEBUFFER) {
-		if (current_ctx->gl_framebuffer_binding_read_used == 1) {
-			if CURR_STATE_COMPARE(gl_framebuffer_binding_read, 0, real_obj) {
-				IF_GL_SUCCESS(_orig_fastpath_glBindFramebufferOES(target, real_obj)) {
-					if (real_obj == 0)
-						current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_read);
-					else
-						current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_read;
-					CURR_STATE_UPDATE(gl_framebuffer_binding_read, 0, real_obj)
-				}
-			}
-			if CURR_STATE_COMPARE(gl_framebuffer_binding_draw, 0, real_obj) {
-				IF_GL_SUCCESS(_orig_fastpath_glBindFramebufferOES(target, real_obj)) {
-					if (real_obj == 0)
-						current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_draw);
-					else
-						current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_draw;
-					CURR_STATE_UPDATE(gl_framebuffer_binding_draw, 0, real_obj)
-				}
-			}
-		} else {
-			if CURR_STATE_COMPARE(gl_framebuffer_binding, 0, real_obj) {
-				IF_GL_SUCCESS(_orig_fastpath_glBindFramebufferOES(target, real_obj)) {
-					if (real_obj == 0)
-						current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding);
-					else
-						current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding;
-					CURR_STATE_UPDATE(gl_framebuffer_binding, 0, real_obj)
-				}
-			}
-		}
-	} else if (target == GL_READ_FRAMEBUFFER &&
-		   current_ctx->gl_framebuffer_binding_read_used) {
-		if CURR_STATE_COMPARE(gl_framebuffer_binding_read, 0, real_obj) {
-			IF_GL_SUCCESS(_orig_fastpath_glBindFramebufferOES(target, real_obj)) {
-				if (real_obj == 0)
-					current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_read);
-				else
-					current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_read;
-				CURR_STATE_UPDATE(gl_framebuffer_binding_read, 0, real_obj)
-			}
-		}
-	} else if (target == GL_DRAW_FRAMEBUFFER &&
-		   current_ctx->gl_framebuffer_binding_draw_used) {
-		if CURR_STATE_COMPARE(gl_framebuffer_binding_draw, 0, real_obj) {
-			IF_GL_SUCCESS(_orig_fastpath_glBindFramebufferOES(target, real_obj)) {
-				if (real_obj == 0)
-					current_ctx->_bind_flag1 &= (~_BIND_FLAG1_BIT_gl_framebuffer_binding_draw);
-				else
-					current_ctx->_bind_flag1 |= _BIND_FLAG1_BIT_gl_framebuffer_binding_draw;
-				CURR_STATE_UPDATE(gl_framebuffer_binding_draw, 0, real_obj)
-			}
-		}
-	} else {
-		_set_gl_error(GL_INVALID_ENUM);
-		goto finish;
+#define STATE_PROC(gl_state, flagid, flagbit) \
+	if CURR_STATE_COMPARE(gl_framebuffer_binding_read, 0, real_obj) {			\
+		IF_GL_SUCCESS(_orig_fastpath_glBindFramebufferOES(target, real_obj)) {	\
+			if (real_obj == 0)													\
+				current_ctx->flagid &= (~flagbit##_##gl_state);					\
+			else																\
+				current_ctx->flagid |= flagbit##_##gl_state;						\
+			CURR_STATE_UPDATE(gl_state, 0, real_obj)							\
+		}																		\
 	}
+
+	switch(target) {
+		case GL_FRAMEBUFFER:
+			if (current_ctx->gl_framebuffer_binding_read_used)
+				STATE_PROC(gl_framebuffer_binding_read, _bind_flag1, _BIND_FLAG1_BIT)
+			if (current_ctx->gl_framebuffer_binding_draw_used)
+				STATE_PROC(gl_framebuffer_binding_draw, _bind_flag1, _BIND_FLAG1_BIT)
+			if(!current_ctx->gl_framebuffer_binding_read_used && !current_ctx->gl_framebuffer_binding_draw_used)
+				STATE_PROC(gl_framebuffer_binding, _bind_flag1, _BIND_FLAG1_BIT)
+			break;
+		case GL_READ_FRAMEBUFFER:
+			if (current_ctx->gl_framebuffer_binding_read_used)
+				STATE_PROC(gl_framebuffer_binding_read, _bind_flag1, _BIND_FLAG1_BIT)
+			break;
+		case GL_DRAW_FRAMEBUFFER:
+			if (current_ctx->gl_framebuffer_binding_draw_used)
+				STATE_PROC(gl_framebuffer_binding_draw, _bind_flag1, _BIND_FLAG1_BIT)
+			break;
+		default:
+			_set_gl_error(GL_INVALID_ENUM);
+			goto finish;
+	}
+
+#undef STATE_PROC
+
 	goto finish;
 
 finish:
