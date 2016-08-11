@@ -603,7 +603,7 @@ fastpath_glFramebufferTexture2D(GLenum target, GLenum attachment,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -628,7 +628,7 @@ fastpath_glFramebufferTexture3DOES(GLenum target, GLenum attachment,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -653,7 +653,7 @@ fastpath_glFramebufferTexture2DMultisampleEXT(GLenum target, GLenum attachment,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -1135,7 +1135,7 @@ fastpath_glBindFramebuffer(GLenum target, GLuint framebuffer)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_FRAMEBUFFER, framebuffer, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -1353,7 +1353,7 @@ fastpath_glBindRenderbuffer(GLenum target, GLuint renderbuffer)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_RENDERBUFFER, renderbuffer, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -1390,7 +1390,7 @@ fastpath_glFramebufferRenderbuffer(GLenum target, GLenum attachment,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_RENDERBUFFER, renderbuffer, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -1831,6 +1831,11 @@ fastpath_glUseProgram(GLuint program)
 			current_ctx->_clear_flag1 |= _CLEAR_FLAG1_BIT_gl_current_program;
 			CURR_STATE_UPDATE(gl_current_program, 0, real_obj)
 		}
+	}
+	else if(current_ctx->gl_transform_feedback_active[0] == GL_TRUE &&
+		current_ctx->gl_transform_feedback_paused[0] == GL_FALSE) {
+		_set_gl_error(GL_INVALID_OPERATION);
+		goto finish;
 	}
 
 	goto finish;
@@ -4242,6 +4247,10 @@ fastpath_glReadBuffer(GLenum mode)
 			CURR_STATE_UPDATE(gl_read_buffer, 0, mode)
 		}
 	}
+	else if (current_ctx->gl_framebuffer_binding_read[0] && mode == GL_BACK) {
+		_set_gl_error(GL_INVALID_OPERATION);
+		goto finish;
+	}
 
 	goto finish;
 
@@ -4468,7 +4477,7 @@ fastpath_glFramebufferTextureLayer(GLenum target, GLenum attachment,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_VALUE);
 		goto finish;
 	}
 
@@ -4708,7 +4717,7 @@ fastpath_glBindTransformFeedback(GLenum target, GLuint id)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TRANSFORMFEEDBACK, id, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -4718,6 +4727,12 @@ fastpath_glBindTransformFeedback(GLenum target, GLuint id)
 			CURR_STATE_UPDATE(gl_transform_feedback_binding, 0, real_obj)
 		}
 	}
+	else if(current_ctx->gl_transform_feedback_active[0] == GL_TRUE &&
+		current_ctx->gl_transform_feedback_paused[0] == GL_FALSE) {
+		_set_gl_error(GL_INVALID_OPERATION);
+		goto finish;
+	}
+
 	goto finish;
 
 finish:
@@ -5523,7 +5538,7 @@ fastpath_glBindSampler(GLuint unit, GLuint sampler)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -5622,6 +5637,7 @@ fastpath_glSamplerParameteri(GLuint sampler, GLenum pname, GLint param)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -5643,6 +5659,7 @@ fastpath_glSamplerParameteriv(GLuint sampler, GLenum pname, const GLint *param)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -5664,6 +5681,7 @@ fastpath_glSamplerParameterf(GLuint sampler, GLenum pname, GLfloat param)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -5686,6 +5704,7 @@ fastpath_glSamplerParameterfv(GLuint sampler, GLenum pname,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -5707,6 +5726,7 @@ fastpath_glGetSamplerParameteriv(GLuint sampler, GLenum pname, GLint *params)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -5728,6 +5748,7 @@ fastpath_glGetSamplerParameterfv(GLuint sampler, GLenum pname, GLfloat *params)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -5896,7 +5917,7 @@ fastpath_glGetProgramPipelineiv(GLuint pipeline, GLenum pname, GLint *params)
 
 	if (params == NULL ||
 	    GET_REAL_OBJ(GL_OBJECT_TYPE_PROGRAMPIPELINE, pipeline, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_VALUE);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -6019,7 +6040,7 @@ fastpath_glValidateProgramPipeline(GLuint pipeline)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_PROGRAMPIPELINE, pipeline, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_VALUE);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -6232,18 +6253,23 @@ finish:
 void
 fastpath_glUseProgramStages(GLuint pipeline, GLbitfield stages, GLuint program)
 {
-	GLuint real_obj;
+	GLuint real_program_obj;
+	GLuint real_pipeline_obj;
 
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
 	INIT_FASTPATH_GL_FUNC();
 
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_PROGRAM, program, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_VALUE);
+	if (GET_REAL_OBJ(GL_OBJECT_TYPE_PROGRAM, program, &real_program_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
+		goto finish;
+	}
+	if (GET_REAL_OBJ(GL_OBJECT_TYPE_PROGRAMPIPELINE, pipeline, &real_pipeline_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
-	_orig_fastpath_glUseProgramStages(pipeline, stages, real_obj);
+	_orig_fastpath_glUseProgramStages(real_pipeline_obj, stages, real_program_obj);
 
 	goto finish;
 
@@ -7171,7 +7197,7 @@ fastpath_glBindFramebufferOES(GLenum target, GLuint framebuffer)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_FRAMEBUFFER, framebuffer, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_VALUE);
 		goto finish;
 	}
 
@@ -7248,7 +7274,7 @@ fastpath_glBindRenderbufferOES(GLenum target, GLuint renderbuffer)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_RENDERBUFFER, renderbuffer, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_VALUE);
 		goto finish;
 	}
 
@@ -7467,7 +7493,7 @@ fastpath_glFramebufferRenderbufferOES(GLenum target, GLenum attachment,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_RENDERBUFFER, renderbuffer, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_VALUE);
 		goto finish;
 	}
 
@@ -7491,7 +7517,7 @@ fastpath_glFramebufferTexture2DOES(GLenum target, GLenum attachment,
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
-		_set_gl_error(GL_OUT_OF_MEMORY);
+		_set_gl_error(GL_INVALID_VALUE);
 		goto finish;
 	}
 
@@ -8102,7 +8128,7 @@ fastpath_glGenVertexArraysOES(GLsizei n, GLuint *arrays)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (n < 0) {
-		_set_gl_error(GL_INVALID_VALUE);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 	if (n == 0) goto finish;
@@ -8334,7 +8360,7 @@ fastpath_glTexBuffer(GLenum target, GLenum internalformat, GLuint buffer)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_VALUE);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 	_orig_fastpath_glTexBuffer(target, internalformat, real_obj);
@@ -8374,7 +8400,7 @@ fastpath_glTexBufferRange(GLenum target, GLenum internalformat, GLuint buffer, G
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_VALUE);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 	_orig_fastpath_glTexBufferRange(target, internalformat, real_obj, offset, size);
@@ -8495,7 +8521,7 @@ fastpath_glGetSamplerParameterIiv(GLuint sampler, GLenum pname, GLint *params)
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_VALUE);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 	_orig_fastpath_glGetSamplerParameterIiv(real_obj, pname, params);
