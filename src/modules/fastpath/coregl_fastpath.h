@@ -238,6 +238,12 @@ typedef struct _GLGlueContext {
 #define _BIND_FLAG3_BIT_gl_dispatch_indirect_buffer_binding   FLAG_BIT_3
 #define _BIND_FLAG3_BIT_gl_texture_buffer_binding             FLAG_BIT_4
 
+	unsigned char           _bind_flag4;
+#define _BIND_FLAG4_BIT_gl_transform_feedback_buffer_range_binding  FLAG_BIT_0
+#define _BIND_FLAG4_BIT_gl_uniform_buffer_range_binding             FLAG_BIT_1
+#define _BIND_FLAG4_BIT_gl_shader_storage_buffer_range_binding      FLAG_BIT_2
+#define _BIND_FLAG4_BIT_gl_atomic_counter_buffer_range_binding	    FLAG_BIT_3
+
 	unsigned char           _enable_flag1;
 #define _ENABLE_FLAG1_BIT_gl_blend        FLAG_BIT_0
 #define _ENABLE_FLAG1_BIT_gl_cull_face    FLAG_BIT_1
@@ -285,6 +291,7 @@ typedef struct _GLGlueContext {
 #define _TEX_FLAG2_BIT_gl_tex_buffer_ext_state               FLAG_BIT_0
 #define _TEX_FLAG2_BIT_gl_tex_2d_multisample_state           FLAG_BIT_1
 #define _TEX_FLAG2_BIT_gl_tex_2d_multisample_array_oes_state FLAG_BIT_2
+#define _TEX_FLAG2_BIT_gl_tex_cube_map_array_ext_state       FLAG_BIT_3
 
 	unsigned char           _blend_flag;
 #define _BLEND_FLAG_BIT_gl_blend_color           FLAG_BIT_0
