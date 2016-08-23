@@ -251,7 +251,7 @@ coregl_initialize()
 
 	if (!_gl_lib_init()) return 0;
 
-	init_export();
+	init_export(GL_TRUE, GL_TRUE);
 
 	COREGL_LOG(" -> Completed\n");
 

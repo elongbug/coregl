@@ -150,7 +150,7 @@ extern GLThreadState      *get_current_thread_state();
 
 
 // Override functions
-extern void                init_export();
+extern void                init_export(GLboolean init_egl, GLboolean init_gl);
 extern void                deinit_export();
 
 // Module interfaces

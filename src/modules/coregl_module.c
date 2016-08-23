@@ -37,7 +37,7 @@ void
 reset_modules_override()
 {
 	// Step 1 : Initialization
-	init_export();
+	init_export(GL_TRUE, GL_TRUE);
 
 	// Step 2 : User Define Modules : Sequence is important! (Last module's API is called first)
 	fastpath_apply_overrides();

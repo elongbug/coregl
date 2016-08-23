@@ -14,6 +14,7 @@
 
 General_Trace_List *glue_ctx_trace_list = NULL;
 General_Trace_List *context_state_trace_list = NULL;
+int current_gl_api_version = 0;
 
 static void
 _dump_context_info(const char *ment, int force_output)
@@ -1195,6 +1196,10 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 			ret = EGL_FALSE;
 			goto finish;
 		}
+
+		current_gl_api_version = ((EGL_packed_option *)gctx->real_ctx_option)->attrib_list.context_major_version;
+		if(current_gl_api_version == COREGL_GLAPI_1)
+			init_export(GL_FALSE, GL_TRUE);
 
 		// Update references only when the contexts are different
 		if (tstate->cstate != gctx->cstate)  {
