@@ -3361,10 +3361,8 @@ fastpath_glEnableVertexAttribArray(GLuint index)
 
 	if CURR_STATE_COMPARE(gl_vertex_array_enabled, index, GL_TRUE) {
 		IF_GL_SUCCESS(_orig_fastpath_glEnableVertexAttribArray(index)) {
-			if (current_ctx->gl_vertex_array_binding[0] == 0) {
-				current_ctx->_vattrib_flag |= _VATTRIB_FLAG_BIT_gl_vertex_array;
-				CURR_STATE_UPDATE(gl_vertex_array_enabled, index, GL_TRUE)
-			}
+			current_ctx->_vattrib_flag |= _VATTRIB_FLAG_BIT_gl_vertex_array;
+			CURR_STATE_UPDATE(gl_vertex_array_enabled, index, GL_TRUE)
 		}
 	}
 
@@ -3383,10 +3381,8 @@ fastpath_glDisableVertexAttribArray(GLuint index)
 
 	if CURR_STATE_COMPARE(gl_vertex_array_enabled, index, GL_FALSE) {
 		IF_GL_SUCCESS(_orig_fastpath_glDisableVertexAttribArray(index)) {
-			if (current_ctx->gl_vertex_array_binding[0] == 0) {
-				current_ctx->_vattrib_flag |= _VATTRIB_FLAG_BIT_gl_vertex_array;
-				CURR_STATE_UPDATE(gl_vertex_array_enabled, index, GL_FALSE)
-			}
+			current_ctx->_vattrib_flag |= _VATTRIB_FLAG_BIT_gl_vertex_array;
+			CURR_STATE_UPDATE(gl_vertex_array_enabled, index, GL_FALSE)
 		}
 	}
 
@@ -3395,7 +3391,6 @@ fastpath_glDisableVertexAttribArray(GLuint index)
 finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
-
 
 void
 fastpath_glFrontFace(GLenum mode)
@@ -4693,6 +4688,7 @@ void
 fastpath_glBindVertexArray(GLuint array)
 {
 	GLuint real_obj;
+	int i;
 
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
@@ -4703,10 +4699,20 @@ fastpath_glBindVertexArray(GLuint array)
 		goto finish;
 	}
 
-	if (CURR_STATE_COMPARE(gl_vertex_array_binding, 0, real_obj)) {
+	if(real_obj == 0) {
+		IF_GL_SUCCESS(_orig_fastpath_glBindVertexArray(real_obj)) {
+			current_ctx->_misc_flag3 &= ~(_MISC_FLAG3_BIT_gl_vertex_array_binding);
+			CURR_STATE_CLEAR(gl_vertex_array_binding, 0)
+			for(i = 0; i < current_ctx->gl_vertex_attribs_num[0]; i++)
+				CURR_STATE_CLEAR(gl_vertex_array_enabled, i)
+		}
+	}
+	else if (CURR_STATE_COMPARE(gl_vertex_array_binding, 0, real_obj)) {
 		IF_GL_SUCCESS(_orig_fastpath_glBindVertexArray(real_obj)) {
 			current_ctx->_misc_flag3 |= _MISC_FLAG3_BIT_gl_vertex_array_binding;
 			CURR_STATE_UPDATE(gl_vertex_array_binding, 0, real_obj)
+			for(i = 0; i < current_ctx->gl_vertex_attribs_num[0]; i++)
+				CURR_STATE_CLEAR(gl_vertex_array_enabled, i)
 		}
 	}
 	goto finish;
@@ -8207,11 +8213,11 @@ finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
 
-
 void
 fastpath_glBindVertexArrayOES(GLuint array)
 {
 	GLuint real_obj;
+	int i;
 
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
@@ -8221,10 +8227,21 @@ fastpath_glBindVertexArrayOES(GLuint array)
 		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
-	if (CURR_STATE_COMPARE(gl_vertex_array_binding, 0, real_obj)) {
+
+	if(real_obj == 0) {
+		IF_GL_SUCCESS(_orig_fastpath_glBindVertexArrayOES(real_obj)) {
+			current_ctx->_misc_flag3 &= ~(_MISC_FLAG3_BIT_gl_vertex_array_binding);
+			CURR_STATE_CLEAR(gl_vertex_array_binding, 0)
+			for(i = 0; i < current_ctx->gl_vertex_attribs_num[0]; i++)
+				CURR_STATE_CLEAR(gl_vertex_array_enabled, i)
+		}
+	}
+	else if (CURR_STATE_COMPARE(gl_vertex_array_binding, 0, real_obj)) {
 		IF_GL_SUCCESS(_orig_fastpath_glBindVertexArrayOES(real_obj)) {
 			current_ctx->_misc_flag3 |= _MISC_FLAG3_BIT_gl_vertex_array_binding;
 			CURR_STATE_UPDATE(gl_vertex_array_binding, 0, real_obj)
+			for(i = 0; i < current_ctx->gl_vertex_attribs_num[0]; i++)
+				CURR_STATE_CLEAR(gl_vertex_array_enabled, i)
 		}
 	}
 	goto finish;
@@ -8232,7 +8249,6 @@ fastpath_glBindVertexArrayOES(GLuint array)
 finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
-
 
 GLboolean
 fastpath_glIsVertexArrayOES(GLuint array)
