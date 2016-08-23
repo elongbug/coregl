@@ -8800,7 +8800,7 @@ fastpath_glGetSamplerParameterIivEXT(GLuint sampler, GLenum pname, GLint *params
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_ENUM);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -8821,7 +8821,7 @@ fastpath_glGetSamplerParameterIuivEXT(GLuint sampler, GLenum pname, GLuint *para
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_ENUM);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -8842,7 +8842,7 @@ fastpath_glSamplerParameterIivEXT(GLuint sampler, GLenum pname, const GLint *par
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_ENUM);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -8883,8 +8883,17 @@ fastpath_glTexBufferRangeEXT(GLenum target, GLenum internalformat, GLuint buffer
 	_COREGL_FASTPATH_FUNC_BEGIN();
 	INIT_FASTPATH_GL_FUNC();
 
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
+	if(target != GL_TEXTURE_BUFFER_EXT){
 		_set_gl_error(GL_INVALID_ENUM);
+		goto finish;
+	}
+	if (offset < 0 || size<=0){
+		_set_gl_error(GL_INVALID_VALUE);
+		goto finish;
+	}
+
+	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -8905,7 +8914,7 @@ fastpath_glSamplerParameterIuivEXT(GLuint sampler, GLenum pname, const GLuint *p
 	INIT_FASTPATH_GL_FUNC();
 
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_SAMPLER, sampler, &real_obj) != 1) {
-		_set_gl_error(GL_INVALID_ENUM);
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
@@ -8925,8 +8934,11 @@ fastpath_glTexBufferEXT(GLenum target, GLenum internalformat, GLuint buffer)
 	_COREGL_FASTPATH_FUNC_BEGIN();
 	INIT_FASTPATH_GL_FUNC();
 
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
+	if(target != GL_TEXTURE_BUFFER_EXT)
 		_set_gl_error(GL_INVALID_ENUM);
+
+	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_OPERATION);
 		goto finish;
 	}
 
