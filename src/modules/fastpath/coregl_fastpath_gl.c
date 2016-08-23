@@ -601,6 +601,121 @@ finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
 
+GLboolean
+fastpath_glIsTexture(GLuint texture)
+{
+	GLboolean ret = GL_FALSE;
+	GLuint real_obj;
+
+	DEFINE_FASTPAH_GL_FUNC();
+	_COREGL_FASTPATH_FUNC_BEGIN();
+	INIT_FASTPATH_GL_FUNC();
+
+	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
+		ret = GL_FALSE;
+		goto finish;
+	}
+
+	ret = _orig_fastpath_glIsTexture(real_obj);
+
+	goto finish;
+
+finish:
+	_COREGL_FASTPATH_FUNC_END();
+	return ret;
+}
+
+void
+fastpath_glDeleteTextures(GLsizei n, const GLuint *textures)
+{
+	int i, j;
+	GLuint *objid_array = NULL;
+
+	DEFINE_FASTPAH_GL_FUNC();
+	_COREGL_FASTPATH_FUNC_BEGIN();
+	INIT_FASTPATH_GL_FUNC();
+
+	if (n < 0) {
+		_set_gl_error(GL_INVALID_VALUE);
+		goto finish;
+	}
+	if (n == 0) goto finish;
+	if (textures == NULL) goto finish;
+
+	AST(current_ctx->ostate.shared != NULL);
+
+	objid_array = (GLuint *)calloc(1, sizeof(GLuint) * n);
+	{
+		int real_n = 0;
+
+		for (i = 0; i < n; i++) {
+			int real_objid = _COREGL_INT_INIT_VALUE;
+			if (textures[i] == 0) continue;
+
+			real_objid = fastpath_ostate_get_object(&current_ctx->ostate,
+								GL_OBJECT_TYPE_TEXTURE, textures[i]);
+			if (real_objid == 0) continue;
+
+			AST(fastpath_ostate_remove_object(&current_ctx->ostate, GL_OBJECT_TYPE_TEXTURE,
+							  textures[i]) == 1);
+			objid_array[real_n++] = real_objid;
+		}
+
+		IF_GL_SUCCESS(_orig_fastpath_glDeleteTextures(real_n, objid_array)) {
+			for (i = 0; i < real_n; i++) {
+				General_Trace_List *current = NULL;
+				current = current_ctx->ostate.shared->using_gctxs;
+
+				while (current != NULL) {
+					GLGlueContext *cur_gctx = (GLGlueContext *)current->value;
+
+					if (cur_gctx->initialized == 1) {
+						for (j = 0; j < cur_gctx->gl_tex_units_num[0]; j++) {
+							if (cur_gctx->gl_tex_2d_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_2d_state, j)
+							}
+							if (cur_gctx->gl_tex_3d_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_3d_state, j)
+							}
+							if (cur_gctx->gl_tex_2d_array_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_2d_array_state, j)
+							}
+							if (cur_gctx->gl_tex_cube_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_cube_state, j)
+							}
+							if (cur_gctx->gl_tex_external_oes_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_external_oes_state, j)
+							}
+							if (cur_gctx->gl_tex_buffer_ext_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_buffer_ext_state, j)
+							}
+							if (cur_gctx->gl_tex_2d_multisample_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_2d_multisample_state, j)
+							}
+							if (cur_gctx->gl_tex_2d_multisample_array_oes_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_2d_multisample_array_oes_state, j)
+							}
+							if (cur_gctx->gl_tex_cube_map_array_ext_state[j] == objid_array[i]) {
+								CURR_STATE_CLEAR(gl_tex_cube_map_array_ext_state, j)
+							}
+						}
+					}
+
+					current = current->next;
+				}
+			}
+		}
+	}
+
+	goto finish;
+
+finish:
+	if (objid_array != NULL) {
+		free(objid_array);
+		objid_array = NULL;
+	}
+	_COREGL_FASTPATH_FUNC_END();
+}
 
 void
 fastpath_glFramebufferTexture2D(GLenum target, GLenum attachment,
@@ -719,124 +834,6 @@ fastpath_glGetFramebufferAttachmentParameteriv(GLenum target, GLenum attachment,
 	goto finish;
 
 finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
-
-GLboolean
-fastpath_glIsTexture(GLuint texture)
-{
-	GLboolean ret = GL_FALSE;
-	GLuint real_obj;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
-		ret = GL_FALSE;
-		goto finish;
-	}
-
-	ret = _orig_fastpath_glIsTexture(real_obj);
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-	return ret;
-}
-
-
-void
-fastpath_glDeleteTextures(GLsizei n, const GLuint *textures)
-{
-	int i, j;
-	GLuint *objid_array = NULL;
-
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	if (n < 0) {
-		_set_gl_error(GL_INVALID_VALUE);
-		goto finish;
-	}
-	if (n == 0) goto finish;
-	if (textures == NULL) goto finish;
-
-	AST(current_ctx->ostate.shared != NULL);
-
-	objid_array = (GLuint *)calloc(1, sizeof(GLuint) * n);
-	{
-		int real_n = 0;
-
-		for (i = 0; i < n; i++) {
-			int real_objid = _COREGL_INT_INIT_VALUE;
-			if (textures[i] == 0) continue;
-
-			real_objid = fastpath_ostate_get_object(&current_ctx->ostate,
-								GL_OBJECT_TYPE_TEXTURE, textures[i]);
-			if (real_objid == 0) continue;
-
-			AST(fastpath_ostate_remove_object(&current_ctx->ostate, GL_OBJECT_TYPE_TEXTURE,
-							  textures[i]) == 1);
-			objid_array[real_n++] = real_objid;
-		}
-
-		IF_GL_SUCCESS(_orig_fastpath_glDeleteTextures(real_n, objid_array)) {
-			for (i = 0; i < real_n; i++) {
-				General_Trace_List *current = NULL;
-				current = current_ctx->ostate.shared->using_gctxs;
-
-				while (current != NULL) {
-					GLGlueContext *cur_gctx = (GLGlueContext *)current->value;
-
-					if (cur_gctx->initialized == 1) {
-						for (j = 0; j < cur_gctx->gl_tex_units_num[0]; j++) {
-							if (cur_gctx->gl_tex_2d_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_2d_state, j)
-							}
-							if (cur_gctx->gl_tex_3d_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_3d_state, j)
-							}
-							if (cur_gctx->gl_tex_2d_array_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_2d_array_state, j)
-							}
-							if (cur_gctx->gl_tex_cube_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_cube_state, j)
-							}
-							if (cur_gctx->gl_tex_external_oes_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_external_oes_state, j)
-							}
-							if (cur_gctx->gl_tex_buffer_ext_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_buffer_ext_state, j)
-							}
-							if (cur_gctx->gl_tex_2d_multisample_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_2d_multisample_state, j)
-							}
-							if (cur_gctx->gl_tex_2d_multisample_array_oes_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_2d_multisample_array_oes_state, j)
-							}
-							if (cur_gctx->gl_tex_cube_map_array_ext_state[j] == objid_array[i]) {
-								CURR_STATE_CLEAR(gl_tex_cube_map_array_ext_state, j)
-							}
-						}
-					}
-
-					current = current->next;
-				}
-			}
-		}
-	}
-
-	goto finish;
-
-finish:
-	if (objid_array != NULL) {
-		free(objid_array);
-		objid_array = NULL;
-	}
 	_COREGL_FASTPATH_FUNC_END();
 }
 
@@ -3284,29 +3281,6 @@ finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
 
-
-void
-fastpath_glDisableVertexAttribArray(GLuint index)
-{
-	DEFINE_FASTPAH_GL_FUNC();
-	_COREGL_FASTPATH_FUNC_BEGIN();
-	INIT_FASTPATH_GL_FUNC();
-
-	if CURR_STATE_COMPARE(gl_vertex_array_enabled, index, GL_FALSE) {
-		IF_GL_SUCCESS(_orig_fastpath_glDisableVertexAttribArray(index)) {
-			if (current_ctx->gl_vertex_array_binding[0] == 0) {
-				current_ctx->_vattrib_flag |= _VATTRIB_FLAG_BIT_gl_vertex_array;
-				CURR_STATE_UPDATE(gl_vertex_array_enabled, index, GL_FALSE)
-			}
-		}
-	}
-
-	goto finish;
-
-finish:
-	_COREGL_FASTPATH_FUNC_END();
-}
-
 void
 fastpath_glEnable(GLenum cap)
 {
@@ -3390,6 +3364,28 @@ fastpath_glEnableVertexAttribArray(GLuint index)
 			if (current_ctx->gl_vertex_array_binding[0] == 0) {
 				current_ctx->_vattrib_flag |= _VATTRIB_FLAG_BIT_gl_vertex_array;
 				CURR_STATE_UPDATE(gl_vertex_array_enabled, index, GL_TRUE)
+			}
+		}
+	}
+
+	goto finish;
+
+finish:
+	_COREGL_FASTPATH_FUNC_END();
+}
+
+void
+fastpath_glDisableVertexAttribArray(GLuint index)
+{
+	DEFINE_FASTPAH_GL_FUNC();
+	_COREGL_FASTPATH_FUNC_BEGIN();
+	INIT_FASTPATH_GL_FUNC();
+
+	if CURR_STATE_COMPARE(gl_vertex_array_enabled, index, GL_FALSE) {
+		IF_GL_SUCCESS(_orig_fastpath_glDisableVertexAttribArray(index)) {
+			if (current_ctx->gl_vertex_array_binding[0] == 0) {
+				current_ctx->_vattrib_flag |= _VATTRIB_FLAG_BIT_gl_vertex_array;
+				CURR_STATE_UPDATE(gl_vertex_array_enabled, index, GL_FALSE)
 			}
 		}
 	}
