@@ -572,6 +572,7 @@ tracepath_dump_context_states(int force_output)
       TYPE valuedata[SIZE]; \
       TYPE *value = NULL; \
       value = valuedata; GET_STMT; value = valuedata; \
+      _sym_glGetError();	\
       TRACE("\E[40;37;1m %-30.30s : (\E[0m ", #NAME); \
       for (int i = 0; i < SIZE; i++) \
       { \

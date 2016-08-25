@@ -1445,6 +1445,7 @@ fastpath_dump_context_states(GLGlueContext *ctx, int force_output)
       TYPE *value = NULL; \
       if(api_gl_version <= driver_gl_version) { \
          value = valuedata; GET_STMT; value = valuedata; \
+         _sym_glGetError();\
          TRACE("\E[40;37;1m %-30.30s : (\E[0m ", #NAME); \
          for (int i = 0; i < SIZE; i++) \
          { \
