@@ -533,6 +533,7 @@ tracepath_dump_context_states(int force_output)
 			   (GLint *)initial_fake_ctx->gl_transform_feedback_buffer_binding_num);
 	_sym_glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS,
 			   (GLint *)initial_fake_ctx->gl_uniform_buffer_binding_num);
+	_sym_glGetError();
 
 	if (!force_output) {
 		struct timeval tv_now = { 0, 0 };
