@@ -274,7 +274,7 @@ _pack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay dpy,
 
 	// Apply specified attributes
 	EGLint *attrib = (EGLint *)attrib_list;
-	while (attrib[0] != EGL_NONE) {
+	while ((attrib != NULL) && (attrib[0] != EGL_NONE)) {
 		switch (attrib[0]) {
 		case EGL_CONTEXT_MAJOR_VERSION_KHR: // EGL_CONTEXT_CLIENT_VERSION
 			pack_data->attrib_list.context_major_version = attrib[1];
