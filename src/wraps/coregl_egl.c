@@ -91,7 +91,7 @@ eglTerminate(EGLDisplay dpy)
 
 EGLBoolean
 eglGetConfigs(EGLDisplay dpy, EGLConfig *configs, EGLint config_size,
-	      EGLint *num_config)
+			  EGLint *num_config)
 {
 	INIT_EXPORT();
 	return ovr_eglGetConfigs(dpy, configs, config_size, num_config);
@@ -99,7 +99,7 @@ eglGetConfigs(EGLDisplay dpy, EGLConfig *configs, EGLint config_size,
 
 EGLBoolean
 eglChooseConfig(EGLDisplay dpy, const EGLint *attrib_list, EGLConfig *configs,
-		EGLint config_size, EGLint *num_config)
+				EGLint config_size, EGLint *num_config)
 {
 	INIT_EXPORT();
 	return ovr_eglChooseConfig(dpy, attrib_list, configs, config_size, num_config);
@@ -107,7 +107,7 @@ eglChooseConfig(EGLDisplay dpy, const EGLint *attrib_list, EGLConfig *configs,
 
 EGLBoolean
 eglGetConfigAttrib(EGLDisplay dpy, EGLConfig config, EGLint attribute,
-		   EGLint *value)
+				   EGLint *value)
 {
 	INIT_EXPORT();
 	return ovr_eglGetConfigAttrib(dpy, config, attribute, value);
@@ -116,7 +116,7 @@ eglGetConfigAttrib(EGLDisplay dpy, EGLConfig config, EGLint attribute,
 
 EGLSurface
 eglCreateWindowSurface(EGLDisplay dpy, EGLConfig config,
-		       EGLNativeWindowType win, const EGLint *attrib_list)
+					   EGLNativeWindowType win, const EGLint *attrib_list)
 {
 	INIT_EXPORT();
 	return ovr_eglCreateWindowSurface(dpy, config, win, attrib_list);
@@ -124,7 +124,7 @@ eglCreateWindowSurface(EGLDisplay dpy, EGLConfig config,
 
 EGLSurface
 eglCreatePbufferSurface(EGLDisplay dpy, EGLConfig config,
-			const EGLint *attrib_list)
+						const EGLint *attrib_list)
 {
 	INIT_EXPORT();
 	return ovr_eglCreatePbufferSurface(dpy, config, attrib_list);
@@ -132,7 +132,7 @@ eglCreatePbufferSurface(EGLDisplay dpy, EGLConfig config,
 
 EGLSurface
 eglCreatePixmapSurface(EGLDisplay dpy, EGLConfig config,
-		       EGLNativePixmapType pixmap, const EGLint *attrib_list)
+					   EGLNativePixmapType pixmap, const EGLint *attrib_list)
 {
 	INIT_EXPORT();
 	return ovr_eglCreatePixmapSurface(dpy, config, pixmap, attrib_list);
@@ -147,7 +147,7 @@ eglDestroySurface(EGLDisplay dpy, EGLSurface surface)
 
 EGLBoolean
 eglQuerySurface(EGLDisplay dpy, EGLSurface surface, EGLint attribute,
-		EGLint *value)
+				EGLint *value)
 {
 	INIT_EXPORT();
 	return ovr_eglQuerySurface(dpy, surface, attribute, value);
@@ -183,7 +183,7 @@ eglReleaseThread(void)
 
 EGLSurface
 eglCreatePbufferFromClientBuffer(EGLDisplay dpy, EGLenum buftype,
-				 EGLClientBuffer buffer, EGLConfig config, const EGLint *attrib_list)
+								 EGLClientBuffer buffer, EGLConfig config, const EGLint *attrib_list)
 {
 	INIT_EXPORT();
 	return ovr_eglCreatePbufferFromClientBuffer(dpy, buftype, buffer, config,
@@ -192,7 +192,7 @@ eglCreatePbufferFromClientBuffer(EGLDisplay dpy, EGLenum buftype,
 
 EGLBoolean
 eglSurfaceAttrib(EGLDisplay dpy, EGLSurface surface, EGLint attribute,
-		 EGLint value)
+				 EGLint value)
 {
 	INIT_EXPORT();
 	return ovr_eglSurfaceAttrib(dpy, surface, attribute, value);
@@ -221,7 +221,7 @@ eglSwapInterval(EGLDisplay dpy, EGLint interval)
 
 EGLContext
 eglCreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context,
-		 const EGLint *attrib_list)
+				 const EGLint *attrib_list)
 {
 	INIT_EXPORT();
 	return ovr_eglCreateContext(dpy, config, share_context, attrib_list);

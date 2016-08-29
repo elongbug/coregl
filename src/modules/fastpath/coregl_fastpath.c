@@ -66,9 +66,9 @@ _state_get_transform_feedback_buffer_bindings(GLuint *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_transform_feedback_buffer_binding_num[0];
-	     i++) {
+			i++) {
 		_orig_fastpath_glGetIntegeri_v(GL_TRANSFORM_FEEDBACK_BUFFER_BINDING, i,
-					       (GLint *)&params[i]);
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -79,9 +79,9 @@ _state_get_transform_feedback_buffer_bindings_offset(GLintptr *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_transform_feedback_buffer_binding_num[0];
-	     i++) {
+			i++) {
 		_orig_fastpath_glGetIntegeri_v(GL_TRANSFORM_FEEDBACK_BUFFER_START, i,
-					       (GLint *)&params[i]);
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -92,9 +92,9 @@ _state_get_transform_feedback_buffer_bindings_size(GLsizeiptr *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_transform_feedback_buffer_binding_num[0];
-	     i++) {
+			i++) {
 		_orig_fastpath_glGetIntegeri_v(GL_TRANSFORM_FEEDBACK_BUFFER_SIZE, i,
-					       (GLint *)&params[i]);
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -143,7 +143,8 @@ _state_get_shader_storage_buffer_bindings(GLuint *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_shader_storage_buffer_binding_num[0]; i++) {
-		_orig_fastpath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_BINDING, i, (GLint *)&params[i]);
+		_orig_fastpath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_BINDING, i,
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -154,7 +155,8 @@ _state_get_shader_storage_buffer_bindings_offset(GLintptr *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_shader_storage_buffer_binding_num[0]; i++) {
-		_orig_fastpath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_START, i, (GLint *)&params[i]);
+		_orig_fastpath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_START, i,
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -165,7 +167,8 @@ _state_get_shader_storage_buffer_bindings_size(GLsizeiptr *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_shader_storage_buffer_binding_num[0]; i++) {
-		_orig_fastpath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_SIZE, i, (GLint *)&params[i]);
+		_orig_fastpath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_SIZE, i,
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -177,7 +180,8 @@ _state_get_atomic_counter_buffer_bindings(GLuint *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
-		_orig_fastpath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_BINDING, i, (GLint *)&params[i]);
+		_orig_fastpath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_BINDING, i,
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -188,7 +192,8 @@ _state_get_atomic_counter_buffer_bindings_offset(GLintptr *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
-		_orig_fastpath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_START, i, (GLint *)&params[i]);
+		_orig_fastpath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_START, i,
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -199,7 +204,8 @@ _state_get_atomic_counter_buffer_bindings_size(GLsizeiptr *params)
 
 	int i;
 	for (i = 0; i < initial_ctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
-		_orig_fastpath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_SIZE, i, (GLint *)&params[i]);
+		_orig_fastpath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_SIZE, i,
+									   (GLint *)&params[i]);
 	}
 }
 
@@ -256,10 +262,10 @@ deinit_modules_fastpath()
 		while (current) {
 			if (current->cstate != NULL) {
 				COREGL_WRN("\E[40;31;1mContext attached to [dpy=%p|rctx=%p] has not been completely destroyed.(leak)\E[0m\n",
-					   current->cstate->rdpy, current->cstate->rctx);
+						   current->cstate->rdpy, current->cstate->rctx);
 
 				_orig_fastpath_eglMakeCurrent(current->cstate->rdpy, EGL_NO_SURFACE,
-							      EGL_NO_SURFACE, EGL_NO_CONTEXT);
+											  EGL_NO_SURFACE, EGL_NO_CONTEXT);
 				_orig_fastpath_eglDestroyContext(current->cstate->rdpy, current->cstate->rctx);
 
 				fastpath_remove_context_states_from_list(current->cstate, NULL);
@@ -666,7 +672,7 @@ fastpath_apply_overrides_gl(int enable)
 			COREGL_OVERRIDE(fastpath_, glBindVertexBuffer);
 		}
 
-		if(driver_gl_version >= COREGL_GLAPI_32) {
+		if (driver_gl_version >= COREGL_GLAPI_32) {
 			COREGL_OVERRIDE(fastpath_, glBlendEquationi);
 			COREGL_OVERRIDE(fastpath_, glBlendEquationSeparatei);
 			COREGL_OVERRIDE(fastpath_, glTexBuffer);
@@ -792,7 +798,7 @@ _unlock_gl_object_hash_real(GL_Object_State *ostate, GL_Object_Type type)
 
 int
 fastpath_add_context_state_to_list(const void *option, const int option_len,
-				   GLContextState *cstate, Mutex *mtx)
+								   GLContextState *cstate, Mutex *mtx)
 {
 	int ret = 0;
 	int tid = 0;
@@ -808,8 +814,8 @@ fastpath_add_context_state_to_list(const void *option, const int option_len,
 	current = glctx_list;
 	while (current != NULL) {
 		if (current->option_len == option_len &&
-		    memcmp(current->option, option, option_len) == 0 &&
-		    current->thread_id == tid) {
+				memcmp(current->option, option, option_len) == 0 &&
+				current->thread_id == tid) {
 			AST(current->cstate == cstate);
 			goto finish;
 		}
@@ -854,7 +860,7 @@ finish:
 
 GLContextState *
 fastpath_get_context_state_from_list(const void *option, const int option_len,
-				     Mutex *mtx)
+									 Mutex *mtx)
 {
 	GLContextState *ret = NULL;
 	GLContext_List *current = NULL;
@@ -867,8 +873,8 @@ fastpath_get_context_state_from_list(const void *option, const int option_len,
 	current = glctx_list;
 	while (current != NULL) {
 		if (current->option_len == option_len &&
-		    memcmp(current->option, option, option_len) == 0 &&
-		    current->thread_id == tid) {
+				memcmp(current->option, option, option_len) == 0 &&
+				current->thread_id == tid) {
 			ret = current->cstate;
 			goto finish;
 		}
@@ -1105,7 +1111,7 @@ _ostate_hash_check(GL_Object_Hash_Base *hash_base)
 
 	hash_base->hash_size = oldsize << 1;
 	hash_base->hash_field = (GL_Object_Hash **)calloc(1,
-				sizeof(GL_Object_Hash *) * hash_base->hash_size);
+							sizeof(GL_Object_Hash *) * hash_base->hash_size);
 	AST(hash_base->hash_field != NULL);
 
 	for (int i = 0; i < oldsize; i++) {
@@ -1126,7 +1132,7 @@ _ostate_hash_check(GL_Object_Hash_Base *hash_base)
 
 GLuint
 fastpath_ostate_create_object(GL_Object_State *ostate, GL_Object_Type type,
-			      GLuint real_name)
+							  GLuint real_name)
 {
 	GLuint ret = _COREGL_INT_INIT_VALUE;
 
@@ -1172,7 +1178,7 @@ fastpath_ostate_create_object(GL_Object_State *ostate, GL_Object_Type type,
 
 
 		GL_Object_Hash *newobj_hash = (GL_Object_Hash *)calloc(1,
-					      sizeof(GL_Object_Hash));
+									  sizeof(GL_Object_Hash));
 		if (newobj_hash == NULL) {
 			free(newobj);
 			goto finish;
@@ -1182,7 +1188,7 @@ fastpath_ostate_create_object(GL_Object_State *ostate, GL_Object_Type type,
 		_add_hash(hash_base, newobj_hash);
 
 		GL_Object_Hash *newobj_hash_real = (GL_Object_Hash *)calloc(1,
-						   sizeof(GL_Object_Hash));
+										   sizeof(GL_Object_Hash));
 		if (newobj_hash_real == NULL) {
 			free(newobj);
 			free(newobj_hash);
@@ -1218,7 +1224,7 @@ finish:
 
 GLuint
 fastpath_ostate_remove_object(GL_Object_State *ostate, GL_Object_Type type,
-			      GLuint glue_name)
+							  GLuint glue_name)
 {
 	GLuint ret = _COREGL_INT_INIT_VALUE;
 
@@ -1263,7 +1269,7 @@ finish:
 
 GLuint
 fastpath_ostate_get_object(GL_Object_State *ostate, GL_Object_Type type,
-			   GLuint glue_name)
+						   GLuint glue_name)
 {
 	GLuint ret = _COREGL_INT_INIT_VALUE;
 
@@ -1310,7 +1316,7 @@ finish:
 
 GLint
 fastpath_ostate_set_object_tag(GL_Object_State *ostate, GL_Object_Type type,
-			       GLuint glue_name, GLvoid *tag)
+							   GLuint glue_name, GLvoid *tag)
 {
 	GLint ret = _COREGL_INT_INIT_VALUE;
 
@@ -1336,7 +1342,7 @@ finish:
 
 GLvoid *
 fastpath_ostate_get_object_tag(GL_Object_State *ostate, GL_Object_Type type,
-			       GLuint glue_name)
+							   GLuint glue_name)
 {
 	GLvoid *ret = NULL;
 
@@ -1357,7 +1363,7 @@ finish:
 
 GLuint
 fastpath_ostate_find_object(GL_Object_State *ostate, GL_Object_Type type,
-			    GLuint real_name)
+							GLuint real_name)
 {
 	GLuint ret = _COREGL_INT_INIT_VALUE;
 
@@ -1378,7 +1384,7 @@ finish:
 
 GLint
 fastpath_ostate_use_object(GL_Object_State *ostate, GL_Object_Type type,
-			   GLuint glue_name)
+						   GLuint glue_name)
 {
 	GLint ret = _COREGL_INT_INIT_VALUE;
 
@@ -1417,7 +1423,7 @@ fastpath_dump_context_states(GLGlueContext *ctx, int force_output)
 	TRACE("\n");
 	TRACE("\E[0;40;34m========================================================================================================================\E[0m\n");
 	TRACE("\E[40;32;1m  State info \E[1;37;1m: <PID = %d> GlueCTX = %p\E[0m\n",
-	      getpid(), ctx);
+		  getpid(), ctx);
 	TRACE("\E[0;40;34m========================================================================================================================\E[0m\n");
 
 #define PRINTF_CHAR_GLenum "0x%8X"
@@ -1614,32 +1620,34 @@ fastpath_init_context_states(GLGlueContext *ctx)
 
 		if (initial_ctx->gl_vertex_attribs_num[0] > MAX_VERTEX_ATTRIBS) {
 			COREGL_WRN("\E[40;31;1mNumber of vertex attrib is too big! (%d-%d)\E[0m\n",
-				   MAX_VERTEX_ATTRIBS, initial_ctx->gl_vertex_attribs_num[0]);
+					   MAX_VERTEX_ATTRIBS, initial_ctx->gl_vertex_attribs_num[0]);
 		}
 		if (initial_ctx->gl_tex_units_num[0] > MAX_TEXTURE_UNITS) {
 			COREGL_WRN("\E[40;31;1mNumber of texture unit is too big! (%d-%d)\E[0m\n",
-				   MAX_TEXTURE_UNITS, initial_ctx->gl_tex_units_num[0]);
+					   MAX_TEXTURE_UNITS, initial_ctx->gl_tex_units_num[0]);
 		}
 		if (initial_ctx->gl_transform_feedback_buffer_binding_num[0] >
-		    MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS) {
+				MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS) {
 			COREGL_WRN("\E[40;31;1mNumber of transform feedback separate attrib is too big! (%d-%d)\E[0m\n",
-				   MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
-				   initial_ctx->gl_transform_feedback_buffer_binding_num[0]);
+					   MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
+					   initial_ctx->gl_transform_feedback_buffer_binding_num[0]);
 		}
 		if (initial_ctx->gl_uniform_buffer_binding_num[0] >
-		    MAX_UNIFORM_BUFFER_BINDINGS) {
+				MAX_UNIFORM_BUFFER_BINDINGS) {
 			COREGL_WRN("\E[40;31;1mNumber of uniform buffer binding is too big! (%d-%d)\E[0m\n",
-				   MAX_UNIFORM_BUFFER_BINDINGS, initial_ctx->gl_uniform_buffer_binding_num[0]);
+					   MAX_UNIFORM_BUFFER_BINDINGS, initial_ctx->gl_uniform_buffer_binding_num[0]);
 		}
 		if (initial_ctx->gl_shader_storage_buffer_binding_num[0] >
-		    MAX_SHADER_STORAGE_BUFFER_BINDINGS) {
+				MAX_SHADER_STORAGE_BUFFER_BINDINGS) {
 			COREGL_WRN("\E[40;31;1mNumber of shader storage buffer binding is too big! (%d-%d)\E[0m\n",
-				   MAX_SHADER_STORAGE_BUFFER_BINDINGS, initial_ctx->gl_shader_storage_buffer_binding_num[0]);
+					   MAX_SHADER_STORAGE_BUFFER_BINDINGS,
+					   initial_ctx->gl_shader_storage_buffer_binding_num[0]);
 		}
 		if (initial_ctx->gl_atomic_counter_buffer_binding_num[0] >
-		    MAX_ATOMIC_COUNTER_BUFFER_BINDING) {
+				MAX_ATOMIC_COUNTER_BUFFER_BINDING) {
 			COREGL_WRN("\E[40;31;1mNumber of uniform buffer binding is too big! (%d-%d)\E[0m\n",
-				   MAX_ATOMIC_COUNTER_BUFFER_BINDING, initial_ctx->gl_atomic_counter_buffer_binding_num[0]);
+					   MAX_ATOMIC_COUNTER_BUFFER_BINDING,
+					   initial_ctx->gl_atomic_counter_buffer_binding_num[0]);
 		}
 	}
 
@@ -1682,9 +1690,9 @@ finish:
 
 #ifdef COREGL_USE_MODULE_TRACEPATH
 extern void *tracepath_api_trace_begin(const char *name, void *hint,
-				       int trace_total_time);
+									   int trace_total_time);
 extern void *tracepath_api_trace_end(const char *name, void *hint,
-				     int trace_total_time);
+									 int trace_total_time);
 #endif
 
 #define CHECK_GL_ERROR(func) \
@@ -1726,7 +1734,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 #ifdef COREGL_USE_MODULE_TRACEPATH
 	static void *trace_hint_glfinish = NULL;
 	trace_hint_glfinish = tracepath_api_trace_begin("eglMakeCurrent(FP glFinish)",
-			      trace_hint_glfinish, 0);
+						  trace_hint_glfinish, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	{
@@ -1746,7 +1754,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	static void *trace_hint_vertex_attrib = NULL;
 	trace_hint_vertex_attrib =
 		tracepath_api_trace_begin("eglMakeCurrent(FP vertex attrib)",
-					  trace_hint_vertex_attrib, 0);
+								  trace_hint_vertex_attrib, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	flag = oldctx->_vattrib_flag | newctx->_vattrib_flag;
@@ -1754,35 +1762,35 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 		for (i = 0; i < oldctx->gl_vertex_attribs_num[0]; i++) {
 			if (newctx->gl_vertex_array_buf_id[i] != oldctx->gl_vertex_array_buf_id[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_ARRAY_BUFFER,
-						newctx->gl_vertex_array_buf_id[i]))
+							   newctx->gl_vertex_array_buf_id[i]))
 			} else {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_ARRAY_BUFFER, 0))
 			}
 
 			if STATE_COMPARE(gl_vertex_array_divisor[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glVertexAttribDivisor(i,
-						newctx->gl_vertex_array_divisor[i]))
+							   newctx->gl_vertex_array_divisor[i]))
 			}
 
 			if (newctx->gl_vertex_array_size[i] != 0) {
 				CHECK_GL_ERROR(_orig_fastpath_glVertexAttribPointer(i,
-						newctx->gl_vertex_array_size[i],
-						newctx->gl_vertex_array_type[i],
-						newctx->gl_vertex_array_normalized[i],
-						newctx->gl_vertex_array_stride[i],
-						newctx->gl_vertex_array_pointer[i]))
+							   newctx->gl_vertex_array_size[i],
+							   newctx->gl_vertex_array_type[i],
+							   newctx->gl_vertex_array_normalized[i],
+							   newctx->gl_vertex_array_stride[i],
+							   newctx->gl_vertex_array_pointer[i]))
 			} else {
 				if (newctx->gl_vertex_array_integer[0] == GL_TRUE) {
 					if (newctx->gl_vertex_array_type[0] == GL_UNSIGNED_INT) {
 						CHECK_GL_ERROR(_orig_fastpath_glVertexAttribI4uiv(i,
-								&newctx->gl_vertex_attrib_value_unsigned_integer[4 * i]))
+									   &newctx->gl_vertex_attrib_value_unsigned_integer[4 * i]))
 					} else {
 						CHECK_GL_ERROR(_orig_fastpath_glVertexAttribI4iv(i,
-								&newctx->gl_vertex_attrib_value_integer[4 * i]))
+									   &newctx->gl_vertex_attrib_value_integer[4 * i]))
 					}
 				} else {
 					CHECK_GL_ERROR(_orig_fastpath_glVertexAttrib4fv(i,
-							&newctx->gl_vertex_attrib_value[4 * i]))
+								   &newctx->gl_vertex_attrib_value[4 * i]))
 				}
 			}
 
@@ -1797,7 +1805,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 
 #ifdef COREGL_USE_MODULE_TRACEPATH
 	tracepath_api_trace_end("eglMakeCurrent(FP vertex attrib)",
-				trace_hint_vertex_attrib, 0);
+							trace_hint_vertex_attrib, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 
@@ -1805,7 +1813,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	static void *trace_hint_bindbuffers = NULL;
 	trace_hint_bindbuffers =
 		tracepath_api_trace_begin("eglMakeCurrent(FP bind buffers)",
-					  trace_hint_bindbuffers, 0);
+								  trace_hint_bindbuffers, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	//------------------//
@@ -1814,47 +1822,47 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	if (flag) {
 		if STATE_COMPARE(gl_array_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_ARRAY_BUFFER,
-					newctx->gl_array_buffer_binding[0]))
+						   newctx->gl_array_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_element_array_buffer_binding[0]) {
 			if STATE_COMPARE(gl_vertex_array_binding[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindVertexArray(
-						       newctx->gl_vertex_array_binding[0]))
+								   newctx->gl_vertex_array_binding[0]))
 			}
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
-					newctx->gl_element_array_buffer_binding[0]))
+						   newctx->gl_element_array_buffer_binding[0]))
 		}
 
 		if (newctx->gl_framebuffer_binding_read_used == 1) {
 			if STATE_COMPARE(gl_framebuffer_binding_read[0]) {
 				if (driver_gl_version >= 2)
 					CHECK_GL_ERROR(_orig_fastpath_glBindFramebuffer(GL_READ_FRAMEBUFFER,
-							newctx->gl_framebuffer_binding_read[0]))
+								   newctx->gl_framebuffer_binding_read[0]))
 					else
 						CHECK_GL_ERROR(_orig_fastpath_glBindFramebufferOES(GL_READ_FRAMEBUFFER,
-								newctx->gl_framebuffer_binding_read[0]))
+									   newctx->gl_framebuffer_binding_read[0]))
 					}
 			if STATE_COMPARE(gl_framebuffer_binding_draw[0]) {
 				if (driver_gl_version >= 2)
 					CHECK_GL_ERROR(_orig_fastpath_glBindFramebuffer(GL_DRAW_FRAMEBUFFER,
-							newctx->gl_framebuffer_binding_draw[0]))
+								   newctx->gl_framebuffer_binding_draw[0]))
 					else
 						CHECK_GL_ERROR(_orig_fastpath_glBindFramebufferOES(GL_DRAW_FRAMEBUFFER,
-								newctx->gl_framebuffer_binding_draw[0]))
+									   newctx->gl_framebuffer_binding_draw[0]))
 					}
 		} else {
 			if STATE_COMPARE(gl_framebuffer_binding[0]) {
 				if (driver_gl_version >= 2)
 					CHECK_GL_ERROR(_orig_fastpath_glBindFramebuffer(GL_FRAMEBUFFER,
-							newctx->gl_framebuffer_binding[0]))
+								   newctx->gl_framebuffer_binding[0]))
 					else
 						CHECK_GL_ERROR(_orig_fastpath_glBindFramebufferOES(GL_FRAMEBUFFER,
-								newctx->gl_framebuffer_binding[0]))
+									   newctx->gl_framebuffer_binding[0]))
 					}
 		}
 		if STATE_COMPARE(gl_renderbuffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindRenderbuffer(GL_RENDERBUFFER,
-					newctx->gl_renderbuffer_binding[0]))
+						   newctx->gl_renderbuffer_binding[0]))
 		}
 	}
 
@@ -1864,39 +1872,39 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	if (flag) {
 		if STATE_COMPARE(gl_copy_read_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_COPY_READ_BUFFER,
-					newctx->gl_copy_read_buffer_binding[0]))
+						   newctx->gl_copy_read_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_copy_write_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_COPY_WRITE_BUFFER,
-					newctx->gl_copy_write_buffer_binding[0]))
+						   newctx->gl_copy_write_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_pixel_pack_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_PIXEL_PACK_BUFFER,
-					newctx->gl_pixel_pack_buffer_binding[0]))
+						   newctx->gl_pixel_pack_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_pixel_unpack_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_PIXEL_UNPACK_BUFFER,
-					newctx->gl_pixel_unpack_buffer_binding[0]))
+						   newctx->gl_pixel_unpack_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_transform_feedback_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_TRANSFORM_FEEDBACK_BUFFER,
-					newctx->gl_transform_feedback_buffer_binding[0]))
+						   newctx->gl_transform_feedback_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_uniform_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_UNIFORM_BUFFER,
-					newctx->gl_uniform_buffer_binding[0]))
+						   newctx->gl_uniform_buffer_binding[0]))
 		}
 		/* handle states set in fastpath_glBindBufferBase() */
-		for(i = 0; i < newctx->gl_transform_feedback_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_transform_feedback_buffer_binding_num[0]; i++) {
 			if STATE_COMPARE(gl_transform_feedback_buffer_binding_array[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, i,
-					newctx->gl_transform_feedback_buffer_binding_array[i]))
+							   newctx->gl_transform_feedback_buffer_binding_array[i]))
 			}
 		}
-		for(i = 0; i < newctx->gl_uniform_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_uniform_buffer_binding_num[0]; i++) {
 			if STATE_COMPARE(gl_uniform_buffer_binding_array[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferBase(GL_UNIFORM_BUFFER, i,
-					newctx->gl_uniform_buffer_binding_array[i]))
+							   newctx->gl_uniform_buffer_binding_array[i]))
 			}
 		}
 	}
@@ -1905,87 +1913,87 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	if (flag) {
 		if STATE_COMPARE(gl_shader_storage_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_SHADER_STORAGE_BUFFER,
-					newctx->gl_shader_storage_buffer_binding[0]))
+						   newctx->gl_shader_storage_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_atomic_counter_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_ATOMIC_COUNTER_BUFFER,
-					newctx->gl_atomic_counter_buffer_binding[0]))
+						   newctx->gl_atomic_counter_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_draw_indirect_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_DRAW_INDIRECT_BUFFER,
-					newctx->gl_draw_indirect_buffer_binding[0]))
+						   newctx->gl_draw_indirect_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_dispatch_indirect_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_DISPATCH_INDIRECT_BUFFER,
-					newctx->gl_dispatch_indirect_buffer_binding[0]))
+						   newctx->gl_dispatch_indirect_buffer_binding[0]))
 		}
 		if STATE_COMPARE(gl_texture_buffer_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindBuffer(GL_TEXTURE_BUFFER,
-					newctx->gl_texture_buffer_binding[0]))
+						   newctx->gl_texture_buffer_binding[0]))
 		}
 		/* handle states set in fastpath_glBindBufferBase() */
-		for(i = 0; i < newctx->gl_shader_storage_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_shader_storage_buffer_binding_num[0]; i++) {
 			if STATE_COMPARE(gl_shader_storage_buffer_binding_array[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferBase(GL_SHADER_STORAGE_BUFFER, i,
-					newctx->gl_shader_storage_buffer_binding_array[i]))
+							   newctx->gl_shader_storage_buffer_binding_array[i]))
 			}
 		}
-		for(i = 0; i < newctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
 			if STATE_COMPARE(gl_atomic_counter_buffer_binding_array[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferBase(GL_ATOMIC_COUNTER_BUFFER, i,
-					newctx->gl_atomic_counter_buffer_binding_array[i]))
+							   newctx->gl_atomic_counter_buffer_binding_array[i]))
 			}
 		}
 	}
 
 	flag = oldctx->_bind_flag4 | newctx->_bind_flag4;
-	if(flag) {
+	if (flag) {
 		/* handle states set in fastpath_BindBufferRrange() */
-		for(i = 0; i < newctx->gl_transform_feedback_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_transform_feedback_buffer_binding_num[0]; i++) {
 			if (STATE_COMPARE(gl_transform_feedback_buffer_range_binding_array[i]) ||
-				STATE_COMPARE(gl_transform_feedback_buffer_range_binding_array_offset[i]) ||
-				STATE_COMPARE(gl_transform_feedback_buffer_range_binding_array_size[i])) {
+					STATE_COMPARE(gl_transform_feedback_buffer_range_binding_array_offset[i]) ||
+					STATE_COMPARE(gl_transform_feedback_buffer_range_binding_array_size[i])) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferRange(GL_TRANSFORM_FEEDBACK_BUFFER, i,
-						newctx->gl_transform_feedback_buffer_range_binding_array[i],
-						newctx->gl_transform_feedback_buffer_range_binding_array_offset[i],
-						newctx->gl_transform_feedback_buffer_range_binding_array_size[i]))
+							   newctx->gl_transform_feedback_buffer_range_binding_array[i],
+							   newctx->gl_transform_feedback_buffer_range_binding_array_offset[i],
+							   newctx->gl_transform_feedback_buffer_range_binding_array_size[i]))
 			}
 		}
-		for(i = 0; i < newctx->gl_uniform_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_uniform_buffer_binding_num[0]; i++) {
 			if (STATE_COMPARE(gl_uniform_buffer_range_binding_array[i]) ||
-				STATE_COMPARE(gl_uniform_buffer_range_binding_array_offset[i]) ||
-				STATE_COMPARE(gl_uniform_buffer_range_binding_array_size[i])) {
+					STATE_COMPARE(gl_uniform_buffer_range_binding_array_offset[i]) ||
+					STATE_COMPARE(gl_uniform_buffer_range_binding_array_size[i])) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferRange(GL_UNIFORM_BUFFER, i,
-						newctx->gl_uniform_buffer_range_binding_array[i],
-						newctx->gl_uniform_buffer_range_binding_array_offset[i],
-						newctx->gl_uniform_buffer_range_binding_array_size[i]))
+							   newctx->gl_uniform_buffer_range_binding_array[i],
+							   newctx->gl_uniform_buffer_range_binding_array_offset[i],
+							   newctx->gl_uniform_buffer_range_binding_array_size[i]))
 			}
 		}
-		for(i = 0; i < newctx->gl_shader_storage_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_shader_storage_buffer_binding_num[0]; i++) {
 			if (STATE_COMPARE(gl_shader_storage_buffer_range_binding_array[i]) ||
-				STATE_COMPARE(gl_shader_storage_buffer_range_binding_array_offset[i]) ||
-				STATE_COMPARE(gl_shader_storage_buffer_range_binding_array_size[i])) {
+					STATE_COMPARE(gl_shader_storage_buffer_range_binding_array_offset[i]) ||
+					STATE_COMPARE(gl_shader_storage_buffer_range_binding_array_size[i])) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferRange(GL_SHADER_STORAGE_BUFFER, i,
-						newctx->gl_shader_storage_buffer_range_binding_array[i],
-						newctx->gl_shader_storage_buffer_range_binding_array_offset[i],
-						newctx->gl_shader_storage_buffer_range_binding_array_size[i]))
+							   newctx->gl_shader_storage_buffer_range_binding_array[i],
+							   newctx->gl_shader_storage_buffer_range_binding_array_offset[i],
+							   newctx->gl_shader_storage_buffer_range_binding_array_size[i]))
 			}
 		}
-		for(i = 0; i < newctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
+		for (i = 0; i < newctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
 			if (STATE_COMPARE(gl_atomic_counter_buffer_range_binding_array[i]) ||
-				STATE_COMPARE(gl_atomic_counter_buffer_range_binding_array_offset[i]) ||
-				STATE_COMPARE(gl_atomic_counter_buffer_range_binding_array_size[i])) {
+					STATE_COMPARE(gl_atomic_counter_buffer_range_binding_array_offset[i]) ||
+					STATE_COMPARE(gl_atomic_counter_buffer_range_binding_array_size[i])) {
 				CHECK_GL_ERROR(_orig_fastpath_glBindBufferRange(GL_ATOMIC_COUNTER_BUFFER, i,
-						newctx->gl_atomic_counter_buffer_range_binding_array[i],
-						newctx->gl_atomic_counter_buffer_range_binding_array_offset[i],
-						newctx->gl_atomic_counter_buffer_range_binding_array_size[i]))
+							   newctx->gl_atomic_counter_buffer_range_binding_array[i],
+							   newctx->gl_atomic_counter_buffer_range_binding_array_offset[i],
+							   newctx->gl_atomic_counter_buffer_range_binding_array_size[i]))
 			}
 		}
 	}
 
 #ifdef COREGL_USE_MODULE_TRACEPATH
 	tracepath_api_trace_end("eglMakeCurrent(FP bind buffers)",
-				trace_hint_bindbuffers, 0);
+							trace_hint_bindbuffers, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 
@@ -1996,7 +2004,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	static void *trace_hint_enable_states = NULL;
 	trace_hint_enable_states =
 		tracepath_api_trace_begin("eglMakeCurrent(FP enable states)",
-					  trace_hint_enable_states, 0);
+								  trace_hint_enable_states, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	flag = oldctx->_enable_flag1 | newctx->_enable_flag1;
@@ -2006,25 +2014,25 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_BLEND))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_BLEND))
-		}
+			}
 		if STATE_COMPARE(gl_cull_face[0]) {
 			if (newctx->gl_cull_face[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_CULL_FACE))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_CULL_FACE))
-		}
+			}
 		if STATE_COMPARE(gl_depth_test[0]) {
 			if (newctx->gl_depth_test[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_DEPTH_TEST))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_DEPTH_TEST))
-		}
+			}
 		if STATE_COMPARE(gl_dither[0]) {
 			if (newctx->gl_dither[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_DITHER))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_DITHER))
-		}
+			}
 	}
 
 	// _enable_flag2
@@ -2035,43 +2043,43 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_POLYGON_OFFSET_FILL))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_POLYGON_OFFSET_FILL))
-		}
+			}
 		if STATE_COMPARE(gl_sample_alpha_to_coverage[0]) {
 			if (newctx->gl_sample_alpha_to_coverage[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE))
-		}
+			}
 		if STATE_COMPARE(gl_sample_coverage[0]) {
 			if (newctx->gl_sample_coverage[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_SAMPLE_COVERAGE))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_SAMPLE_COVERAGE))
-		}
+			}
 		if STATE_COMPARE(gl_scissor_test[0]) {
 			if (newctx->gl_scissor_test[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_SCISSOR_TEST))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_SCISSOR_TEST))
-		}
+			}
 		if STATE_COMPARE(gl_stencil_test[0]) {
 			if (newctx->gl_stencil_test[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_STENCIL_TEST))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_STENCIL_TEST))
-		}
+			}
 		if STATE_COMPARE(gl_sample_shading_oes[0]) {
 			if (newctx->gl_sample_shading_oes[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_SAMPLE_SHADING_OES))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_SAMPLE_SHADING_OES))
-		}
+			}
 		if STATE_COMPARE(gl_sample_mask[0]) {
 			if (newctx->gl_sample_mask[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_SAMPLE_MASK))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_SAMPLE_MASK))
-		}
+			}
 	}
 
 	// _enable_flag3
@@ -2082,24 +2090,24 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_PRIMITIVE_RESTART_FIXED_INDEX))
-		}
+			}
 		if STATE_COMPARE(gl_rasterizer_discard[0]) {
 			if (newctx->gl_rasterizer_discard[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_RASTERIZER_DISCARD))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_RASTERIZER_DISCARD))
-		}
+			}
 		if STATE_COMPARE(gl_blend_advanced_coherent_khr[0]) {
 			if (newctx->gl_blend_advanced_coherent_khr[0]) {
 				CHECK_GL_ERROR(_orig_fastpath_glEnable(GL_BLEND_ADVANCED_COHERENT_KHR))
 			} else
 				CHECK_GL_ERROR(_orig_fastpath_glDisable(GL_BLEND_ADVANCED_COHERENT_KHR))
-		}
+			}
 	}
 
 #ifdef COREGL_USE_MODULE_TRACEPATH
 	tracepath_api_trace_end("eglMakeCurrent(FP enable states)",
-				trace_hint_enable_states, 0);
+							trace_hint_enable_states, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	//------------------//
@@ -2108,7 +2116,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	static void *trace_hint_clear_viewport = NULL;
 	trace_hint_clear_viewport =
 		tracepath_api_trace_begin("eglMakeCurrent(FP clear/viewport)",
-					  trace_hint_clear_viewport, 0);
+								  trace_hint_clear_viewport, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	flag = oldctx->_clear_flag1 | newctx->_clear_flag1;
@@ -2116,9 +2124,9 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 		// Viewport.
 		if STATES_COMPARE(gl_viewport, 4 * sizeof(GLint)) {
 			CHECK_GL_ERROR(_orig_fastpath_glViewport(newctx->gl_viewport[0],
-					newctx->gl_viewport[1],
-					newctx->gl_viewport[2],
-					newctx->gl_viewport[3]))
+						   newctx->gl_viewport[1],
+						   newctx->gl_viewport[2],
+						   newctx->gl_viewport[3]))
 		}
 
 		if STATE_COMPARE(gl_current_program[0]) {
@@ -2126,9 +2134,9 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 		}
 		if STATES_COMPARE(gl_color_clear_value, 4 * sizeof(GLclampf)) {
 			CHECK_GL_ERROR(_orig_fastpath_glClearColor(newctx->gl_color_clear_value[0],
-					newctx->gl_color_clear_value[1],
-					newctx->gl_color_clear_value[2],
-					newctx->gl_color_clear_value[3]))
+						   newctx->gl_color_clear_value[1],
+						   newctx->gl_color_clear_value[2],
+						   newctx->gl_color_clear_value[3]))
 		}
 	}
 
@@ -2138,13 +2146,13 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	if (flag) {
 		if STATES_COMPARE(gl_color_writemask, 4 * sizeof(GLboolean)) {
 			CHECK_GL_ERROR(_orig_fastpath_glColorMask(newctx->gl_color_writemask[0],
-					newctx->gl_color_writemask[1],
-					newctx->gl_color_writemask[2],
-					newctx->gl_color_writemask[3]))
+						   newctx->gl_color_writemask[1],
+						   newctx->gl_color_writemask[2],
+						   newctx->gl_color_writemask[3]))
 		}
 		if STATES_COMPARE(gl_depth_range, 2 * sizeof(GLclampf)) {
 			CHECK_GL_ERROR(_orig_fastpath_glDepthRangef(newctx->gl_depth_range[0],
-					newctx->gl_depth_range[1]))
+						   newctx->gl_depth_range[1]))
 		}
 		if STATE_COMPARE(gl_depth_clear_value[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glClearDepthf(newctx->gl_depth_clear_value[0]))
@@ -2163,7 +2171,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 
 #ifdef COREGL_USE_MODULE_TRACEPATH
 	tracepath_api_trace_end("eglMakeCurrent(FP clear/viewport)",
-				trace_hint_clear_viewport, 0);
+							trace_hint_clear_viewport, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	//------------------//
@@ -2172,7 +2180,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	static void *trace_hint_bind_textures = NULL;
 	trace_hint_bind_textures =
 		tracepath_api_trace_begin("eglMakeCurrent(FP bind textures)",
-					  trace_hint_bind_textures, 0);
+								  trace_hint_bind_textures, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	flag = oldctx->_tex_flag1 | newctx->_tex_flag1;
@@ -2182,27 +2190,27 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 			if STATE_COMPARE(gl_tex_2d_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_2D,
-						newctx->gl_tex_2d_state[i]))
+							   newctx->gl_tex_2d_state[i]))
 			}
 			if STATE_COMPARE(gl_tex_3d_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_3D,
-						newctx->gl_tex_3d_state[i]))
+							   newctx->gl_tex_3d_state[i]))
 			}
 			if STATE_COMPARE(gl_tex_2d_array_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_2D_ARRAY,
-						newctx->gl_tex_2d_array_state[i]))
+							   newctx->gl_tex_2d_array_state[i]))
 			}
 			if STATE_COMPARE(gl_tex_cube_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_CUBE_MAP,
-						newctx->gl_tex_cube_state[i]))
+							   newctx->gl_tex_cube_state[i]))
 			}
 			if STATE_COMPARE(gl_tex_external_oes_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_EXTERNAL_OES,
-						newctx->gl_tex_external_oes_state[i]))
+							   newctx->gl_tex_external_oes_state[i]))
 			}
 		}
 
@@ -2211,7 +2219,7 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 
 		if STATE_COMPARE(gl_generate_mipmap_hint[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glHint(GL_GENERATE_MIPMAP_HINT,
-							     newctx->gl_generate_mipmap_hint[0]))
+												 newctx->gl_generate_mipmap_hint[0]))
 		}
 	}
 
@@ -2221,58 +2229,58 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 			if STATE_COMPARE(gl_tex_buffer_ext_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_BUFFER_EXT,
-						newctx->gl_tex_buffer_ext_state[i]))
+							   newctx->gl_tex_buffer_ext_state[i]))
 			}
 			if STATE_COMPARE(gl_tex_2d_multisample_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_2D_MULTISAMPLE,
-						newctx->gl_tex_2d_multisample_state[i]))
+							   newctx->gl_tex_2d_multisample_state[i]))
 			}
 			if STATE_COMPARE(gl_tex_cube_map_array_ext_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY_EXT,
-						newctx->gl_tex_cube_map_array_ext_state[i]))
+							   newctx->gl_tex_cube_map_array_ext_state[i]))
 			}
 			if STATE_COMPARE(gl_tex_2d_multisample_array_oes_state[i]) {
 				CHECK_GL_ERROR(_orig_fastpath_glActiveTexture(GL_TEXTURE0 + i))
 				CHECK_GL_ERROR(_orig_fastpath_glBindTexture(GL_TEXTURE_2D_MULTISAMPLE_ARRAY_OES,
-						newctx->gl_tex_2d_multisample_array_oes_state[i]))
+							   newctx->gl_tex_2d_multisample_array_oes_state[i]))
 			}
 		}
 	}
 #ifdef COREGL_USE_MODULE_TRACEPATH
 	tracepath_api_trace_end("eglMakeCurrent(FP bind textures)",
-				trace_hint_bind_textures, 0);
+							trace_hint_bind_textures, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	//------------------//
 #ifdef COREGL_USE_MODULE_TRACEPATH
 	static void *trace_hint_etc = NULL;
 	trace_hint_etc = tracepath_api_trace_begin("eglMakeCurrent(FP etc.)",
-			 trace_hint_etc, 0);
+					 trace_hint_etc, 0);
 #endif // COREGL_USE_MODULE_TRACEPATH
 
 	flag = oldctx->_blend_flag | newctx->_blend_flag;
 	if (flag) {
 		if STATES_COMPARE(gl_blend_color, 4 * sizeof(GLclampf)) {
 			CHECK_GL_ERROR(_orig_fastpath_glBlendColor(newctx->gl_blend_color[0],
-					newctx->gl_blend_color[1],
-					newctx->gl_blend_color[2],
-					newctx->gl_blend_color[3]))
+						   newctx->gl_blend_color[1],
+						   newctx->gl_blend_color[2],
+						   newctx->gl_blend_color[3]))
 		}
 		if ((oldctx->gl_blend_src_rgb[0] != newctx->gl_blend_src_rgb[0]) ||
-		    (oldctx->gl_blend_dst_rgb[0] != newctx->gl_blend_dst_rgb[0]) ||
-		    (oldctx->gl_blend_src_alpha[0] != newctx->gl_blend_src_alpha[0]) ||
-		    (oldctx->gl_blend_dst_alpha[0] != newctx->gl_blend_dst_alpha[0])) {
+				(oldctx->gl_blend_dst_rgb[0] != newctx->gl_blend_dst_rgb[0]) ||
+				(oldctx->gl_blend_src_alpha[0] != newctx->gl_blend_src_alpha[0]) ||
+				(oldctx->gl_blend_dst_alpha[0] != newctx->gl_blend_dst_alpha[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glBlendFuncSeparate(newctx->gl_blend_src_rgb[0],
-					newctx->gl_blend_dst_rgb[0],
-					newctx->gl_blend_src_alpha[0],
-					newctx->gl_blend_dst_alpha[0]))
+						   newctx->gl_blend_dst_rgb[0],
+						   newctx->gl_blend_src_alpha[0],
+						   newctx->gl_blend_dst_alpha[0]))
 		}
 		if ((oldctx->gl_blend_equation_rgb[0] != newctx->gl_blend_equation_rgb[0]) ||
-		    (oldctx->gl_blend_equation_alpha[0] != newctx->gl_blend_equation_alpha[0])) {
+				(oldctx->gl_blend_equation_alpha[0] != newctx->gl_blend_equation_alpha[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glBlendEquationSeparate(
-					       newctx->gl_blend_equation_rgb[0], newctx->gl_blend_equation_alpha[0]))
+							   newctx->gl_blend_equation_rgb[0], newctx->gl_blend_equation_alpha[0]))
 		}
 
 	}
@@ -2282,27 +2290,27 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	flag = oldctx->_stencil_flag1 | newctx->_stencil_flag1;
 	if (flag) {
 		if ((oldctx->gl_stencil_func[0] != newctx->gl_stencil_func[0]) ||
-		    (oldctx->gl_stencil_ref[0]  != newctx->gl_stencil_ref[0])  ||
-		    (oldctx->gl_stencil_value_mask[0] != newctx->gl_stencil_value_mask[0])) {
+				(oldctx->gl_stencil_ref[0]  != newctx->gl_stencil_ref[0])  ||
+				(oldctx->gl_stencil_value_mask[0] != newctx->gl_stencil_value_mask[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glStencilFuncSeparate(GL_FRONT,
-					newctx->gl_stencil_func[0],
-					newctx->gl_stencil_ref[0],
-					newctx->gl_stencil_value_mask[0]))
+						   newctx->gl_stencil_func[0],
+						   newctx->gl_stencil_ref[0],
+						   newctx->gl_stencil_value_mask[0]))
 		}
 		if ((oldctx->gl_stencil_fail[0] != newctx->gl_stencil_fail[0]) ||
-		    (oldctx->gl_stencil_pass_depth_fail[0] != newctx->gl_stencil_pass_depth_fail[0])
-		    ||
-		    (oldctx->gl_stencil_pass_depth_pass[0] !=
-		     newctx->gl_stencil_pass_depth_pass[0])) {
+				(oldctx->gl_stencil_pass_depth_fail[0] != newctx->gl_stencil_pass_depth_fail[0])
+				||
+				(oldctx->gl_stencil_pass_depth_pass[0] !=
+				 newctx->gl_stencil_pass_depth_pass[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glStencilOpSeparate(GL_FRONT,
-					newctx->gl_stencil_fail[0],
-					newctx->gl_stencil_pass_depth_fail[0],
-					newctx->gl_stencil_pass_depth_pass[0]))
+						   newctx->gl_stencil_fail[0],
+						   newctx->gl_stencil_pass_depth_fail[0],
+						   newctx->gl_stencil_pass_depth_pass[0]))
 		}
 
 		if STATE_COMPARE(gl_stencil_writemask[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glStencilMaskSeparate(GL_FRONT,
-					newctx->gl_stencil_writemask[0]))
+						   newctx->gl_stencil_writemask[0]))
 		}
 	}
 
@@ -2311,28 +2319,28 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	flag = oldctx->_stencil_flag2 | newctx->_stencil_flag2;
 	if (flag) {
 		if ((oldctx->gl_stencil_back_func[0] != newctx->gl_stencil_back_func[0]) ||
-		    (oldctx->gl_stencil_back_ref[0]  != newctx->gl_stencil_back_ref[0])  ||
-		    (oldctx->gl_stencil_back_value_mask[0] !=
-		     newctx->gl_stencil_back_value_mask[0])) {
+				(oldctx->gl_stencil_back_ref[0]  != newctx->gl_stencil_back_ref[0])  ||
+				(oldctx->gl_stencil_back_value_mask[0] !=
+				 newctx->gl_stencil_back_value_mask[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glStencilFuncSeparate(GL_BACK,
-					newctx->gl_stencil_back_func[0],
-					newctx->gl_stencil_back_ref[0],
-					newctx->gl_stencil_back_value_mask[0]))
+						   newctx->gl_stencil_back_func[0],
+						   newctx->gl_stencil_back_ref[0],
+						   newctx->gl_stencil_back_value_mask[0]))
 		}
 		if ((oldctx->gl_stencil_back_fail[0] != newctx->gl_stencil_back_fail[0]) ||
-		    (oldctx->gl_stencil_back_pass_depth_fail[0] !=
-		     newctx->gl_stencil_back_pass_depth_fail[0]) ||
-		    (oldctx->gl_stencil_back_pass_depth_pass[0] !=
-		     newctx->gl_stencil_back_pass_depth_pass[0])) {
+				(oldctx->gl_stencil_back_pass_depth_fail[0] !=
+				 newctx->gl_stencil_back_pass_depth_fail[0]) ||
+				(oldctx->gl_stencil_back_pass_depth_pass[0] !=
+				 newctx->gl_stencil_back_pass_depth_pass[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glStencilOpSeparate(GL_BACK,
-					newctx->gl_stencil_back_fail[0],
-					newctx->gl_stencil_back_pass_depth_fail[0],
-					newctx->gl_stencil_back_pass_depth_pass[0]))
+						   newctx->gl_stencil_back_fail[0],
+						   newctx->gl_stencil_back_pass_depth_fail[0],
+						   newctx->gl_stencil_back_pass_depth_pass[0]))
 		}
 
 		if STATE_COMPARE(gl_stencil_back_writemask[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glStencilMaskSeparate(GL_BACK,
-					newctx->gl_stencil_back_writemask[0]))
+						   newctx->gl_stencil_back_writemask[0]))
 		}
 		if STATE_COMPARE(gl_stencil_clear_value[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glClearStencil(newctx->gl_stencil_clear_value[0]))
@@ -2345,19 +2353,19 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	if (flag) {
 		if STATE_COMPARE(gl_pack_row_length[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_PACK_ROW_LENGTH,
-					newctx->gl_pack_row_length[0]))
+						   newctx->gl_pack_row_length[0]))
 		}
 		if STATE_COMPARE(gl_pack_skip_rows[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_PACK_SKIP_ROWS,
-					newctx->gl_pack_skip_rows[0]))
+						   newctx->gl_pack_skip_rows[0]))
 		}
 		if STATE_COMPARE(gl_pack_skip_pixels[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_PACK_SKIP_PIXELS,
-					newctx->gl_pack_skip_pixels[0]))
+						   newctx->gl_pack_skip_pixels[0]))
 		}
 		if STATE_COMPARE(gl_pack_alignment[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_PACK_ALIGNMENT,
-					newctx->gl_pack_alignment[0]))
+						   newctx->gl_pack_alignment[0]))
 		}
 	}
 
@@ -2366,27 +2374,27 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	if (flag) {
 		if STATE_COMPARE(gl_unpack_row_length[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_UNPACK_ROW_LENGTH,
-					newctx->gl_unpack_row_length[0]))
+						   newctx->gl_unpack_row_length[0]))
 		}
 		if STATE_COMPARE(gl_unpack_skip_rows[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_UNPACK_SKIP_ROWS,
-					newctx->gl_unpack_skip_rows[0]))
+						   newctx->gl_unpack_skip_rows[0]))
 		}
 		if STATE_COMPARE(gl_unpack_skip_pixels[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_UNPACK_SKIP_PIXELS,
-					newctx->gl_unpack_skip_pixels[0]))
+						   newctx->gl_unpack_skip_pixels[0]))
 		}
 		if STATE_COMPARE(gl_unpack_alignment[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_UNPACK_ALIGNMENT,
-					newctx->gl_unpack_alignment[0]))
+						   newctx->gl_unpack_alignment[0]))
 		}
 		if STATE_COMPARE(gl_unpack_image_height[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_UNPACK_IMAGE_HEIGHT,
-					newctx->gl_unpack_image_height[0]))
+						   newctx->gl_unpack_image_height[0]))
 		}
 		if STATE_COMPARE(gl_unpack_skip_images[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glPixelStorei(GL_UNPACK_SKIP_IMAGES,
-					newctx->gl_unpack_skip_images[0]))
+						   newctx->gl_unpack_skip_images[0]))
 		}
 	}
 
@@ -2401,23 +2409,23 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 			CHECK_GL_ERROR(_orig_fastpath_glLineWidth(newctx->gl_line_width[0]))
 		}
 		if ((oldctx->gl_polygon_offset_factor[0] != newctx->gl_polygon_offset_factor[0])
-		    ||
-		    (oldctx->gl_polygon_offset_units[0]  != newctx->gl_polygon_offset_units[0])) {
+				||
+				(oldctx->gl_polygon_offset_units[0]  != newctx->gl_polygon_offset_units[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glPolygonOffset(
-					       newctx->gl_polygon_offset_factor[0],
-					       newctx->gl_polygon_offset_units[0]))
+							   newctx->gl_polygon_offset_factor[0],
+							   newctx->gl_polygon_offset_units[0]))
 		}
 		if ((oldctx->gl_sample_coverage_value[0]  !=
-		     newctx->gl_sample_coverage_value[0]) ||
-		    (oldctx->gl_sample_coverage_invert[0] !=
-		     newctx->gl_sample_coverage_invert[0])) {
+				newctx->gl_sample_coverage_value[0]) ||
+				(oldctx->gl_sample_coverage_invert[0] !=
+				 newctx->gl_sample_coverage_invert[0])) {
 			CHECK_GL_ERROR(_orig_fastpath_glSampleCoverage(
-					       newctx->gl_sample_coverage_value[0],
-					       newctx->gl_sample_coverage_invert[0]))
+							   newctx->gl_sample_coverage_value[0],
+							   newctx->gl_sample_coverage_invert[0]))
 		}
 		if STATE_COMPARE(gl_fragment_shader_derivative_hint[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glHint(GL_FRAGMENT_SHADER_DERIVATIVE_HINT_OES,
-							     newctx->gl_fragment_shader_derivative_hint[0]))
+												 newctx->gl_fragment_shader_derivative_hint[0]))
 		}
 	}
 
@@ -2426,9 +2434,9 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	if (flag) {
 		if STATES_COMPARE(gl_scissor_box, 4 * sizeof(GLint)) {
 			CHECK_GL_ERROR(_orig_fastpath_glScissor(newctx->gl_scissor_box[0],
-								newctx->gl_scissor_box[1],
-								newctx->gl_scissor_box[2],
-								newctx->gl_scissor_box[3]))
+													newctx->gl_scissor_box[1],
+													newctx->gl_scissor_box[2],
+													newctx->gl_scissor_box[3]))
 		}
 	}
 
@@ -2442,24 +2450,24 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 			int drawBuffSize = 16;
 			/* If the  context has only default framebuffer, then size of glDrawBuffers can only be 1 */
 			if (fastpath_ostate_has_object_type(&newctx->ostate,
-							    GL_OBJECT_TYPE_FRAMEBUFFER) == 0) {
+												GL_OBJECT_TYPE_FRAMEBUFFER) == 0) {
 				drawBuffSize = 1;
 			}
 
 			CHECK_GL_ERROR(_orig_fastpath_glDrawBuffers(drawBuffSize,
-					newctx->gl_draw_buffers))
+						   newctx->gl_draw_buffers))
 		}
 
 		if (oldctx->gl_transform_feedback_active[0] == GL_TRUE &&
-		    oldctx->gl_transform_feedback_paused[0] == GL_FALSE) {
+				oldctx->gl_transform_feedback_paused[0] == GL_FALSE) {
 			CHECK_GL_ERROR(_orig_fastpath_glPauseTransformFeedback())
 		}
 		if STATE_COMPARE(gl_transform_feedback_binding[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glBindTransformFeedback(GL_TRANSFORM_FEEDBACK,
-					newctx->gl_transform_feedback_binding[0]))
+						   newctx->gl_transform_feedback_binding[0]))
 		}
 		if (newctx->gl_transform_feedback_active[0] == GL_TRUE &&
-		    newctx->gl_transform_feedback_paused[0] == GL_FALSE) {
+				newctx->gl_transform_feedback_paused[0] == GL_FALSE) {
 			CHECK_GL_ERROR(_orig_fastpath_glResumeTransformFeedback())
 		}
 	}

@@ -55,7 +55,7 @@ _dump_context_info(const char *ment, int force_output)
 	TRACE("\n");
 	TRACE("\E[40;34m========================================================================================================================\E[0m\n");
 	TRACE("\E[40;32;1m  Context info \E[1;37;1m: <PID = %d> %s\E[0m\n", getpid(),
-	      ment);
+		  ment);
 	TRACE("\E[40;34m========================================================================================================================\E[0m\n");
 
 
@@ -72,14 +72,14 @@ _dump_context_info(const char *ment, int force_output)
 			AST(cur_tstate_tm != NULL);
 
 			TRACE(" %c Thread  [0x%12x] : Surf <D=[%12p] R=[%12p]>",
-			      (tstate == cur_tstate_tm) ? '*' : ' ',
-			      cur_tstate->thread_id,
-			      cur_tstate_tm->surf_draw,
-			      cur_tstate_tm->surf_read);
+				  (tstate == cur_tstate_tm) ? '*' : ' ',
+				  cur_tstate->thread_id,
+				  cur_tstate_tm->surf_draw,
+				  cur_tstate_tm->surf_read);
 
 			if (cur_tstate_tm->ctx != NULL) {
 				TRACE(" EGLCTX=[%12p]\E[0m\n",
-				      cur_tstate_tm->ctx->handle);
+					  cur_tstate_tm->ctx->handle);
 			} else {
 				TRACE(" (NOT BINDED TO THREAD)\E[0m\n");
 			}
@@ -92,10 +92,10 @@ _dump_context_info(const char *ment, int force_output)
 				while (current != NULL) {
 					if (cur_tstate_tm->ctx == current) {
 						TRACE("   -> EGLCTX [%12p] : EGLDPY=[%12p] <MC count [%10d]> <Ref [%2d]>\E[0m\n",
-						      current->handle,
-						      current->dpy,
-						      current->mc_count,
-						      current->ref_count);
+							  current->handle,
+							  current->dpy,
+							  current->mc_count,
+							  current->ref_count);
 					}
 
 					current = current->next;
@@ -137,10 +137,10 @@ _dump_context_info(const char *ment, int force_output)
 
 			if (isbinded == 0) {
 				TRACE("   EGLCTX    [%12p] : EGLDPY=[%12p] <MC count [%10d]> <Ref [%2d]>\E[0m\n",
-				      current->handle,
-				      current->dpy,
-				      current->mc_count,
-				      current->ref_count);
+					  current->handle,
+					  current->dpy,
+					  current->mc_count,
+					  current->ref_count);
 			}
 
 			current = current->next;
@@ -333,7 +333,7 @@ finish:
 
 EGLBoolean
 tracepath_eglGetConfigs(EGLDisplay dpy, EGLConfig *configs, EGLint config_size,
-			EGLint *num_config)
+						EGLint *num_config)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -348,13 +348,13 @@ finish:
 
 EGLBoolean
 tracepath_eglChooseConfig(EGLDisplay dpy, const EGLint *attrib_list,
-			  EGLConfig *configs, EGLint config_size, EGLint *num_config)
+						  EGLConfig *configs, EGLint config_size, EGLint *num_config)
 {
 	EGLBoolean ret = EGL_FALSE;
 
 	_COREGL_TRACEPATH_FUNC_BEGIN();
 	ret = _orig_tracepath_eglChooseConfig(dpy, attrib_list, configs, config_size,
-					      num_config);
+										  num_config);
 	goto finish;
 
 finish:
@@ -364,7 +364,7 @@ finish:
 
 EGLBoolean
 tracepath_eglGetConfigAttrib(EGLDisplay dpy, EGLConfig config, EGLint attribute,
-			     EGLint *value)
+							 EGLint *value)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -380,7 +380,7 @@ finish:
 
 EGLSurface
 tracepath_eglCreateWindowSurface(EGLDisplay dpy, EGLConfig config,
-				 EGLNativeWindowType win, const EGLint *attrib_list)
+								 EGLNativeWindowType win, const EGLint *attrib_list)
 {
 	EGLSurface ret = EGL_NO_SURFACE;
 
@@ -395,7 +395,7 @@ finish:
 
 EGLSurface
 tracepath_eglCreatePbufferSurface(EGLDisplay dpy, EGLConfig config,
-				  const EGLint *attrib_list)
+								  const EGLint *attrib_list)
 {
 	EGLSurface ret = EGL_NO_SURFACE;
 
@@ -410,7 +410,7 @@ finish:
 
 EGLSurface
 tracepath_eglCreatePixmapSurface(EGLDisplay dpy, EGLConfig config,
-				 EGLNativePixmapType pixmap, const EGLint *attrib_list)
+								 EGLNativePixmapType pixmap, const EGLint *attrib_list)
 {
 	EGLSurface ret = EGL_NO_SURFACE;
 
@@ -446,7 +446,7 @@ finish:
 
 EGLBoolean
 tracepath_eglQuerySurface(EGLDisplay dpy, EGLSurface surface, EGLint attribute,
-			  EGLint *value)
+						  EGLint *value)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -533,7 +533,7 @@ finish:
 
 EGLBoolean
 tracepath_eglSurfaceAttrib(EGLDisplay dpy, EGLSurface surface, EGLint attribute,
-			   EGLint value)
+						   EGLint value)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -590,7 +590,7 @@ finish:
 
 EGLContext
 tracepath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
-			   EGLContext share_context, const EGLint *attrib_list)
+						   EGLContext share_context, const EGLint *attrib_list)
 {
 	EGLContext ret = EGL_NO_CONTEXT;
 
@@ -638,7 +638,7 @@ finish:
 		if (_orig_tracepath_eglDestroyContext == _sym_eglDestroyContext) {
 			char ment[256];
 			snprintf(ment, sizeof(ment), "eglDestroyContext completed (EGLCTX=[%12p])",
-				 ctx);
+					 ctx);
 			_dump_context_info(ment, 1);
 		}
 	}
@@ -648,7 +648,7 @@ finish:
 
 EGLBoolean
 tracepath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
-			 EGLContext ctx)
+						 EGLContext ctx)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -699,8 +699,8 @@ finish:
 		if (_orig_tracepath_eglMakeCurrent == _sym_eglMakeCurrent) {
 			char ment[256];
 			snprintf(ment, sizeof(ment),
-				 "eglMakeCurrent finished (EGLCTX=[%12p] Surf=[D:%12p R:%12p])",
-				 ctx, draw, read);
+					 "eglMakeCurrent finished (EGLCTX=[%12p] Surf=[D:%12p R:%12p])",
+					 ctx, draw, read);
 			_dump_context_info(ment, 0);
 		}
 	}
@@ -752,7 +752,7 @@ finish:
 
 EGLBoolean
 tracepath_eglQueryContext(EGLDisplay dpy, EGLContext ctx, EGLint attribute,
-			  EGLint *value)
+						  EGLint *value)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -826,7 +826,7 @@ finish:
 
 EGLBoolean
 tracepath_eglSwapBuffersWithDamageEXT(EGLDisplay dpy, EGLSurface surface,
-				      EGLint *rects, EGLint n_rects)
+									  EGLint *rects, EGLint n_rects)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -855,7 +855,7 @@ finish:
 
 EGLBoolean
 tracepath_eglSwapBuffersRegionEXT(EGLDisplay dpy, EGLSurface surface,
-				  EGLint numRects, const EGLint *rects)
+								  EGLint numRects, const EGLint *rects)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -884,7 +884,7 @@ finish:
 
 EGLBoolean
 tracepath_eglCopyBuffers(EGLDisplay dpy, EGLSurface surface,
-			 EGLNativePixmapType target)
+						 EGLNativePixmapType target)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -933,7 +933,7 @@ tracepath_eglGetProcAddress(const char *procname)
 	ret = _orig_tracepath_eglGetProcAddress(procname);
 	if (ret != NULL) {
 		COREGL_WRN("\E[40;31;1mTRACEPATH can't support '%s' (tracing for this function will be ignored)\E[0m\n",
-			   procname);
+				   procname);
 	}
 
 	goto finish;
@@ -959,7 +959,7 @@ finish:
 
 EGLImageKHR
 tracepath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
-			     EGLClientBuffer buffer, const EGLint *attrib_list)
+							 EGLClientBuffer buffer, const EGLint *attrib_list)
 {
 	void *ret = NULL;
 
@@ -988,7 +988,7 @@ finish:
 
 void *
 tracepath_eglMapImageSEC(EGLDisplay dpy, EGLImageKHR image, EGLint device_type,
-			 EGLint access_option)
+						 EGLint access_option)
 {
 	void *ret = NULL;
 
@@ -1003,7 +1003,7 @@ finish:
 
 EGLBoolean
 tracepath_eglUnmapImageSEC(EGLDisplay dpy, EGLImageKHR image,
-			   EGLint device_type)
+						   EGLint device_type)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -1018,7 +1018,7 @@ finish:
 
 EGLBoolean
 tracepath_eglGetImageAttribSEC(EGLDisplay dpy, EGLImageKHR image,
-			       EGLint attribute, EGLint *value)
+							   EGLint attribute, EGLint *value)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -1033,7 +1033,7 @@ finish:
 
 EGLBoolean
 tracepath_eglLockSurfaceKHR(EGLDisplay display, EGLSurface surface,
-			    const EGLint *attrib_list)
+							const EGLint *attrib_list)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -1092,7 +1092,7 @@ finish:
 
 EGLBoolean
 tracepath_eglQueryWaylandBufferWL(EGLDisplay dpy, void *buffer,
-				  EGLint attribute, EGLint *value)
+								  EGLint attribute, EGLint *value)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -1108,7 +1108,7 @@ finish:
 
 EGLBoolean
 tracepath_eglSetDamageRegionKHR(EGLDisplay dpy, EGLSurface surface,
-				EGLint *rects, EGLint n_rects)
+								EGLint *rects, EGLint n_rects)
 {
 	EGLBoolean ret = EGL_FALSE;
 
@@ -1124,7 +1124,7 @@ finish:
 
 EGLBoolean
 tracepath_eglSwapBuffersWithDamageKHR(EGLDisplay dpy, EGLSurface surface,
-				EGLint *rects, EGLint n_rects)
+									  EGLint *rects, EGLint n_rects)
 {
 	EGLBoolean ret = EGL_FALSE;
 

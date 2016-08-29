@@ -41,7 +41,7 @@ _dump_context_info(const char *ment, int force_output)
 	TRACE("\n");
 	TRACE("\E[40;34m========================================================================================================================\E[0m\n");
 	TRACE("\E[40;32;1m  Context info \E[1;37;1m: <PID = %d> %s\E[0m\n", getpid(),
-	      ment);
+		  ment);
 	TRACE("\E[40;34m========================================================================================================================\E[0m\n");
 
 
@@ -58,15 +58,15 @@ _dump_context_info(const char *ment, int force_output)
 			AST(cur_tstate_tm != NULL);
 
 			TRACE(" %c Thread  [0x%12x] : Surf <D=[%12p] R=[%12p]>",
-			      (tstate == cur_tstate_tm) ? '*' : ' ',
-			      cur_tstate->thread_id,
-			      cur_tstate_tm->rsurf_draw,
-			      cur_tstate_tm->rsurf_read);
+				  (tstate == cur_tstate_tm) ? '*' : ' ',
+				  cur_tstate->thread_id,
+				  cur_tstate_tm->rsurf_draw,
+				  cur_tstate_tm->rsurf_read);
 
 			if (cur_tstate_tm->cstate != NULL) {
 				TRACE(" GlueCTX=[%12p] RealCTX=[%12p]\E[0m\n",
-				      cur_tstate_tm->cstate->data,
-				      cur_tstate_tm->cstate);
+					  cur_tstate_tm->cstate->data,
+					  cur_tstate_tm->cstate);
 			} else {
 				TRACE(" (NOT BINDED TO THREAD)\E[0m\n");
 			}
@@ -85,10 +85,10 @@ _dump_context_info(const char *ment, int force_output)
 
 					if (cur_tstate_tm->cstate == cur_cstate) {
 						TRACE("   -> RealCTX [%12p] : EGLDPY=[%12p] EGLCTX=[%12p] <[%2d] GlueCTXs>\E[0m\n",
-						      cur_cstate,
-						      cur_cstate->rdpy,
-						      cur_cstate->rctx,
-						      cur_cstate->ref_count);
+							  cur_cstate,
+							  cur_cstate->rdpy,
+							  cur_cstate->rctx,
+							  cur_cstate->ref_count);
 
 						// Binded Glue Context List
 						{
@@ -100,11 +100,11 @@ _dump_context_info(const char *ment, int force_output)
 
 								if (cur_gctx->cstate == cur_cstate) {
 									TRACE("    -%c GlueCTX [%12p] : EGLDPY=[%12p] TID=[%12d] <MC count [%10d]>",
-									      (cur_cstate->data == cur_gctx) ? '>' : '-',
-									      cur_gctx,
-									      cur_gctx->rdpy,
-									      cur_gctx->thread_id,
-									      cur_gctx->used_count);
+										  (cur_cstate->data == cur_gctx) ? '>' : '-',
+										  cur_gctx,
+										  cur_gctx->rdpy,
+										  cur_gctx->thread_id,
+										  cur_gctx->used_count);
 
 									TRACE(" <Ref [%2d]>\E[0m\n", cur_gctx->ref_count);
 								}
@@ -158,10 +158,10 @@ _dump_context_info(const char *ment, int force_output)
 
 			if (isbinded == 0) {
 				TRACE("   RealCTX   [%12p] : EGLDPY=[%12p] EGLCTX=[%12p] <[%2d] GlueCTXs>\E[0m\n",
-				      cur_cstate,
-				      cur_cstate->rdpy,
-				      cur_cstate->rctx,
-				      cur_cstate->ref_count);
+					  cur_cstate,
+					  cur_cstate->rdpy,
+					  cur_cstate->rctx,
+					  cur_cstate->ref_count);
 
 				// Binded Glue Context List
 				{
@@ -173,11 +173,11 @@ _dump_context_info(const char *ment, int force_output)
 
 						if (cur_gctx->cstate == cur_cstate) {
 							TRACE("    -%c GlueCTX [%12p] : EGLDPY=[%12p] TID=[%12d] <MC count [%10d]>",
-							      (cur_cstate->data == cur_gctx) ? '>' : '-',
-							      cur_gctx,
-							      cur_gctx->rdpy,
-							      cur_gctx->thread_id,
-							      cur_gctx->used_count);
+								  (cur_cstate->data == cur_gctx) ? '>' : '-',
+								  cur_gctx,
+								  cur_gctx->rdpy,
+								  cur_gctx->thread_id,
+								  cur_gctx->used_count);
 
 							TRACE(" <Ref [%2d]>\E[0m\n", cur_gctx->ref_count);
 						}
@@ -204,10 +204,10 @@ _dump_context_info(const char *ment, int force_output)
 
 			if (cur_gctx->cstate == NULL) {
 				TRACE("   GlueCTX [%12p]   : EGLDPY=[%12p] TID=[%12d] <MC count [%10d]>",
-				      cur_gctx,
-				      cur_gctx->rdpy,
-				      cur_gctx->thread_id,
-				      cur_gctx->used_count);
+					  cur_gctx,
+					  cur_gctx->rdpy,
+					  cur_gctx->thread_id,
+					  cur_gctx->used_count);
 
 				TRACE(" <Ref [%2d]>\E[0m\n", cur_gctx->ref_count);
 			}
@@ -255,7 +255,7 @@ typedef struct {
 
 static int
 _pack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay dpy,
-			 EGLConfig cfg, EGLint force_unique, const EGLint *attrib_list)
+						 EGLConfig cfg, EGLint force_unique, const EGLint *attrib_list)
 {
 	static int force_unique_free_id = 0;
 	int ret = 0;
@@ -312,8 +312,8 @@ finish:
 
 static int
 _unpack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay *dpy,
-			   EGLConfig *cfg, EGLint *force_unique, EGLint *attrib_list,
-			   const int attrib_list_size)
+						   EGLConfig *cfg, EGLint *force_unique, EGLint *attrib_list,
+						   const int attrib_list_size)
 {
 	int ret = 0;
 
@@ -354,7 +354,7 @@ _unpack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay *dpy,
 			attrib_list_index += 2;
 		}
 		if (pack_data->attrib_list.opengl_reset_notification_strategy !=
-		    EGL_DONT_CARE) {
+				EGL_DONT_CARE) {
 			AST(attrib_list_index + 2 < attrib_list_size);
 			attrib_list[attrib_list_index] =
 				EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_KHR;
@@ -374,7 +374,7 @@ finish:
 
 static int
 _pack_egl_context_sharable_option(EGL_packed_sharable_option *pack_data,
-				  EGLContext share_context)
+								  EGLContext share_context)
 {
 	int ret = 0;
 
@@ -390,7 +390,7 @@ finish:
 #if 0
 static int
 _unpack_egl_context_sharable_option(EGL_packed_sharable_option *pack_data,
-				    EGLContext *share_context)
+									EGLContext *share_context)
 {
 	int ret = 0;
 
@@ -439,7 +439,7 @@ _unlink_context_state(GLGlueContext *gctx, Mutex *ctx_list_mtx)
 		if (tstate != NULL) {
 			if (tstate->cstate == cstate) {
 				_orig_fastpath_eglMakeCurrent(cstate->rdpy, tstate->rsurf_draw,
-							      tstate->rsurf_read, EGL_NO_CONTEXT);
+											  tstate->rsurf_read, EGL_NO_CONTEXT);
 				tstate->cstate = NULL;
 			}
 		}
@@ -459,7 +459,7 @@ _add_shared_obj_state_ref(GLGlueContext *gctx, GL_Shared_Object_State *sostate)
 
 static void
 _remove_shared_obj_state_ref(GLGlueContext *gctx,
-			     GL_Shared_Object_State *sostate)
+							 GL_Shared_Object_State *sostate)
 {
 	remove_from_general_trace_list(&sostate->using_gctxs, gctx);
 
@@ -555,7 +555,7 @@ _remove_context_ref(GLGlueContext *gctx, Mutex *ctx_list_mtx)
 
 static int
 _bind_context_state(GLGlueContext *gctx, GLContextState *cstate,
-		    Mutex *ctx_list_mtx)
+					Mutex *ctx_list_mtx)
 {
 	if (gctx != NULL) {
 		AST(gctx->cstate == cstate);
@@ -588,8 +588,8 @@ _bind_context_state(GLGlueContext *gctx, GLContextState *cstate,
 
 GLContextState *
 _egl_create_context(EGL_packed_option *real_ctx_option,
-		    GLContextState **cstate_new, EGLContext *ctx,
-		    EGLDisplay dpy, EGLConfig config, const EGLint *attrib_list)
+					GLContextState **cstate_new, EGLContext *ctx,
+					EGLDisplay dpy, EGLConfig config, const EGLint *attrib_list)
 {
 	GLContextState *cstate = NULL;
 
@@ -599,17 +599,17 @@ _egl_create_context(EGL_packed_option *real_ctx_option,
 
 	// Pack context option
 	AST(_pack_egl_context_option(real_ctx_option, dpy, config, 0,
-				     attrib_list) == 1);
+								 attrib_list) == 1);
 
 	if (debug_nofp == 1) {
 		AST(_pack_egl_context_option(real_ctx_option, dpy, config, 1,
-					     attrib_list) == 1);
+									 attrib_list) == 1);
 	}
 
 	// Find context state
 	if (real_ctx_option->force_unique == 0) {
 		cstate = fastpath_get_context_state_from_list(real_ctx_option,
-				sizeof(EGL_packed_option), &ctx_list_access_mutex);
+				 sizeof(EGL_packed_option), &ctx_list_access_mutex);
 	}
 
 	// Create a real context if it hasn't been created
@@ -626,7 +626,7 @@ _egl_create_context(EGL_packed_option *real_ctx_option,
 				EGLint attribs[11];
 				_unpack_egl_context_option(current->option, &cur_dpy, NULL, NULL, attribs, 11);
 				if (cur_dpy == dpy) {
-					if(attribs[0] == EGL_CONTEXT_MAJOR_VERSION_KHR &&
+					if (attribs[0] == EGL_CONTEXT_MAJOR_VERSION_KHR &&
 							attribs[1] != real_ctx_option->attrib_list.context_major_version) {
 						current = current->next;
 						continue;
@@ -642,7 +642,7 @@ _egl_create_context(EGL_packed_option *real_ctx_option,
 		AST(mutex_unlock(&ctx_list_access_mutex) == 1);
 
 		*ctx = _orig_fastpath_eglCreateContext(dpy, config, real_share_context,
-						       attrib_list);
+											   attrib_list);
 
 		if (*ctx == EGL_NO_CONTEXT) {
 			COREGL_WRN("\E[40;31;1mFailed creating a egl real context for Fastpath. (Invalid config?)\E[0m\n");
@@ -659,7 +659,7 @@ _egl_create_context(EGL_packed_option *real_ctx_option,
 		(*cstate_new)->data = NULL;
 
 		AST(fastpath_add_context_state_to_list(real_ctx_option,
-						       sizeof(EGL_packed_option), *cstate_new, &ctx_list_access_mutex) == 1);
+											   sizeof(EGL_packed_option), *cstate_new, &ctx_list_access_mutex) == 1);
 
 #ifdef COREGL_FASTPATH_TRACE_CONTEXT_INFO
 		if (unlikely(trace_ctx_flag == 1))
@@ -743,7 +743,7 @@ finish:
 
 EGLContext
 fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
-			  EGLContext share_context, const EGLint *attrib_list)
+						  EGLContext share_context, const EGLint *attrib_list)
 {
 	GLGlueContext *gctx = NULL, *newgctx = NULL;
 	GLGlueContext_List *gctx_list_new = NULL;
@@ -770,19 +770,19 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 		goto finish;
 	}
 	cstate = _egl_create_context(real_ctx_option, &cstate_new, &ctx, dpy, config,
-				     attrib_list);
-	if(cstate == NULL)
+								 attrib_list);
+	if (cstate == NULL)
 		goto finish;
 
 	// Pack shared context options
 	real_ctx_sharable_option = (EGL_packed_sharable_option *)calloc(1,
-				   sizeof(EGL_packed_sharable_option));
+							   sizeof(EGL_packed_sharable_option));
 	if (real_ctx_sharable_option == NULL) {
 		COREGL_ERR("\E[40;31;1mError creating a new GLGlueContext(Memory full 2)\E[0m\n");
 		goto finish;
 	}
 	AST(_pack_egl_context_sharable_option(real_ctx_sharable_option,
-					      share_context) == 1);
+										  share_context) == 1);
 
 	// Allocate a new context
 	newgctx = (GLGlueContext *)calloc(1, sizeof(GLGlueContext));
@@ -805,7 +805,7 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 		newgctx->ostate.shared = shared_gctx->ostate.shared;
 	} else {
 		sostate_new = (GL_Shared_Object_State *)calloc(1,
-				sizeof(GL_Shared_Object_State));
+					  sizeof(GL_Shared_Object_State));
 		if (sostate_new == NULL) {
 			COREGL_ERR("\E[40;31;1mError creating a new GLGlueContext(Memory full 4)\E[0m\n");
 			goto finish;
@@ -854,7 +854,7 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 		add_to_general_trace_list(&glue_ctx_trace_list, newgctx);
 
 		snprintf(ment, sizeof(ment), "eglCreateContext completed (GlueCTX=[%12p])",
-			 newgctx);
+				 newgctx);
 		_dump_context_info(ment, 1);
 	}
 #endif // COREGL_FASTPATH_TRACE_CONTEXT_INFO
@@ -957,7 +957,7 @@ finish:
 	if (unlikely(trace_ctx_flag == 1)) {
 		char ment[256];
 		snprintf(ment, sizeof(ment), "eglDestroyContext completed (GlueCTX=[%12p])",
-			 ctx);
+				 ctx);
 		_dump_context_info(ment, 1);
 	}
 #endif // COREGL_FASTPATH_TRACE_CONTEXT_INFO
@@ -967,7 +967,7 @@ finish:
 
 EGLBoolean
 fastpath_eglQueryContext(EGLDisplay dpy, EGLContext ctx, EGLint attribute,
-			 EGLint *value)
+						 EGLint *value)
 {
 	EGLBoolean ret = EGL_FALSE;
 	EGLContext real_ctx = EGL_NO_CONTEXT;
@@ -1061,7 +1061,7 @@ finish:
 
 EGLBoolean
 fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
-			EGLContext ctx)
+						EGLContext ctx)
 {
 	EGLBoolean ret = EGL_FALSE;
 	EGLBoolean need_mc = EGL_FALSE;
@@ -1101,7 +1101,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 			}
 			if (_orig_fastpath_eglMakeCurrent(dpy, draw, read, ctx) != EGL_TRUE) {
 				COREGL_WRN("Error making context [%p] current. (invalid EGL display [%p] or EGL surface [D:%p/R:%p])\n",
-					   ctx, dpy, draw, read);
+						   ctx, dpy, draw, read);
 				ret = EGL_FALSE;
 				goto finish;
 			}
@@ -1128,7 +1128,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 
 	// Handle cross threading of context (when used by two or more gctx)
 	if (gctx && gctx->thread_id != get_current_thread() &&
-	    gctx->cstate->ref_count > 1) {
+			gctx->cstate->ref_count > 1) {
 #define ATTRIB_LIST_BUFFER_SIZE 8
 
 		GLContextState *cstate_new = NULL;
@@ -1139,11 +1139,11 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 		int attrib_list[ATTRIB_LIST_BUFFER_SIZE];
 
 		AST(_unpack_egl_context_option(gctx->real_ctx_option, &dpy, &config, NULL,
-					       attrib_list, ATTRIB_LIST_BUFFER_SIZE) == 1);
+									   attrib_list, ATTRIB_LIST_BUFFER_SIZE) == 1);
 		AST(dpy == gctx->rdpy);
 
 		_egl_create_context(gctx->real_ctx_option, &cstate_new, &new_real_ctx, dpy,
-				    config, attrib_list);
+							config, attrib_list);
 
 		AST(cstate_new != NULL);
 
@@ -1176,14 +1176,14 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 
 	// If drawable changed, do a make current
 	if (tstate &&
-	    ((tstate->rsurf_draw != draw) || (tstate->rsurf_read != read)))
+			((tstate->rsurf_draw != draw) || (tstate->rsurf_read != read)))
 		need_mc = EGL_TRUE;
 
 	AST(gctx && (gctx->cstate != NULL));
 
 	// If binded real context changed, do a make current
 	if (tstate && gctx && ((tstate->cstate == NULL) ||
-			       (tstate->cstate != gctx->cstate)))
+						   (tstate->cstate != gctx->cstate)))
 		need_mc = EGL_TRUE;
 
 	if (tstate && gctx && gctx->cstate && (need_mc == EGL_TRUE)) {
@@ -1191,21 +1191,22 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 
 		// BB : full makecurrent
 		if (_orig_fastpath_eglMakeCurrent(dpy, draw, read,
-						  gctx->cstate->rctx) != EGL_TRUE) {
+										  gctx->cstate->rctx) != EGL_TRUE) {
 			COREGL_WRN("\E[40;31;1mError making context current with the drawable. (Bad match?)\E[0m\n");
 			ret = EGL_FALSE;
 			goto finish;
 		}
 
-		current_gl_api_version = ((EGL_packed_option *)gctx->real_ctx_option)->attrib_list.context_major_version;
-		if(current_gl_api_version == COREGL_GLAPI_1)
+		current_gl_api_version = ((EGL_packed_option *)
+								  gctx->real_ctx_option)->attrib_list.context_major_version;
+		if (current_gl_api_version == COREGL_GLAPI_1)
 			init_export(GL_FALSE, GL_TRUE);
 
 		// Update references only when the contexts are different
 		if (tstate->cstate != gctx->cstate)  {
 			if (tstate->cstate != NULL && tstate->cstate->data != NULL)
 				_remove_context_ref((GLGlueContext *)tstate->cstate->data,
-						    &ctx_list_access_mutex);
+									&ctx_list_access_mutex);
 
 			tstate->cstate = gctx->cstate;
 
@@ -1255,7 +1256,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 	}
 
 	if (tstate &&
-	    (_bind_context_state(gctx, tstate->cstate, &ctx_list_access_mutex) != 1)) {
+			(_bind_context_state(gctx, tstate->cstate, &ctx_list_access_mutex) != 1)) {
 		ret = EGL_FALSE;
 		goto finish;
 	}
@@ -1272,8 +1273,8 @@ finish:
 	if (unlikely(trace_ctx_flag == 1)) {
 		char ment[256];
 		snprintf(ment, sizeof(ment),
-			 "eglMakeCurrent finished (GlueCTX=[%12p] Surf=[D:%12p R:%12p])",
-			 ctx, draw, read);
+				 "eglMakeCurrent finished (GlueCTX=[%12p] Surf=[D:%12p R:%12p])",
+				 ctx, draw, read);
 		_dump_context_info(ment, 0);
 	}
 #endif // COREGL_FASTPATH_TRACE_CONTEXT_INFO
@@ -1345,16 +1346,16 @@ finish:
 
 EGLImageKHR
 fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
-			    EGLClientBuffer buffer, const EGLint *attrib_list)
+							EGLClientBuffer buffer, const EGLint *attrib_list)
 {
 	void *ret = NULL;
 	EGLContext real_ctx = EGL_NO_CONTEXT;
 	EGLClientBuffer real_obj;
 	GL_Object_Type type = 0;
 
-	if((EGLint)buffer & GL_OBJECT_TYPE_TEXTURE)
+	if ((EGLint)buffer & GL_OBJECT_TYPE_TEXTURE)
 		type = GL_OBJECT_TYPE_TEXTURE;
-	else if((EGLint)buffer & GL_OBJECT_TYPE_RENDERBUFFER)
+	else if ((EGLint)buffer & GL_OBJECT_TYPE_RENDERBUFFER)
 		type = GL_OBJECT_TYPE_RENDERBUFFER;
 	else {
 		COREGL_ERR("\E[40;31;1m fastpath_eglCreateImageKHR buffer type error \E[0m\n");
@@ -1388,7 +1389,7 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 				real_obj = NULL;
 			} else {
 				real_obj = (EGLClientBuffer)(uintptr_t)fastpath_ostate_get_object(&gctx->ostate,
-						type, (GLuint)(uintptr_t)buffer);
+						   type, (GLuint)(uintptr_t)buffer);
 			}
 			break;
 		default:
@@ -1401,7 +1402,7 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 	}
 
 	ret = _orig_fastpath_eglCreateImageKHR(dpy, real_ctx, target, real_obj,
-					       attrib_list);
+										   attrib_list);
 
 
 	goto finish;
@@ -1468,7 +1469,7 @@ fastpath_eglGetProcAddress(const char *procname)
 #undef _COREGL_EXT_SYMBOL_FASTPATH_BLOCK
 
 		COREGL_ERR("\E[40;31;1mFASTPATH can't support '%s' (will be terminated with Illegal instruction!)\E[0m\n",
-			   procname);
+				   procname);
 		assert(0);
 	}
 

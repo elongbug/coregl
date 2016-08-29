@@ -45,7 +45,7 @@ coregl_glwrap_init()
 	}
 
 	set_driver_gl_version = dlsym(lib_handle, "set_driver_gl_version");
-	if(set_driver_gl_version)
+	if (set_driver_gl_version)
 		set_driver_gl_version(1);
 	else
 		printf("%s\n", dlerror());
@@ -97,7 +97,8 @@ glFogfv(GLenum pname, const GLfloat *params)
 }
 
 void
-glFrustumf(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat zNear, GLfloat zFar)
+glFrustumf(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top,
+		   GLfloat zNear, GLfloat zFar)
 {
 	ovr_glFrustumf(left, right, bottom, top, zNear, zFar);
 }
@@ -187,7 +188,8 @@ glNormal3f(GLfloat nx, GLfloat ny, GLfloat nz)
 }
 
 void
-glOrthof(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat zNear, GLfloat zFar)
+glOrthof(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top,
+		 GLfloat zNear, GLfloat zFar)
 {
 	ovr_glOrthof(left, right, bottom, top, zNear, zFar);
 }
@@ -319,7 +321,8 @@ glFogxv(GLenum pname, const GLfixed *params)
 }
 
 void
-glFrustumx(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed zNear, GLfixed zFar)
+glFrustumx(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top,
+		   GLfixed zNear, GLfixed zFar)
 {
 	ovr_glFrustumx(left, right, bottom, top, zNear, zFar);
 }
@@ -457,7 +460,8 @@ glNormalPointer(GLenum type, GLsizei stride, const GLvoid *pointer)
 }
 
 void
-glOrthox(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top, GLfixed zNear, GLfixed zFar)
+glOrthox(GLfixed left, GLfixed right, GLfixed bottom, GLfixed top,
+		 GLfixed zNear, GLfixed zFar)
 {
 	ovr_glOrthox(left, right, bottom, top, zNear, zFar);
 }
@@ -523,7 +527,8 @@ glShadeModel(GLenum mode)
 }
 
 void
-glTexCoordPointer(GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
+glTexCoordPointer(GLint size, GLenum type, GLsizei stride,
+				  const GLvoid *pointer)
 {
 	ovr_glTexCoordPointer(size, type, stride, pointer);
 }

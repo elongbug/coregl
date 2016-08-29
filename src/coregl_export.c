@@ -22,8 +22,8 @@ _clean_overrides(GLboolean init_egl, GLboolean init_gl)
 		COREGL_OVERRIDE_API(ovr_, f, _sym_)
 
 #define _COREGL_SYMBOL(RET_TYPE, FUNC_NAME, PARAM_LIST)     OVERRIDE(FUNC_NAME);
-	if(init_egl == GL_TRUE) {
-		# include "headers/sym_egl.h"
+	if (init_egl == GL_TRUE) {
+# include "headers/sym_egl.h"
 	}
 #undef _COREGL_SYMBOL
 #undef OVERRIDE
@@ -31,10 +31,10 @@ _clean_overrides(GLboolean init_egl, GLboolean init_gl)
 #define OVERRIDE(f) \
 	if(api_gl_version<=driver_gl_version) COREGL_OVERRIDE_API(ovr_, f, _sym_)
 #define _COREGL_SYMBOL(RET_TYPE, FUNC_NAME, PARAM_LIST)     OVERRIDE(FUNC_NAME);
-	if(init_gl == GL_TRUE) {
-		#include "headers/sym_gl1.h"
-		#include "headers/sym_gl2.h"
-		#include "headers/sym_gl_common.h"
+	if (init_gl == GL_TRUE) {
+#include "headers/sym_gl1.h"
+#include "headers/sym_gl2.h"
+#include "headers/sym_gl_common.h"
 	}
 #undef _COREGL_SYMBOL
 #undef OVERRIDE

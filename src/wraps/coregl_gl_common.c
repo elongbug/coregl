@@ -152,7 +152,7 @@ glBufferData(GLenum target, GLsizeiptr size, const void *data, GLenum usage)
 
 void
 glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size,
-		const void *data)
+				const void *data)
 {
 	ovr_glBufferSubData(target, offset, size, data);
 }
@@ -177,33 +177,33 @@ glColorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha)
 
 void
 glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat,
-		       GLsizei width, GLsizei height, GLint border, GLsizei imageSize,
-		       const void *data)
+					   GLsizei width, GLsizei height, GLint border, GLsizei imageSize,
+					   const void *data)
 {
 	ovr_glCompressedTexImage2D(target, level, internalformat, width, height, border,
-				   imageSize, data);
+							   imageSize, data);
 }
 
 void
 glCompressedTexSubImage2D(GLenum target, GLint level, GLint xoffset,
-			  GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize,
-			  const void *data)
+						  GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize,
+						  const void *data)
 {
 	ovr_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height,
-				      format, imageSize, data);
+								  format, imageSize, data);
 }
 
 void
 glCopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x,
-		 GLint y, GLsizei width, GLsizei height, GLint border)
+				 GLint y, GLsizei width, GLsizei height, GLint border)
 {
 	ovr_glCopyTexImage2D(target, level, internalformat, x, y, width, height,
-			     border);
+						 border);
 }
 
 void
 glCopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
-		    GLint x, GLint y, GLsizei width, GLsizei height)
+					GLint x, GLint y, GLsizei width, GLsizei height)
 {
 	ovr_glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
 }
@@ -365,7 +365,7 @@ glPixelStorei(GLenum pname, GLint param)
 
 void
 glReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format,
-	     GLenum type, void *pixels)
+			 GLenum type, void *pixels)
 {
 	ovr_glReadPixels(x, y, width, height, format, type, pixels);
 }
@@ -403,10 +403,10 @@ glStencilOp(GLenum fail, GLenum zfail, GLenum zpass)
 
 void
 glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width,
-	     GLsizei height, GLint border, GLenum format, GLenum type, const void *pixels)
+			 GLsizei height, GLint border, GLenum format, GLenum type, const void *pixels)
 {
 	ovr_glTexImage2D(target, level, internalformat, width, height, border, format,
-			 type, pixels);
+					 type, pixels);
 }
 
 void
@@ -423,10 +423,10 @@ glTexParameteriv(GLenum target, GLenum pname, const GLint *params)
 
 void
 glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
-		GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels)
+				GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels)
 {
 	ovr_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format,
-			    type, pixels);
+						type, pixels);
 }
 
 void

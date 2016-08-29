@@ -124,9 +124,9 @@ _state_get_transform_feedback_buffer_bindings(GLuint *params)
 
 	int i;
 	for (i = 0; i < initial_fake_ctx->gl_transform_feedback_buffer_binding_num[0];
-	     i++) {
+			i++) {
 		_orig_tracepath_glGetIntegeri_v(GL_TRANSFORM_FEEDBACK_BUFFER_BINDING, i,
-						(GLint *)&params[i]);
+										(GLint *)&params[i]);
 	}
 }
 
@@ -137,9 +137,9 @@ _state_get_transform_feedback_buffer_bindings_offset(GLintptr *params)
 
 	int i;
 	for (i = 0; i < initial_fake_ctx->gl_transform_feedback_buffer_binding_num[0];
-	     i++) {
+			i++) {
 		_orig_tracepath_glGetIntegeri_v(GL_TRANSFORM_FEEDBACK_BUFFER_START, i,
-						(GLint *)&params[i]);
+										(GLint *)&params[i]);
 	}
 }
 
@@ -150,9 +150,9 @@ _state_get_transform_feedback_buffer_bindings_size(GLsizeiptr *params)
 
 	int i;
 	for (i = 0; i < initial_fake_ctx->gl_transform_feedback_buffer_binding_num[0];
-	     i++) {
+			i++) {
 		_orig_tracepath_glGetIntegeri_v(GL_TRANSFORM_FEEDBACK_BUFFER_SIZE, i,
-						(GLint *)&params[i]);
+										(GLint *)&params[i]);
 	}
 }
 
@@ -179,7 +179,7 @@ _state_get_uniform_buffer_bindings_offset(GLintptr *params)
 	int i;
 	for (i = 0; i < initial_fake_ctx->gl_uniform_buffer_binding_num[0]; i++) {
 		_orig_tracepath_glGetIntegeri_v(GL_UNIFORM_BUFFER_START, i,
-						(GLint *)&params[i]);
+										(GLint *)&params[i]);
 	}
 }
 
@@ -201,8 +201,10 @@ _state_get_shader_storage_buffer_bindings(GLuint *params)
 	AST(initial_fake_ctx != NULL);
 
 	int i;
-	for (i = 0; i < initial_fake_ctx->gl_shader_storage_buffer_binding_num[0]; i++) {
-		_orig_tracepath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_BINDING, i, (GLint *)&params[i]);
+	for (i = 0; i < initial_fake_ctx->gl_shader_storage_buffer_binding_num[0];
+			i++) {
+		_orig_tracepath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_BINDING, i,
+										(GLint *)&params[i]);
 	}
 }
 
@@ -212,8 +214,10 @@ _state_get_shader_storage_buffer_bindings_offset(GLintptr *params)
 	AST(initial_fake_ctx != NULL);
 
 	int i;
-	for (i = 0; i < initial_fake_ctx->gl_shader_storage_buffer_binding_num[0]; i++) {
-		_orig_tracepath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_START, i, (GLint *)&params[i]);
+	for (i = 0; i < initial_fake_ctx->gl_shader_storage_buffer_binding_num[0];
+			i++) {
+		_orig_tracepath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_START, i,
+										(GLint *)&params[i]);
 	}
 }
 
@@ -223,8 +227,10 @@ _state_get_shader_storage_buffer_bindings_size(GLsizeiptr *params)
 	AST(initial_fake_ctx != NULL);
 
 	int i;
-	for (i = 0; i < initial_fake_ctx->gl_shader_storage_buffer_binding_num[0]; i++) {
-		_orig_tracepath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_SIZE, i, (GLint *)&params[i]);
+	for (i = 0; i < initial_fake_ctx->gl_shader_storage_buffer_binding_num[0];
+			i++) {
+		_orig_tracepath_glGetIntegeri_v(GL_SHADER_STORAGE_BUFFER_SIZE, i,
+										(GLint *)&params[i]);
 	}
 }
 
@@ -235,8 +241,10 @@ _state_get_atomic_counter_buffer_bindings(GLuint *params)
 	AST(initial_fake_ctx != NULL);
 
 	int i;
-	for (i = 0; i < initial_fake_ctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
-		_orig_tracepath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_BINDING, i, (GLint *)&params[i]);
+	for (i = 0; i < initial_fake_ctx->gl_atomic_counter_buffer_binding_num[0];
+			i++) {
+		_orig_tracepath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_BINDING, i,
+										(GLint *)&params[i]);
 	}
 }
 
@@ -246,8 +254,10 @@ _state_get_atomic_counter_buffer_bindings_offset(GLintptr *params)
 	AST(initial_fake_ctx != NULL);
 
 	int i;
-	for (i = 0; i < initial_fake_ctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
-		_orig_tracepath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_START, i, (GLint *)&params[i]);
+	for (i = 0; i < initial_fake_ctx->gl_atomic_counter_buffer_binding_num[0];
+			i++) {
+		_orig_tracepath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_START, i,
+										(GLint *)&params[i]);
 	}
 }
 
@@ -257,8 +267,10 @@ _state_get_atomic_counter_buffer_bindings_size(GLsizeiptr *params)
 	AST(initial_fake_ctx != NULL);
 
 	int i;
-	for (i = 0; i < initial_fake_ctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
-		_orig_tracepath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_SIZE, i, (GLint *)&params[i]);
+	for (i = 0; i < initial_fake_ctx->gl_atomic_counter_buffer_binding_num[0];
+			i++) {
+		_orig_tracepath_glGetIntegeri_v(GL_ATOMIC_COUNTER_BUFFER_SIZE, i,
+										(GLint *)&params[i]);
 	}
 }
 
@@ -285,9 +297,9 @@ init_modules_tracepath()
 #ifdef COREGL_TRACEPATH_TRACE_SURFACE_INFO
 	trace_surface_flag = atoi(get_env_setting("COREGL_TRACE_SURFACE"));
 	trace_surface_sequence_sort_flag = atoi(
-			get_env_setting("COREGL_TRACE_SURFACE_SEQUENCE_SORT"));
+										   get_env_setting("COREGL_TRACE_SURFACE_SEQUENCE_SORT"));
 	trace_surface_print_only_flag = atoi(
-						get_env_setting("COREGL_TRACE_SURFACE_PRINT_ONLY"));
+										get_env_setting("COREGL_TRACE_SURFACE_PRINT_ONLY"));
 
 	{
 		// COREGL_TRACE_SURFACE_FILTER_PERIOD=40~60
@@ -427,19 +439,19 @@ init_modules_tracepath()
 			if (trace_surface_print_only_flag == 1)
 				COREGL_LOG("\E[40;36;1m(PRINT ONLY)\E[0m ");
 			if (trace_surface_filter_period_begin != 0 ||
-			    trace_surface_filter_period_end != 0)
+					trace_surface_filter_period_end != 0)
 				COREGL_LOG("\E[40;36;1m(SURFACE-PERIOD:%d~%d)\E[0m ",
-					   trace_surface_filter_period_begin, trace_surface_filter_period_end);
+						   trace_surface_filter_period_begin, trace_surface_filter_period_end);
 			if (trace_surface_filter_type == 1)
 				COREGL_LOG("\E[40;36;1m(SURFACE-TYPE:EGL)\E[0m ");
 			if (trace_surface_filter_type == 2)
 				COREGL_LOG("\E[40;36;1m(SURFACE-TYPE:FBO)\E[0m ");
 			if (trace_surface_filter_handle != 0)
 				COREGL_LOG("\E[40;36;1m(SURFACE-HANDLE:%p(%ld))\E[0m ",
-					   (void *)trace_surface_filter_handle, (long int)trace_surface_filter_handle);
+						   (void *)trace_surface_filter_handle, (long int)trace_surface_filter_handle);
 			if (trace_surface_filter_size_w > 0 && trace_surface_filter_size_h > 0)
 				COREGL_LOG("\E[40;36;1m(SURFACE-SIZE:%dx%d)\E[0m ", trace_surface_filter_size_w,
-					   trace_surface_filter_size_h);
+						   trace_surface_filter_size_h);
 		}
 
 		COREGL_LOG("\E[40;37;1menabled\E[0m\n");
@@ -524,15 +536,15 @@ tracepath_dump_context_states(int force_output)
 	if (unlikely(trace_state_flag != 1)) return;
 
 	_sym_glGetIntegerv(GL_MAX_DRAW_BUFFERS,
-			   (GLint *)initial_fake_ctx->gl_draw_buffers_num);
+					   (GLint *)initial_fake_ctx->gl_draw_buffers_num);
 	_sym_glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,
-			   (GLint *)initial_fake_ctx->gl_tex_units_num);
+					   (GLint *)initial_fake_ctx->gl_tex_units_num);
 	_sym_glGetIntegerv(GL_MAX_VERTEX_ATTRIBS,
-			   (GLint *)initial_fake_ctx->gl_vertex_attribs_num);
+					   (GLint *)initial_fake_ctx->gl_vertex_attribs_num);
 	_sym_glGetIntegerv(GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
-			   (GLint *)initial_fake_ctx->gl_transform_feedback_buffer_binding_num);
+					   (GLint *)initial_fake_ctx->gl_transform_feedback_buffer_binding_num);
 	_sym_glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS,
-			   (GLint *)initial_fake_ctx->gl_uniform_buffer_binding_num);
+					   (GLint *)initial_fake_ctx->gl_uniform_buffer_binding_num);
 	_sym_glGetError();
 
 	if (!force_output) {
@@ -547,7 +559,7 @@ tracepath_dump_context_states(int force_output)
 	TRACE("\n");
 	TRACE("\E[0;40;34m===================================================================================================================\E[0m\n");
 	TRACE("\E[40;32;1m  State info \E[1;37;1m: <PID = %d> (CURRENT BINDED CONTEXT)\E[0m\n",
-	      getpid());
+		  getpid());
 	TRACE("\E[0;40;34m===================================================================================================================\E[0m\n");
 
 #define PRINTF_CHAR_GLenum "0x%8X"
@@ -602,7 +614,7 @@ finish:
 
 static inline void
 _add_timeval_period(struct timeval *tv_dst, struct timeval tv_now,
-		    struct timeval tv_old)
+					struct timeval tv_old)
 {
 	tv_dst->tv_sec += tv_now.tv_sec - tv_old.tv_sec;
 	tv_dst->tv_usec += 1000000 + (tv_now.tv_usec - tv_old.tv_usec);
@@ -675,7 +687,9 @@ _get_trace_data(Trace_Data **ftd_table, size_t td_size, const char *name)
 	} else {
 		Trace_Data *newitm = NULL;
 		newitm = (Trace_Data *)calloc(1, td_size);
-		strncpy(newitm->name, name, strlen(name) < (sizeof(newitm->name) -1) ? strlen(name) : (sizeof(newitm->name) -1));
+		strncpy(newitm->name, name,
+				strlen(name) < (sizeof(newitm->name) - 1) ? strlen(name) : (sizeof(
+							newitm->name) - 1));
 		newitm->next = NULL;
 
 		if (prev != NULL) {
@@ -702,11 +716,11 @@ tracepath_mem_trace_add(const char *desc, int alloc_size)
 
 		if (mtd_table == NULL) {
 			mtd_table = (Memuse_Data **)calloc(1,
-							   sizeof(Memuse_Data *) * MAX_TRACE_TABLE_SIZE);
+											   sizeof(Memuse_Data *) * MAX_TRACE_TABLE_SIZE);
 		}
 
 		mtd = (Memuse_Data *)_get_trace_data((Trace_Data **)mtd_table,
-						     sizeof(Memuse_Data), desc);
+											 sizeof(Memuse_Data), desc);
 
 		AST(mtd != NULL);
 
@@ -735,11 +749,11 @@ tracepath_mem_trace_remove(const char *desc, int alloc_size)
 
 		if (mtd_table == NULL) {
 			mtd_table = (Memuse_Data **)calloc(1,
-							   sizeof(Memuse_Data *) * MAX_TRACE_TABLE_SIZE);
+											   sizeof(Memuse_Data *) * MAX_TRACE_TABLE_SIZE);
 		}
 
 		mtd = (Memuse_Data *)_get_trace_data((Trace_Data **)mtd_table,
-						     sizeof(Memuse_Data), desc);
+											 sizeof(Memuse_Data), desc);
 
 		AST(mtd != NULL);
 		AST(mtd->memsize == alloc_size);
@@ -756,7 +770,7 @@ tracepath_mem_trace_remove(const char *desc, int alloc_size)
 
 void *
 tracepath_api_trace_begin(const char *funcname, void *hint,
-			  int trace_total_time)
+						  int trace_total_time)
 {
 	Apicall_Data *ftd = NULL;
 	struct timeval t = TIMEVAL_INIT;
@@ -781,11 +795,11 @@ tracepath_api_trace_begin(const char *funcname, void *hint,
 			if (tstate) {
 				if (tstate->ftd_table == NULL) {
 					tstate->ftd_table = (Apicall_Data **)calloc(1,
-							    sizeof(Apicall_Data *) * MAX_TRACE_TABLE_SIZE);
+										sizeof(Apicall_Data *) * MAX_TRACE_TABLE_SIZE);
 				}
 
 				ftd = (Apicall_Data *)_get_trace_data((Trace_Data **)tstate->ftd_table,
-								      sizeof(Apicall_Data), funcname);
+													  sizeof(Apicall_Data), funcname);
 			}
 		}
 
@@ -842,7 +856,7 @@ tracepath_api_trace_end(const char *funcname, void *hint, int trace_total_time)
 
 			if (tstate && (tstate->ftd_table)) {
 				ftd = (Apicall_Data *)_get_trace_data((Trace_Data **)tstate->ftd_table,
-								      sizeof(Apicall_Data), funcname);
+													  sizeof(Apicall_Data), funcname);
 			}
 		}
 
@@ -853,8 +867,8 @@ tracepath_api_trace_end(const char *funcname, void *hint, int trace_total_time)
 		if (ftd) _add_timeval(&ftd->elapsed_time, elapsed_time);
 
 		if (ftd &&
-		    elapsed_time.tv_sec >= ftd->elapsed_time_max.tv_sec &&
-		    elapsed_time.tv_usec > ftd->elapsed_time_max.tv_usec) {
+				elapsed_time.tv_sec >= ftd->elapsed_time_max.tv_sec &&
+				elapsed_time.tv_usec > ftd->elapsed_time_max.tv_usec) {
 			ftd->elapsed_time_max.tv_sec = elapsed_time.tv_sec;
 			ftd->elapsed_time_max.tv_usec = elapsed_time.tv_usec;
 		}
@@ -918,7 +932,7 @@ tracepath_api_trace_output(int force_output)
 
 	total_other_elapsed_time = _get_timeval(other_elapsed_time);
 	total_other_elapsed_time_period = _get_timeval_period(other_elapsed_time,
-					  traced_other_elapsed_time);
+									  traced_other_elapsed_time);
 	traced_other_elapsed_time = other_elapsed_time;
 
 	tstate = get_current_thread_state();
@@ -940,11 +954,11 @@ tracepath_api_trace_output(int force_output)
 		static Apicall_Data *trace_hint_swap = NULL;
 		if (trace_hint_swap == NULL)
 			trace_hint_swap = (Apicall_Data *)_get_trace_data((Trace_Data **)ftd_table,
-					  sizeof(Apicall_Data), "tracepath_eglSwapBuffers");
+							  sizeof(Apicall_Data), "tracepath_eglSwapBuffers");
 
 		if (trace_hint_swap != NULL && total_elapsed_time_period > 0) {
 			swaps_per_sec = (trace_hint_swap->call_count -
-					 trace_hint_swap->last_call_count) / (total_elapsed_time_period / 1000);
+							 trace_hint_swap->last_call_count) / (total_elapsed_time_period / 1000);
 		}
 	}
 
@@ -952,7 +966,7 @@ tracepath_api_trace_output(int force_output)
 	TRACE("\n");
 	TRACE("\E[40;34m========================================================================================================================\E[0m\n");
 	TRACE("\E[40;32;1m  API call info \E[1;37;1m: <PID = %d> Thread ID = 0x%x  [Swaps per Second(P) = %7.2f]\E[0m\n",
-	      getpid(), tstate->thread_id, swaps_per_sec);
+		  getpid(), tstate->thread_id, swaps_per_sec);
 	TRACE("\E[40;34m========================================================================================================================\E[0m\n");
 
 	// highlighted
@@ -966,26 +980,26 @@ tracepath_api_trace_output(int force_output)
 
 				total_opengl_elapsed_time += _get_timeval(current->total_elapsed_time);
 				total_opengl_elapsed_time_period += _get_timeval(current->total_elapsed_time) -
-								    _get_timeval(current->last_total_elapsed_time);
+													_get_timeval(current->last_total_elapsed_time);
 
 				current->traced = 0;
 
 				if (current->call_count > current->last_call_count) {
 					double elapsed_time_period = _get_timeval_period(current->elapsed_time,
-								     current->last_elapsed_time);
+												 current->last_elapsed_time);
 					double elapsed_time_max = _get_timeval(current->elapsed_time_max);
 					double elapsed_time_per_call_period = elapsed_time_period /
-									      (current->call_count - current->last_call_count);
+														  (current->call_count - current->last_call_count);
 					char *fname = current->trace_data.name;
 
 					if (!strncmp(fname, "tracepath_", 10))
 						fname = &current->trace_data.name[10];
 
 					if (elapsed_time_per_call_period >= 0.01 ||
-					    current->call_count - current->last_call_count > 1000) {
+							current->call_count - current->last_call_count > 1000) {
 						TRACE("\E[40;37;1m %-39.39s : %10d call(s), %9.3f ms/API, %9.2f ms(MAX), %9.3f ms/API(P)\E[0m\n",
-						      fname, current->call_count, elapsed_time_per_call, elapsed_time_max,
-						      elapsed_time_per_call_period);
+							  fname, current->call_count, elapsed_time_per_call, elapsed_time_max,
+							  elapsed_time_per_call_period);
 						current->traced = 1;
 					}
 				}
@@ -1014,7 +1028,7 @@ tracepath_api_trace_output(int force_output)
 								fname = &current->trace_data.name[10];
 
 							TRACE(" %-39.39s : %10d call(s), %9.3f ms/API, %9.2f ms(MAX)\n",
-							      fname, current->call_count, elapsed_time_per_call, elapsed_time_max);
+								  fname, current->call_count, elapsed_time_per_call, elapsed_time_max);
 						}
 						current = (Apicall_Data *)current->trace_data.next;
 					}
@@ -1027,36 +1041,36 @@ tracepath_api_trace_output(int force_output)
 
 	if (trace_api_frame_flag == 0) {
 		TRACE("\E[40;36;1m %-39.39s : %13.2f ms[%6.2f%%], %13.2f ms(P)[%6.2f%%]\E[0m\n",
-		      "TOTAL elapsed Time",
-		      total_elapsed_time,
-		      100.0,
-		      total_elapsed_time_period,
-		      100.0);
+			  "TOTAL elapsed Time",
+			  total_elapsed_time,
+			  100.0,
+			  total_elapsed_time_period,
+			  100.0);
 
 
 		TRACE("\E[40;36;1m %-39.39s : %13.2f ms[%6.2f%%], %13.2f ms(P)[%6.2f%%]\E[0m\n",
-		      "OpenGL elapsed Time",
-		      total_opengl_elapsed_time,
-		      total_opengl_elapsed_time * 100.0 / total_elapsed_time,
-		      total_opengl_elapsed_time_period,
-		      total_opengl_elapsed_time_period * 100.0 / total_elapsed_time_period);
+			  "OpenGL elapsed Time",
+			  total_opengl_elapsed_time,
+			  total_opengl_elapsed_time * 100.0 / total_elapsed_time,
+			  total_opengl_elapsed_time_period,
+			  total_opengl_elapsed_time_period * 100.0 / total_elapsed_time_period);
 
 		TRACE("\E[40;36;1m %-39.39s : %13.2f ms[%6.2f%%], %13.2f ms(P)[%6.2f%%]\E[0m\n",
-		      "Out of OpenGL elapsed time",
-		      total_other_elapsed_time,
-		      total_other_elapsed_time * 100.0 / total_elapsed_time,
-		      total_other_elapsed_time_period,
-		      total_other_elapsed_time_period * 100.0 / total_elapsed_time_period);
+			  "Out of OpenGL elapsed time",
+			  total_other_elapsed_time,
+			  total_other_elapsed_time * 100.0 / total_elapsed_time,
+			  total_other_elapsed_time_period,
+			  total_other_elapsed_time_period * 100.0 / total_elapsed_time_period);
 
 		TRACE("\E[40;36;1m %-39.39s : %13.2f ms[%6.2f%%], %13.2f ms(P)[%6.2f%%]\E[0m\n",
-		      "CoreGL API tracing overhead",
-		      total_elapsed_time - total_opengl_elapsed_time - total_other_elapsed_time,
-		      (total_elapsed_time - total_opengl_elapsed_time - total_other_elapsed_time) *
-		      100.0 / total_elapsed_time,
-		      total_elapsed_time_period - total_opengl_elapsed_time_period -
-		      total_other_elapsed_time_period,
-		      (total_elapsed_time_period - total_opengl_elapsed_time_period -
-		       total_other_elapsed_time_period) * 100.0 / total_elapsed_time_period);
+			  "CoreGL API tracing overhead",
+			  total_elapsed_time - total_opengl_elapsed_time - total_other_elapsed_time,
+			  (total_elapsed_time - total_opengl_elapsed_time - total_other_elapsed_time) *
+			  100.0 / total_elapsed_time,
+			  total_elapsed_time_period - total_opengl_elapsed_time_period -
+			  total_other_elapsed_time_period,
+			  (total_elapsed_time_period - total_opengl_elapsed_time_period -
+			   total_other_elapsed_time_period) * 100.0 / total_elapsed_time_period);
 
 		TRACE("\E[40;34m========================================================================================================================\E[0m\n");
 	}
@@ -1171,8 +1185,8 @@ tracepath_mem_trace_output(int force_output)
 					int obj_count = current->alloc_count - current->remove_count;
 					if (obj_count > 0) {
 						TRACE("\E[40;37;1m %-46.46s : %12d byte(s)(E), %9d object(s) [%9d+/%9d-]\E[0m\n",
-						      current->trace_data.name, current->memsize, obj_count, current->alloc_count,
-						      current->remove_count);
+							  current->trace_data.name, current->memsize, obj_count, current->alloc_count,
+							  current->remove_count);
 					}
 					current = (Memuse_Data *)current->trace_data.next;
 				}
@@ -1187,8 +1201,8 @@ tracepath_mem_trace_output(int force_output)
 					int obj_count = current->alloc_count - current->remove_count;
 					if (obj_count == 0) {
 						TRACE(" %-46.46s : %12d byte(s)(E), %9d object(s) [%9d+/%9d-]\n",
-						      current->trace_data.name, current->memsize, obj_count, current->alloc_count,
-						      current->remove_count);
+							  current->trace_data.name, current->memsize, obj_count, current->alloc_count,
+							  current->remove_count);
 					}
 					current = (Memuse_Data *)current->trace_data.next;
 				}
@@ -1218,43 +1232,43 @@ png_structp (*dl_png_create_write_struct) (png_const_charp user_png_ver,
 
 
 void (*dl_png_destroy_write_struct) (png_structpp png_ptr_ptr,
-				     png_infopp info_ptr_ptr);
+									 png_infopp info_ptr_ptr);
 
 
 png_infop (*dl_png_create_info_struct) (png_structp png_ptr);
 
 void (*dl_png_init_io) (png_structp png_ptr,
-			png_FILE_p fp);
+						png_FILE_p fp);
 
 
 void (*dl_png_set_IHDR) (png_structp png_ptr,
-			 png_infop info_ptr,
-			 png_uint_32 width,
-			 png_uint_32 height,
-			 int bit_depth,
-			 int color_type,
-			 int interlace_method,
-			 int compression_method,
-			 int filter_method);
+						 png_infop info_ptr,
+						 png_uint_32 width,
+						 png_uint_32 height,
+						 int bit_depth,
+						 int color_type,
+						 int interlace_method,
+						 int compression_method,
+						 int filter_method);
 
 void (*dl_png_set_bKGD) (png_structp png_ptr,
-			 png_infop info_ptr,
-			 png_color_16p background);
+						 png_infop info_ptr,
+						 png_color_16p background);
 
 void (*dl_png_set_bgr) (png_structp png_ptr);
 
 void (*dl_png_write_info) (png_structp png_ptr,
-			   png_infop info_ptr);
+						   png_infop info_ptr);
 
 void (*dl_png_write_image) (png_structp png_ptr,
-			    png_bytepp image);
+							png_bytepp image);
 
 void (*dl_png_write_end) (png_structp png_ptr,
-			  png_infop info_ptr);
+						  png_infop info_ptr);
 
 static void
 _dump_surface(int force_output, int type, const char *position,
-	      Surface_Data *sdata)
+			  Surface_Data *sdata)
 {
 	static int alldumpcount = 0;
 	unsigned char *data = NULL;
@@ -1286,54 +1300,54 @@ _dump_surface(int force_output, int type, const char *position,
 
 	{
 		if (!png_lib_handle ||
-		    dl_png_create_write_struct == NULL ||
-		    dl_png_destroy_write_struct == NULL ||
-		    dl_png_create_info_struct == NULL ||
-		    dl_png_init_io == NULL ||
-		    dl_png_set_IHDR == NULL ||
-		    dl_png_set_bKGD == NULL ||
-		    dl_png_set_bgr == NULL ||
-		    dl_png_write_info == NULL ||
-		    dl_png_write_image == NULL ||
-		    dl_png_write_end == NULL) {
+				dl_png_create_write_struct == NULL ||
+				dl_png_destroy_write_struct == NULL ||
+				dl_png_create_info_struct == NULL ||
+				dl_png_init_io == NULL ||
+				dl_png_set_IHDR == NULL ||
+				dl_png_set_bKGD == NULL ||
+				dl_png_set_bgr == NULL ||
+				dl_png_write_info == NULL ||
+				dl_png_write_image == NULL ||
+				dl_png_write_end == NULL) {
 			COREGL_ERR("Can't trace surface : Failed to use libpng (recommend : 1.2.50-3.4)");
 			goto finish;
 		}
 
 		if (trace_surface_sequence_sort_flag == 1)
 			snprintf(name, sizeof(name), "[%d (%06d)%p-%p] %s %04d (%s).png", getpid(),
-				 alldumpcount,
-				 sdata->display, sdata->context, sdata->trace_data.name, sdata->dump_count,
-				 position);
+					 alldumpcount,
+					 sdata->display, sdata->context, sdata->trace_data.name, sdata->dump_count,
+					 position);
 		else
 			snprintf(name, sizeof(name), "[%d %p-%p] %s %04d (%s).png", getpid(),
-				 sdata->display,
-				 sdata->context, sdata->trace_data.name, sdata->dump_count, position);
+					 sdata->display,
+					 sdata->context, sdata->trace_data.name, sdata->dump_count, position);
 
 		if (!strncmp(sdata->trace_data.name, "EGL", 3) && type != 2) {
 			// EGL
 			if (trace_surface_filter_type != 0 &&
-			    trace_surface_filter_type != 1) goto finish;;
+					trace_surface_filter_type != 1) goto finish;;
 
 			if (trace_surface_filter_handle != 0 &&
-			    trace_surface_filter_handle != (uintptr_t)sdata->surface) goto finish;
+					trace_surface_filter_handle != (uintptr_t)sdata->surface) goto finish;
 
 			EGLConfig eglconfig;
 			GLint asize, rsize, gsize, bsize;
 			_orig_tracepath_eglQuerySurface(sdata->display, sdata->surface, EGL_WIDTH,
-							&width);
+											&width);
 			_orig_tracepath_eglQuerySurface(sdata->display, sdata->surface, EGL_HEIGHT,
-							&height);
+											&height);
 			_orig_tracepath_eglQuerySurface(sdata->display, sdata->surface, EGL_CONFIG_ID,
-							(GLint *)&eglconfig);
+											(GLint *)&eglconfig);
 			_orig_tracepath_eglGetConfigAttrib(sdata->display, eglconfig, EGL_ALPHA_SIZE,
-							   &asize);
+											   &asize);
 			_orig_tracepath_eglGetConfigAttrib(sdata->display, eglconfig, EGL_RED_SIZE,
-							   &rsize);
+											   &rsize);
 			_orig_tracepath_eglGetConfigAttrib(sdata->display, eglconfig, EGL_GREEN_SIZE,
-							   &gsize);
+											   &gsize);
 			_orig_tracepath_eglGetConfigAttrib(sdata->display, eglconfig, EGL_BLUE_SIZE,
-							   &bsize);
+											   &bsize);
 			channel = 4;
 			if (asize == 0) channel = 3;
 			if (bsize == 0) channel = 2;
@@ -1343,13 +1357,13 @@ _dump_surface(int force_output, int type, const char *position,
 			if (channel == 2) channel = 3;
 			if (width <= 0 || height <= 0 || channel <= 0) goto finish;
 			if (trace_surface_filter_size_w > 0 && trace_surface_filter_size_h > 0 &&
-			    (trace_surface_filter_size_w != width || trace_surface_filter_size_h != height))
+					(trace_surface_filter_size_w != width || trace_surface_filter_size_h != height))
 				goto finish;
 
 			if ((trace_surface_filter_period_begin > 0 ||
-			     trace_surface_filter_period_end > 0) &&
-			    (trace_surface_filter_period_begin > alldumpcount ||
-			     trace_surface_filter_period_end < alldumpcount)) {
+					trace_surface_filter_period_end > 0) &&
+					(trace_surface_filter_period_begin > alldumpcount ||
+					 trace_surface_filter_period_end < alldumpcount)) {
 				alldumpcount++;
 				sdata->dump_count++;
 				goto finish;
@@ -1358,7 +1372,7 @@ _dump_surface(int force_output, int type, const char *position,
 			if (channel == 3) channel = 4;
 
 			TRACE("\E[40;31;1m[[TRACE SURFACE]] : '%s' is dumped (%dx%dx%d).\E[0m\n", name,
-			      width, height, channel);
+				  width, height, channel);
 			if (trace_surface_print_only_flag == 1 && force_output == 0) {
 				alldumpcount++;
 				sdata->dump_count++;
@@ -1366,7 +1380,7 @@ _dump_surface(int force_output, int type, const char *position,
 			}
 
 			data = (unsigned char *)calloc(1,
-						       width * height * channel * sizeof(unsigned char));
+										   width * height * channel * sizeof(unsigned char));
 			if (data == NULL) {
 				COREGL_ERR("Can't trace surface : Failed to allocate memory");
 				goto finish;
@@ -1379,12 +1393,12 @@ _dump_surface(int force_output, int type, const char *position,
 			switch (channel) {
 			case 4:
 				_orig_tracepath_glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE,
-							     data);
+											 data);
 				break;
 				//case 3: _orig_tracepath_glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data); break;
 			case 1:
 				_orig_tracepath_glReadPixels(0, 0, width, height, GL_ALPHA, GL_UNSIGNED_BYTE,
-							     data);
+											 data);
 				break;
 			}
 
@@ -1395,11 +1409,11 @@ _dump_surface(int force_output, int type, const char *position,
 			if (sdata->fbo == 0) goto finish;
 
 			if (trace_surface_filter_type != 0 &&
-			    trace_surface_filter_type != 2) goto finish;
+					trace_surface_filter_type != 2) goto finish;
 
 			if (trace_surface_filter_handle != 0 &&
-			    trace_surface_filter_handle != (uintptr_t)sdata->tex &&
-			    trace_surface_filter_handle != (uintptr_t)sdata->rb) goto finish;
+					trace_surface_filter_handle != (uintptr_t)sdata->tex &&
+					trace_surface_filter_handle != (uintptr_t)sdata->rb) goto finish;
 
 			GLint oldfb;
 			_orig_tracepath_glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldfb);
@@ -1418,20 +1432,20 @@ _dump_surface(int force_output, int type, const char *position,
 				if (channel == 2) channel = 3;
 				if (width <= 0 || height <= 0 || channel <= 0) goto finish;
 				if (trace_surface_filter_size_w > 0 && trace_surface_filter_size_h > 0 &&
-				    (trace_surface_filter_size_w != width || trace_surface_filter_size_h != height))
+						(trace_surface_filter_size_w != width || trace_surface_filter_size_h != height))
 					goto finish;
 
 				if ((trace_surface_filter_period_begin > 0 ||
-				     trace_surface_filter_period_end > 0) &&
-				    (trace_surface_filter_period_begin > alldumpcount ||
-				     trace_surface_filter_period_end < alldumpcount)) {
+						trace_surface_filter_period_end > 0) &&
+						(trace_surface_filter_period_begin > alldumpcount ||
+						 trace_surface_filter_period_end < alldumpcount)) {
 					alldumpcount++;
 					sdata->dump_count++;
 					goto finish;
 				}
 
 				TRACE("\E[40;31;1m[[TRACE SURFACE]] : '%s' is dumped (%dx%dx%d).\E[0m\n", name,
-				      width, height, channel);
+					  width, height, channel);
 				if (trace_surface_print_only_flag == 1 && force_output == 0) {
 					alldumpcount++;
 					sdata->dump_count++;
@@ -1441,7 +1455,7 @@ _dump_surface(int force_output, int type, const char *position,
 				if (channel == 3) channel = 4;
 
 				data = (unsigned char *)calloc(1,
-							       width * height * channel * sizeof(unsigned char));
+											   width * height * channel * sizeof(unsigned char));
 				if (data == NULL) {
 					COREGL_ERR("Can't trace surface : Failed to allocate memory");
 					goto finish;
@@ -1475,12 +1489,12 @@ _dump_surface(int force_output, int type, const char *position,
 				switch (channel) {
 				case 4:
 					_orig_tracepath_glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE,
-								     data);
+												 data);
 					break;
 					//case 3: _orig_tracepath_glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data); break;
 				case 1:
 					_orig_tracepath_glReadPixels(0, 0, width, height, GL_ALPHA, GL_UNSIGNED_BYTE,
-								     data);
+												 data);
 					break;
 				}
 			}
@@ -1510,9 +1524,9 @@ _dump_surface(int force_output, int type, const char *position,
 		}
 
 		png = dl_png_create_write_struct(PNG_LIBPNG_VER_STRING,
-						 NULL,
-						 NULL,
-						 NULL);
+										 NULL,
+										 NULL,
+										 NULL);
 		if (png == NULL) {
 			COREGL_ERR("Can't trace surface : Failed to create write structure of png file");
 			goto finish;
@@ -1529,12 +1543,12 @@ _dump_surface(int force_output, int type, const char *position,
 		switch (channel) {
 		case 4:
 			dl_png_set_IHDR(png, info, width, height, 8, PNG_COLOR_TYPE_RGB_ALPHA,
-					PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+							PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 			break;
 			//case 3: dl_png_set_IHDR(png, info, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT); break;
 		case 1:
 			dl_png_set_IHDR(png, info, width, height, 8, PNG_COLOR_TYPE_GRAY,
-					PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+							PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 			break;
 		}
 
@@ -1580,8 +1594,8 @@ finish:
 
 void
 tracepath_surface_trace_add(const char *desc, GLDisplay dpy, GLContext ctx,
-			    GLSurface surf, GLint fbo, GLint tex, GLint rb, GLint tex_w, GLint tex_h,
-			    GLint tex_format, const char *dump)
+							GLSurface surf, GLint fbo, GLint tex, GLint rb, GLint tex_w, GLint tex_h,
+							GLint tex_format, const char *dump)
 {
 	Surface_Data *std = NULL;
 
@@ -1590,11 +1604,11 @@ tracepath_surface_trace_add(const char *desc, GLDisplay dpy, GLContext ctx,
 
 		if (std_table == NULL) {
 			std_table = (Surface_Data **)calloc(1,
-							    sizeof(Surface_Data *) * MAX_TRACE_TABLE_SIZE);
+												sizeof(Surface_Data *) * MAX_TRACE_TABLE_SIZE);
 		}
 
 		std = (Surface_Data *)_get_trace_data((Trace_Data **)std_table,
-						      sizeof(Surface_Data), desc);
+											  sizeof(Surface_Data), desc);
 
 		AST(std != NULL);
 
@@ -1641,9 +1655,9 @@ tracepath_surface_trace(int force_output, int type, const char *position)
 
 				while (current != NULL) {
 					if (current->surface != EGL_NO_SURFACE && current->display != EGL_NO_DISPLAY &&
-					    current->context != EGL_NO_CONTEXT) {
+							current->context != EGL_NO_CONTEXT) {
 						if (_orig_tracepath_eglMakeCurrent(current->display, current->surface,
-										   current->surface, current->context) == EGL_TRUE) {
+														   current->surface, current->context) == EGL_TRUE) {
 							_dump_surface(force_output, type, position, current);
 						}
 					}
