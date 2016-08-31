@@ -1352,8 +1352,14 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 {
 	void *ret = NULL;
 	EGLContext real_ctx = EGL_NO_CONTEXT;
-	EGLClientBuffer real_obj;
+	EGLClientBuffer real_obj = NULL;
 	GL_Object_Type type = 0;
+
+	if (current_gl_api_version == COREGL_GLAPI_1) {
+		ret = _orig_fastpath_eglCreateImageKHR(dpy, real_ctx, target, real_obj,
+											   attrib_list);
+		goto finish;
+	}
 
 	if ((EGLint)buffer & GL_OBJECT_TYPE_TEXTURE)
 		type = GL_OBJECT_TYPE_TEXTURE;
