@@ -1201,6 +1201,8 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 								  gctx->real_ctx_option)->attrib_list.context_major_version;
 		if (current_gl_api_version == COREGL_GLAPI_1)
 			init_export(GL_FALSE, GL_TRUE);
+		else
+			init_modules();
 
 		// Update references only when the contexts are different
 		if (tstate->cstate != gctx->cstate)  {

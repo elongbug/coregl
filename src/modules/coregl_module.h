@@ -22,7 +22,6 @@ typedef enum {
 { \
 	if (enable == 1) \
 	{ \
-		AST(orig_prefix##f == NULL); \
 		if (ovr_##f != NULL) COREGL_OVERRIDE_API(orig_prefix, f, ovr_); \
 	} \
 	else \
