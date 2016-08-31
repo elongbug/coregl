@@ -769,6 +769,10 @@ _COREGL_SYMBOL(void, glTexStorage3DMultisample, (GLenum target, GLsizei samples,
 			   GLsizei width, GLsizei height, GLsizei depth, GLboolean fixedsamplelocations))
 _COREGL_END_API(COREGL_GLAPI_32)
 
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_EXT_texture_type_2_10_10_10_REV", 2.0,
+									 -1)
+_COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_required_internalformat", 2.0, -1)
+
 _COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_OES_EGL_image", 1.1, -1)
 _COREGL_EXT_SYMBOL(void, glEGLImageTargetTexture2DOES, (GLenum target,
 				   GLeglImageOES image))
