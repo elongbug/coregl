@@ -4882,6 +4882,7 @@ void
 fastpath_glBindTransformFeedback(GLenum target, GLuint id)
 {
 	GLuint real_obj;
+	int i;
 
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
@@ -4896,6 +4897,11 @@ fastpath_glBindTransformFeedback(GLenum target, GLuint id)
 		IF_GL_SUCCESS(_orig_fastpath_glBindTransformFeedback(target, real_obj)) {
 			current_ctx->_misc_flag3 |= _MISC_FLAG3_BIT_gl_transform_feedback_binding;
 			CURR_STATE_UPDATE(gl_transform_feedback_binding, 0, real_obj)
+			CURR_STATE_CLEAR(gl_transform_feedback_buffer_binding, 0)
+			for (i = 0; i < current_ctx->gl_transform_feedback_buffer_binding_num[0]; i++) {
+				CURR_STATE_CLEAR(gl_transform_feedback_buffer_binding_array, i)
+				CURR_STATE_CLEAR(gl_transform_feedback_buffer_range_binding_array, i)
+			}
 		}
 	} else if (current_ctx->gl_transform_feedback_active[0] == GL_TRUE &&
 			   current_ctx->gl_transform_feedback_paused[0] == GL_FALSE) {
