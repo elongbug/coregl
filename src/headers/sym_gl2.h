@@ -1025,7 +1025,9 @@ _COREGL_EXT_SYMBOL_FASTPATH_PASS(glBlendEquationiOES)
 _COREGL_EXT_SYMBOL_FASTPATH_PASS(glBlendEquationSeparateiOES)
 _COREGL_EXT_SYMBOL_FASTPATH_PASS(glBlendFunciOES)
 _COREGL_EXT_SYMBOL_FASTPATH_PASS(glBlendFuncSeparateiOES)
-_COREGL_EXT_SYMBOL_FASTPATH_PASS(glColorMaskiOES)
+_COREGL_EXT_SYMBOL(void, glColorMaskiOES, (GLuint buf, GLboolean r, GLboolean g,
+				   GLboolean b,
+				   GLboolean a))
 _COREGL_EXT_SYMBOL_FASTPATH_PASS(glIsEnablediOES)
 
 _COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_EXT_draw_buffers_indexed", 2.0, -1)

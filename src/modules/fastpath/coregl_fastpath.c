@@ -436,6 +436,8 @@ fastpath_apply_overrides_gl(int enable)
 		COREGL_OVERRIDE(fastpath_, glClearDepthf);
 		COREGL_OVERRIDE(fastpath_, glClearStencil);
 		COREGL_OVERRIDE(fastpath_, glColorMask);
+		COREGL_OVERRIDE(fastpath_, glColorMaski);
+		COREGL_OVERRIDE(fastpath_, glColorMaskiOES);
 		COREGL_OVERRIDE(fastpath_, glCullFace);
 		COREGL_OVERRIDE(fastpath_, glDepthFunc);
 		COREGL_OVERRIDE(fastpath_, glDepthMask);
@@ -2144,11 +2146,15 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	// _clear_flag2
 	flag = oldctx->_clear_flag2 | newctx->_clear_flag2;
 	if (flag) {
-		if STATES_COMPARE(gl_color_writemask, 4 * sizeof(GLboolean)) {
-			CHECK_GL_ERROR(_orig_fastpath_glColorMask(newctx->gl_color_writemask[0],
-						   newctx->gl_color_writemask[1],
-						   newctx->gl_color_writemask[2],
-						   newctx->gl_color_writemask[3]))
+		if STATES_COMPARE(gl_color_writemask,
+						  4 * newctx->gl_color_writemask_num[0] * sizeof(GLboolean)) {
+			for (i = 0; i < newctx->gl_color_writemask_num[0]; i++) {
+				CHECK_GL_ERROR(_orig_fastpath_glColorMaski(i,
+							   (newctx->gl_color_writemask + i)[0],
+							   (newctx->gl_color_writemask + i)[1],
+							   (newctx->gl_color_writemask + i)[2],
+							   (newctx->gl_color_writemask + i)[3]))
+			}
 		}
 		if STATES_COMPARE(gl_depth_range, 2 * sizeof(GLclampf)) {
 			CHECK_GL_ERROR(_orig_fastpath_glDepthRangef(newctx->gl_depth_range[0],

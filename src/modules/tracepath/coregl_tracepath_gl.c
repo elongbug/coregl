@@ -8570,6 +8570,18 @@ finish:
 	_COREGL_TRACEPATH_FUNC_END();
 }
 
+void
+tracepath_glColorMaskiOES(GLuint index, GLboolean r, GLboolean g, GLboolean b,
+						  GLboolean a)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glColorMaskiOES(index, r, g, b, a);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
 GLboolean
 tracepath_glIsEnabledi(GLenum target, GLuint index)
 {

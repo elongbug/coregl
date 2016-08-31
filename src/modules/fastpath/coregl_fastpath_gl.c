@@ -3151,17 +3151,78 @@ fastpath_glColorMask(GLboolean red, GLboolean green, GLboolean blue,
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
 	INIT_FASTPATH_GL_FUNC();
+	GLint index;
+	GLboolean changed = GL_FALSE;
 
-	if (CURR_STATE_COMPARE(gl_color_writemask, 0, red) ||
-			CURR_STATE_COMPARE(gl_color_writemask, 1, green) ||
-			CURR_STATE_COMPARE(gl_color_writemask, 2, blue) ||
-			CURR_STATE_COMPARE(gl_color_writemask, 3, alpha))	{
+	for (index = 0; index < current_ctx->gl_color_writemask_num[0]; index++) {
+		if (CURR_STATE_COMPARE(gl_color_writemask, 0 + 4 * index, red) ||
+				CURR_STATE_COMPARE(gl_color_writemask, 1 + 4 * index, green) ||
+				CURR_STATE_COMPARE(gl_color_writemask, 2 + 4 * index, blue) ||
+				CURR_STATE_COMPARE(gl_color_writemask, 3 + 4 * index, alpha))
+			changed = GL_TRUE;
+	}
+
+	if (changed) {
 		IF_GL_SUCCESS(_orig_fastpath_glColorMask(red, green, blue, alpha)) {
 			current_ctx->_clear_flag2 |= _CLEAR_FLAG2_BIT_gl_color_writemask;
-			CURR_STATE_UPDATE(gl_color_writemask, 0, red)
-			CURR_STATE_UPDATE(gl_color_writemask, 1, green)
-			CURR_STATE_UPDATE(gl_color_writemask, 2, blue)
-			CURR_STATE_UPDATE(gl_color_writemask, 3, alpha)
+			for (index = 0; index < current_ctx->gl_color_writemask_num[0]; index++) {
+				CURR_STATE_UPDATE(gl_color_writemask, 0 + 4 * index, red)
+				CURR_STATE_UPDATE(gl_color_writemask, 1 + 4 * index, green)
+				CURR_STATE_UPDATE(gl_color_writemask, 2 + 4 * index, blue)
+				CURR_STATE_UPDATE(gl_color_writemask, 3 + 4 * index, alpha)
+			}
+		}
+	}
+	goto finish;
+
+finish:
+	_COREGL_FASTPATH_FUNC_END();
+}
+
+void
+fastpath_glColorMaski(GLuint buf, GLboolean r, GLboolean g, GLboolean b,
+					  GLboolean a)
+{
+	DEFINE_FASTPAH_GL_FUNC();
+	_COREGL_FASTPATH_FUNC_BEGIN();
+	INIT_FASTPATH_GL_FUNC();
+
+	if (CURR_STATE_COMPARE(gl_color_writemask, 0 + 4 * buf, r) ||
+			CURR_STATE_COMPARE(gl_color_writemask, 1 + 4 * buf, g) ||
+			CURR_STATE_COMPARE(gl_color_writemask, 2 + 4 * buf, b) ||
+			CURR_STATE_COMPARE(gl_color_writemask, 3 + 4 * buf, a))	{
+		IF_GL_SUCCESS(_orig_fastpath_glColorMaski(buf, r, g, b, a)) {
+			current_ctx->_clear_flag2 |= _CLEAR_FLAG2_BIT_gl_color_writemask;
+			CURR_STATE_UPDATE(gl_color_writemask, 0 + 4 * buf, r)
+			CURR_STATE_UPDATE(gl_color_writemask, 1 + 4 * buf, g)
+			CURR_STATE_UPDATE(gl_color_writemask, 2 + 4 * buf, b)
+			CURR_STATE_UPDATE(gl_color_writemask, 3 + 4 * buf, a)
+		}
+	}
+	goto finish;
+
+finish:
+	_COREGL_FASTPATH_FUNC_END();
+}
+
+void
+fastpath_glColorMaskiOES(GLuint buf, GLboolean r, GLboolean g, GLboolean b,
+						 GLboolean a)
+{
+	DEFINE_FASTPAH_GL_FUNC();
+	_COREGL_FASTPATH_FUNC_BEGIN();
+	INIT_FASTPATH_GL_FUNC();
+
+	if (CURR_STATE_COMPARE(gl_color_writemask, 0 + 4 * buf, r) ||
+			CURR_STATE_COMPARE(gl_color_writemask, 1 + 4 * buf, g) ||
+			CURR_STATE_COMPARE(gl_color_writemask, 2 + 4 * buf, b) ||
+			CURR_STATE_COMPARE(gl_color_writemask, 3 + 4 * buf, a))	{
+		IF_GL_SUCCESS(_orig_fastpath_glColorMaskiOES(buf, r, g, b, a)) {
+			current_ctx->_clear_flag2 |= _CLEAR_FLAG2_BIT_gl_color_writemask;
+			CURR_STATE_UPDATE(gl_color_writemask, 0 + 4 * buf, r)
+			CURR_STATE_UPDATE(gl_color_writemask, 1 + 4 * buf, g)
+			CURR_STATE_UPDATE(gl_color_writemask, 2 + 4 * buf, b)
+			CURR_STATE_UPDATE(gl_color_writemask, 3 + 4 * buf, a)
 		}
 	}
 	goto finish;

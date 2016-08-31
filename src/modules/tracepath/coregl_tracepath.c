@@ -72,6 +72,7 @@ typedef struct _GLGlueFakeContext {
 	GLuint gl_uniform_buffer_binding_num[1];
 	GLuint gl_shader_storage_buffer_binding_num[1];
 	GLuint gl_atomic_counter_buffer_binding_num[1];
+	GLuint gl_color_writemask_num[1];
 } GLGlueFakeContext;
 
 GLGlueFakeContext initial_fake_ctx_real;
