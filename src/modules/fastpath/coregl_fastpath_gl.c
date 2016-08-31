@@ -880,7 +880,7 @@ void
 fastpath_glBindBuffer(GLenum target, GLuint buffer)
 {
 	GLuint real_obj;
-	int index;
+	int i;
 
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
@@ -889,14 +889,6 @@ fastpath_glBindBuffer(GLenum target, GLuint buffer)
 	/* in case of user didn't call glGenBuffer first */
 	if (GET_REAL_OBJ(GL_OBJECT_TYPE_BUFFER, buffer, &real_obj) != 1)
 		real_obj = buffer;
-
-	/* clear states set in fastpath_glBindBufferBase() */
-#define BIND_STATE_ARRAY_CLEAR(gl_state)						\
-	if (buffer == 0) {											\
-		for(index = 0; index < current_ctx->gl_state##_num[0]; index++)	{	\
-			CURR_STATE_CLEAR(gl_state##_array, index)				\
-		}															\
-	}
 
 #define STATE_PROC(gl_state, flagid, flagbit) \
 	if(buffer == 0) {	\
@@ -942,21 +934,33 @@ fastpath_glBindBuffer(GLenum target, GLuint buffer)
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 		STATE_PROC_WITH_CHECK(gl_transform_feedback_buffer_binding, _bind_flag2,
 							  _BIND_FLAG2_BIT);
-		BIND_STATE_ARRAY_CLEAR(gl_transform_feedback_buffer_binding);
+		for (i = 0; i < current_ctx->gl_transform_feedback_buffer_binding_num[0]; i++) {
+			CURR_STATE_CLEAR(gl_transform_feedback_buffer_binding_array, i)
+			CURR_STATE_CLEAR(gl_transform_feedback_buffer_range_binding_array, i)
+		}
 		break;
 	case GL_UNIFORM_BUFFER:
 		STATE_PROC_WITH_CHECK(gl_uniform_buffer_binding, _bind_flag2, _BIND_FLAG2_BIT);
-		BIND_STATE_ARRAY_CLEAR(gl_uniform_buffer_binding);
+		for (i = 0; i < current_ctx->gl_uniform_buffer_binding_num[0]; i++) {
+			CURR_STATE_CLEAR(gl_uniform_buffer_binding_array, i)
+			CURR_STATE_CLEAR(gl_uniform_buffer_range_binding_array, i)
+		}
 		break;
 	case GL_SHADER_STORAGE_BUFFER:
 		STATE_PROC_WITH_CHECK(gl_shader_storage_buffer_binding, _bind_flag3,
 							  _BIND_FLAG3_BIT);
-		BIND_STATE_ARRAY_CLEAR(gl_shader_storage_buffer_binding);
+		for (i = 0; i < current_ctx->gl_shader_storage_buffer_binding_num[0]; i++) {
+			CURR_STATE_CLEAR(gl_shader_storage_buffer_binding_array, i)
+			CURR_STATE_CLEAR(gl_shader_storage_buffer_range_binding_array, i)
+		}
 		break;
 	case GL_ATOMIC_COUNTER_BUFFER:
 		STATE_PROC_WITH_CHECK(gl_atomic_counter_buffer_binding, _bind_flag3,
 							  _BIND_FLAG3_BIT);
-		BIND_STATE_ARRAY_CLEAR(gl_atomic_counter_buffer_binding);
+		for (i = 0; i < current_ctx->gl_atomic_counter_buffer_binding_num[0]; i++) {
+			CURR_STATE_CLEAR(gl_atomic_counter_buffer_binding_array, i)
+			CURR_STATE_CLEAR(gl_atomic_counter_buffer_range_binding_array, i)
+		}
 		break;
 	case GL_DRAW_INDIRECT_BUFFER:
 		STATE_PROC_WITH_CHECK(gl_draw_indirect_buffer_binding, _bind_flag3,
@@ -987,6 +991,7 @@ void
 fastpath_glBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 {
 	GLuint real_obj;
+	int i;
 
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
@@ -1010,16 +1015,28 @@ fastpath_glBindBufferBase(GLenum target, GLuint index, GLuint buffer)
 	switch (target) {
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 		STATE_PROC(gl_transform_feedback_buffer_binding, _bind_flag2, _BIND_FLAG2_BIT);
-		break;
+		CURR_STATE_CLEAR(gl_transform_feedback_buffer_binding, 0)
+		for (i = 0; i < current_ctx->gl_transform_feedback_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_transform_feedback_buffer_range_binding_array, i)
+			break;
 	case GL_UNIFORM_BUFFER:
 		STATE_PROC(gl_uniform_buffer_binding, _bind_flag2, _BIND_FLAG2_BIT);
-		break;
+		CURR_STATE_CLEAR(gl_uniform_buffer_binding, 0)
+		for (i = 0; i < current_ctx->gl_uniform_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_uniform_buffer_range_binding_array, i)
+			break;
 	case GL_SHADER_STORAGE_BUFFER:
 		STATE_PROC(gl_shader_storage_buffer_binding, _bind_flag3, _BIND_FLAG3_BIT);
-		break;
+		CURR_STATE_CLEAR(gl_shader_storage_buffer_binding, 0)
+		for (i = 0; i < current_ctx->gl_shader_storage_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_shader_storage_buffer_range_binding_array, i)
+			break;
 	case GL_ATOMIC_COUNTER_BUFFER:
 		STATE_PROC(gl_atomic_counter_buffer_binding, _bind_flag3, _BIND_FLAG3_BIT);
-		break;
+		CURR_STATE_CLEAR(gl_atomic_counter_buffer_binding, 0)
+		for (i = 0; i < current_ctx->gl_atomic_counter_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_atomic_counter_buffer_range_binding_array, i)
+			break;
 	default:
 		_set_gl_error(GL_INVALID_ENUM);
 		break;
@@ -1039,6 +1056,7 @@ fastpath_glBindBufferRange(GLenum target, GLuint index, GLuint buffer,
 						   GLintptr offset, GLsizeiptr size)
 {
 	GLuint real_obj;
+	int i;
 
 	DEFINE_FASTPAH_GL_FUNC();
 	_COREGL_FASTPATH_FUNC_BEGIN();
@@ -1068,18 +1086,30 @@ fastpath_glBindBufferRange(GLenum target, GLuint index, GLuint buffer,
 	case GL_TRANSFORM_FEEDBACK_BUFFER:
 		STATE_PROC(gl_transform_feedback_buffer_range_binding, _bind_flag4,
 				   _BIND_FLAG4_BIT_);
-		break;
+		CURR_STATE_CLEAR(gl_transform_feedback_buffer_binding, 0);
+		for (i = 0; i < current_ctx->gl_transform_feedback_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_transform_feedback_buffer_binding_array, i)
+			break;
 	case GL_UNIFORM_BUFFER:
 		STATE_PROC(gl_uniform_buffer_range_binding, _bind_flag4, _BIND_FLAG4_BIT_);
-		break;
+		CURR_STATE_CLEAR(gl_uniform_buffer_binding, 0);
+		for (i = 0; i < current_ctx->gl_uniform_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_uniform_buffer_binding_array, i)
+			break;
 	case GL_SHADER_STORAGE_BUFFER:
 		STATE_PROC(gl_shader_storage_buffer_range_binding, _bind_flag4,
 				   _BIND_FLAG4_BIT_);
-		break;
+		CURR_STATE_CLEAR(gl_shader_storage_buffer_binding, 0);
+		for (i = 0; i < current_ctx->gl_shader_storage_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_shader_storage_buffer_binding_array, i)
+			break;
 	case GL_ATOMIC_COUNTER_BUFFER:
 		STATE_PROC(gl_atomic_counter_buffer_range_binding, _bind_flag4,
 				   _BIND_FLAG4_BIT_);
-		break;
+		CURR_STATE_CLEAR(gl_atomic_counter_buffer_binding, 0);
+		for (i = 0; i < current_ctx->gl_atomic_counter_buffer_binding_num[0]; i++)
+			CURR_STATE_CLEAR(gl_atomic_counter_buffer_binding_array, i)
+			break;
 	default:
 		_set_gl_error(GL_INVALID_ENUM);
 		break;
@@ -1092,6 +1122,7 @@ fastpath_glBindBufferRange(GLenum target, GLuint index, GLuint buffer,
 finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
+
 
 GLboolean
 fastpath_glIsBuffer(GLuint buffer)
