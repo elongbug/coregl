@@ -2452,7 +2452,8 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 		if STATE_COMPARE(gl_read_buffer[0]) {
 			CHECK_GL_ERROR(_orig_fastpath_glReadBuffer(newctx->gl_read_buffer[0]))
 		}
-		if STATES_COMPARE(gl_draw_buffers, 16 * sizeof(GLenum)) {
+		if STATES_COMPARE(gl_draw_buffers,
+						  oldctx->gl_draw_buffers_num[0] * sizeof(GLenum)) {
 			int drawBuffSize = 16;
 			/* If the  context has only default framebuffer, then size of glDrawBuffers can only be 1 */
 			if (fastpath_ostate_has_object_type(&newctx->ostate,
