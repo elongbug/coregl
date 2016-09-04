@@ -1066,6 +1066,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 	EGLBoolean ret = EGL_FALSE;
 	EGLBoolean need_mc = EGL_FALSE;
 	GLGlueContext *gctx = NULL;
+	int api_version;
 
 	MY_MODULE_TSTATE *tstate = NULL;
 
@@ -1197,12 +1198,19 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 			goto finish;
 		}
 
-		current_gl_api_version = ((EGL_packed_option *)
-								  gctx->real_ctx_option)->attrib_list.context_major_version;
-		if (current_gl_api_version == COREGL_GLAPI_1)
-			init_export(GL_FALSE, GL_TRUE);
-		else
-			init_modules();
+		api_version = ((EGL_packed_option *)
+					   gctx->real_ctx_option)->attrib_list.context_major_version;
+		if (!current_gl_api_version)
+			current_gl_api_version = api_version;
+		else {
+			if (current_gl_api_version != api_version) {
+				if (api_version == COREGL_GLAPI_1)
+					init_export(GL_FALSE, GL_TRUE);
+				else
+					init_modules();
+				current_gl_api_version = api_version;
+			}
+		}
 
 		// Update references only when the contexts are different
 		if (tstate->cstate != gctx->cstate)  {
