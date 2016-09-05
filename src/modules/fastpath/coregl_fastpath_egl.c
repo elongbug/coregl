@@ -1200,15 +1200,27 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 
 		api_version = ((EGL_packed_option *)
 					   gctx->real_ctx_option)->attrib_list.context_major_version;
-		if (!current_gl_api_version)
-			current_gl_api_version = api_version;
-		else {
-			if (current_gl_api_version != api_version) {
-				if (api_version == COREGL_GLAPI_1)
-					init_export(GL_FALSE, GL_TRUE);
-				else
-					init_modules();
+
+		// Change overriding for modules according to new API version
+		if (USE_TRACEPATH || (fp_opt == FP_FAST_PATH)) {
+			if (!current_gl_api_version) {
 				current_gl_api_version = api_version;
+				if (current_gl_api_version == COREGL_GLAPI_1) {
+					init_export(GL_FALSE, GL_TRUE);
+					COREGL_LOG("[CoreGL] : Default API path reseted...\n");
+				}
+			} else {
+				if (current_gl_api_version != api_version) {
+					// API version becomes 1.x from higher
+					if (api_version == COREGL_GLAPI_1) {
+						init_export(GL_FALSE, GL_TRUE);
+						COREGL_LOG("[CoreGL] : Default API path reseted...\n");
+					}
+					// API version becomes higher from 1.x
+					if (current_gl_api_version == COREGL_GLAPI_1)
+						init_modules();
+					current_gl_api_version = api_version;
+				}
 			}
 		}
 
