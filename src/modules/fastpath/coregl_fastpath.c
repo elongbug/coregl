@@ -1835,7 +1835,8 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 						   newctx->gl_element_array_buffer_binding[0]))
 		}
 
-		if (newctx->gl_framebuffer_binding_read_used == 1) {
+		if (newctx->gl_framebuffer_binding_read_used == 1 &&
+				newctx->gl_framebuffer_binding_draw_used == 1) {
 			if STATE_COMPARE(gl_framebuffer_binding_read[0]) {
 				if (driver_gl_version >= 2)
 					CHECK_GL_ERROR(_orig_fastpath_glBindFramebuffer(GL_READ_FRAMEBUFFER,

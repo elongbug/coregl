@@ -247,9 +247,9 @@ _COREGL_END_API(COREGL_GLAPI_3)
 GLUE_STATE(GLuint, gl_framebuffer_binding, 1, 1, SET_1(0),
 		   _sym_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint *)value);)
 GLUE_STATE(GLuint, gl_framebuffer_binding_read, 1, 1, SET_1(0),
-		   _sym_glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING_ANGLE, (GLint *)value);)
+		   _sym_glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, (GLint *)value);)
 GLUE_STATE(GLuint, gl_framebuffer_binding_draw, 1, 1, SET_1(0),
-		   _sym_glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING_ANGLE, (GLint *)value);)
+		   _sym_glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, (GLint *)value);)
 GLUE_STATE(GLuint, gl_renderbuffer_binding, 1, 1, SET_1(0),
 		   _sym_glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint *)value);)
 
