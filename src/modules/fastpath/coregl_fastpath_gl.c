@@ -247,7 +247,7 @@ void
 fastpath_release_gl_context(GLGlueContext *gctx)
 {
 	// Release program
-	if (gctx->gl_current_program[0] != 0) {
+	if (gctx->gl_current_program && gctx->gl_current_program[0] != 0) {
 		_detach_program_object(&gctx->ostate, gctx->gl_current_program[0], 1, 0);
 		gctx->gl_current_program[0] = 0;
 	}
