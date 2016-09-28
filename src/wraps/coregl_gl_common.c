@@ -43,7 +43,7 @@ __attribute__((constructor))
 int
 coregl_glwrap_init_common()
 {
-	lib_handle_common = dlopen("libCOREGL.so", RTLD_NOW);
+	lib_handle_common = dlopen(_COREGL_LIB, RTLD_NOW);
 	if (!lib_handle_common) {
 		LOGE(" \E[40;31;1m%s\E[0m\n\n", dlerror());
 		LOGE(" \E[40;31;1mInvalid library link! (Check linkage of libEGL -> libCOREGL)\E[0m\n");
