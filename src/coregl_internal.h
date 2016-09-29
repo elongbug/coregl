@@ -138,6 +138,7 @@ extern int                 trace_surface_print_only_flag;
 extern const char         *get_env_setting(const char *name);
 
 // Main utility functions
+extern void                cleanup_current_thread_state();
 extern int                 init_new_thread_state();
 
 // Thread functions

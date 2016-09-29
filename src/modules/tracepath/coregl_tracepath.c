@@ -462,6 +462,7 @@ init_modules_tracepath()
 void
 deinit_modules_tracepath()
 {
+	cleanup_current_thread_state();
 }
 
 void
@@ -478,8 +479,25 @@ init_modules_tstate_tracepath(GLThreadState *tstate)
 void
 deinit_modules_tstate_tracepath(GLThreadState *tstate)
 {
-	if (tstate->module_data[MY_MODULE_ID] != NULL) {
-		free(tstate->module_data[MY_MODULE_ID]);
+	int i;
+	Trace_Data *current = NULL, *next = NULL;
+	MY_MODULE_TSTATE *tstate_mt = tstate->module_data[MY_MODULE_ID];
+
+	if (tstate_mt != NULL) {
+		if(tstate_mt->ftd_table) {
+			for(i = 0; i < MAX_TRACE_TABLE_SIZE; i++) {
+				current = (Trace_Data *)tstate_mt->ftd_table[i];
+				tstate_mt->ftd_table[i] = NULL;
+
+				while(current) {
+					next = current->next;
+					free(current);
+					current = next;
+				}
+			}
+		}
+
+		free(tstate_mt);
 		tstate->module_data[MY_MODULE_ID] = NULL;
 	}
 }
