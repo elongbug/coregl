@@ -1386,7 +1386,8 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 	else if ((EGLint)buffer & GL_OBJECT_TYPE_RENDERBUFFER)
 		type = GL_OBJECT_TYPE_RENDERBUFFER;
 	else {
-		COREGL_ERR("\E[40;31;1m fastpath_eglCreateImageKHR buffer type error \E[0m\n");
+		ret = _orig_fastpath_eglCreateImageKHR(dpy, real_ctx, target, buffer,
+											   attrib_list);
 		goto finish;
 	}
 
