@@ -1376,7 +1376,7 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 	GL_Object_Type type = 0;
 
 	if (current_gl_api_version == COREGL_GLAPI_1) {
-		ret = _orig_fastpath_eglCreateImageKHR(dpy, real_ctx, target, real_obj,
+		ret = _orig_fastpath_eglCreateImageKHR(dpy, real_ctx, target, buffer,
 											   attrib_list);
 		goto finish;
 	}
