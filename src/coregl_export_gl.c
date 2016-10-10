@@ -2404,7 +2404,7 @@ coregl_api_glProgramUniform4f(GLuint program, GLint location, GLfloat x,
 void
 coregl_api_glProgramUniform1ui(GLuint program, GLint location, GLuint x)
 {
-	ovr_glProgramUniform1i(program, location, x);
+	ovr_glProgramUniform1ui(program, location, x);
 }
 
 void
