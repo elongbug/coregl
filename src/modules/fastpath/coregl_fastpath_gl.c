@@ -323,7 +323,8 @@ _valid_extension_string()
 
 #define _COREGL_SYMBOL(RET_TYPE, FUNC_NAME, PARAM_LIST)
 #define _COREGL_FASTPATH_SUPPORTED_EXTENSION(NAME, MINVER, MAXVER) \
-						if (!strcmp(fstr, NAME) && (MINVER < 0 || GLver >= MINVER) && (MAXVER < 0 || GLver <= MAXVER)) \
+						if (!strcmp(fstr, NAME) && (MINVER < 0 || GLver >= MINVER) && (MAXVER < 0 || GLver <= MAXVER) \
+							&& (sizeof(string_each_extensions[gl_extension_count]) >= strlen(fstr))) \
 						{ \
 							strcpy(string_each_extensions[gl_extension_count], fstr); \
 							strcat(string_extensions, fstr); \
