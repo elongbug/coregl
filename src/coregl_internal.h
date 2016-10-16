@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #include "coregl.h"
 
@@ -15,41 +17,117 @@
 # include "headers/sym.h"
 #undef _COREGL_SYMBOL
 
-#define COREGL_DEBUG
+#ifdef _COREGL_DEBUG
+#define COREGL_LOG_ERR  3
+#define COREGL_LOG_WARN 2
+#define COREGL_LOG_DBG  1
+#define COREGL_LOG_INIT 0
 
-///////////////////////////////////////
-// Disable dlog for debugging urgent issues //
-#ifdef COREGL_DEBUG
-//# define LOG_TAG "CoreGL"
-//# include <dlog.h>
-# define LOGE(...) fprintf(stderr, __VA_ARGS__)
-# define LOGW(...) fprintf(stderr, __VA_ARGS__)
-# define LOGD(...) fprintf(stderr, __VA_ARGS__)
+#define LOG_TAG "COREGL"
+#include <dlog.h>
+
+unsigned int coregl_log_lvl;
+unsigned int coregl_dlog_enable;
+unsigned int coregl_log_initialized;
+
+#define FONT_DEFAULT	"\033[0m"	/* for reset to default color */
+#define FONT_RED		"\033[31m"	/* for error logs */
+#define FONT_YELLOW		"\033[33m"	/* for warning logs */
+#define FONT_GREEN		"\033[32m"	/* for debug logs */
+
+#define coregl_log_e(t, f, x...)											\
+	do {																	\
+		if(coregl_dlog_enable)												\
+			LOGE(FONT_RED t " " f FONT_DEFAULT, ##x);						\
+		else																\
+			fprintf(stderr, FONT_RED t "[(pid:%d)(%s)] " f FONT_DEFAULT "\n", getpid(), __func__, ##x);\
+	} while(0)
+
+#define coregl_log_w(t, f, x...)											\
+	do {																	\
+		if(coregl_dlog_enable)												\
+			LOGW(FONT_YELLOW t " " f FONT_DEFAULT, ##x);					\
+		else																\
+			fprintf(stderr, FONT_YELLOW t "[(pid:%d)(%s)] " f FONT_DEFAULT "\n", getpid(), __func__, ##x);\
+	} while(0)
+
+#define coregl_log_d(t, f, x...)											\
+	do {																	\
+		if(coregl_dlog_enable)												\
+			LOGD(FONT_GREEN t " " f FONT_DEFAULT, ##x); 					\
+		else																\
+			fprintf(stderr, FONT_GREEN t "[(pid:%d)(%s)] " f FONT_DEFAULT "\n", getpid(), __func__, ##x);\
+	} while(0)
+
+#define LOG_INIT()										\
+	do {												\
+		if (!coregl_log_initialized) {					\
+			char *lvl = (char *)getenv("COREGL_LOG_LEVEL");	\
+			char *dlog = (char *)getenv("COREGL_TRACE_DLOG");\
+			if (lvl)									\
+				coregl_log_lvl = atoi(lvl);				\
+			else										\
+				coregl_log_lvl = _COREGL_DEFAULT_LOG_LEVEL;\
+														\
+			if (dlog)									\
+				coregl_dlog_enable = atoi(dlog);		\
+			else										\
+				coregl_dlog_enable = _COREGL_DLOG_ENABLE;\
+			coregl_log_initialized = 1;					\
+		}												\
+	}while(0)
+
+#define COREGL_ERR(f, x...)								\
+	do {												\
+		LOG_INIT();										\
+		if(coregl_dlog_enable)							\
+			coregl_log_e("[COREGL_ERROR]", f, ##x);		\
+		else {											\
+			if (coregl_log_lvl > COREGL_LOG_INIT 		\
+				&& coregl_log_lvl <= COREGL_LOG_ERR)	\
+				coregl_log_e("[COREGL_ERROR]", f, ##x);	\
+		}												\
+	}while(0)
+
+#define COREGL_WARN(f, x...)							\
+	do {												\
+		LOG_INIT();										\
+		if(coregl_dlog_enable) 							\
+			coregl_log_w("[COREGL_WARN]", f, ##x); 		\
+		else {											\
+			if (coregl_log_lvl > COREGL_LOG_INIT 		\
+				&& coregl_log_lvl <= COREGL_LOG_WARN)	\
+				coregl_log_w("[COREGL_WARN]", f, ##x); 	\
+		}												\
+	}while(0)
+
+#define COREGL_DBG(f, x...)								\
+	do {												\
+		LOG_INIT();										\
+		if(coregl_dlog_enable) 							\
+			coregl_log_d("[COREGL_DBG]", f, ##x);		\
+		else{											\
+			if (coregl_log_lvl > COREGL_LOG_INIT 		\
+				&& coregl_log_lvl <= COREGL_LOG_DBG)	\
+				coregl_log_d("[COREGL_DBG]", f, ##x); 	\
+		}												\
+	}while(0)
+#else
+#define COREGL_ERR(f, x...)
+#define COREGL_WARN(f, x...)
+#define COREGL_DBG(f, x...)
 #endif
-///////////////////////////////////////
 
-# define COREGL_ERR(...) \
-     LOGE(" "__VA_ARGS__)
-# define COREGL_WRN(...) \
-     LOGW(" "__VA_ARGS__)
-# ifdef COREGL_DEBUG
-#  define COREGL_DBG(...) \
-     LOGD(" "__VA_ARGS__)
-# else
-#  define COREGL_DBG(...)
-# endif
-
-# define COREGL_LOG(...) \
-     LOGD(" "__VA_ARGS__)
+#define TRACE(...) 							\
+	do {									\
+		if (trace_fp != NULL) 				\
+			fprintf(trace_fp, __VA_ARGS__); \
+		else 								\
+			fprintf(stderr, __VA_ARGS__);	\
+	} while(0)
 
 
-# define TRACE(...) \
-     if (trace_fp != NULL) \
-       fprintf(trace_fp, __VA_ARGS__); \
-     else \
-       LOGD(" "__VA_ARGS__)
-
-# define TRACE_END() \
+#define TRACE_END() \
      if (trace_fp != NULL) \
        fflush(trace_fp)
 #define _COREGL_TRACE_OUTPUT_INTERVAL_SEC 5
@@ -64,11 +142,11 @@ static inline GLuint GET_UINT_FROM_FLOAT(GLfloat value)
 }
 
 
-#ifdef COREGL_DEBUG
-# define AST(expr) \
+#ifdef _COREGL_DEBUG
+#define AST(expr) \
      if (!(expr)) { LOGE("\E[40;31;1m%s(%d) error. '"#expr"'\E[0m\n", __func__, __LINE__); }
 #else
-# define AST(expr) \
+#define AST(expr) \
      if (expr)
 #endif
 

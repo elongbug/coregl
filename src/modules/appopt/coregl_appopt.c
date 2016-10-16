@@ -13,9 +13,6 @@
 void
 init_modules_appopt()
 {
-//	COREGL_LOG("[CoreGL] <Appopt> : ");
-
-//	COREGL_LOG("Not yet implemented\n");
 }
 
 void

@@ -68,7 +68,7 @@ set_current_thread_state(GLThreadState *tstate)
 
 	if (thread_key_inited == 0) {
 		if (pthread_key_create(&thread_key, NULL) != 0) {
-			COREGL_ERR("Failed to create thread key.\n");
+			COREGL_ERR("Failed to create thread key.");
 			ret = 0;
 			goto finish;
 		}
@@ -76,7 +76,7 @@ set_current_thread_state(GLThreadState *tstate)
 	}
 
 	if (pthread_setspecific(thread_key, (void *)tstate) != 0) {
-		COREGL_ERR("Failed to set thread data.\n");
+		COREGL_ERR("Failed to set thread data.");
 		ret = 0;
 		goto finish;
 	}

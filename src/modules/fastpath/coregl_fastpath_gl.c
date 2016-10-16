@@ -43,7 +43,7 @@
    GET_MY_TSTATE(tstate, get_current_thread_state()); \
    if (tstate == NULL || tstate->cstate == NULL) \
    { \
-		COREGL_WRN("\E[40;31;1m'%s' called when GLES context is not binded (Check MakeCurrent)!\E[0m\n", __func__); \
+		COREGL_WARN("'%s' called when GLES context is not binded (Check MakeCurrent)!", __func__); \
 		goto finish; \
    } \
    current_ctx = (GLGlueContext *)tstate->cstate->data; \
@@ -436,13 +436,13 @@ fastpath_glGetString(GLenum name)
 		IF_GL_SUCCESS(ret = (const char *)_orig_fastpath_glGetString(name)) {
 			double GLver = _get_gl_version();
 			if (GLver > 3.2f) {
-				COREGL_WRN("\E[40;31;1mFastpath can't support %s (Fixed to %s)\E[0m\n", ret,
-						   string_gles32);
+				COREGL_WARN("Fastpath can't support %s (Fixed to %s)", ret,
+							string_gles32);
 				ret = string_gles32;
 			}
 			if (GLver < 1.1) {
-				COREGL_WRN("\E[40;31;1mFastpath can't support %s (Fixed to %s)\E[0m\n", ret,
-						   string_gles11);
+				COREGL_WARN("Fastpath can't support %s (Fixed to %s)", ret,
+							string_gles11);
 				ret = string_gles11;
 			}
 		}

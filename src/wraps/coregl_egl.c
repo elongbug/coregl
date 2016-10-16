@@ -3,17 +3,9 @@
 
 # include <EGL/eglplatform.h>
 # include "../headers/egl.h"
+# include "../coregl_internal.h"
 
 typedef void (*_eng_fn) (void);
-
-///////////////////////////////////////
-// Disable dlog for debugging urgent issues //
-//#define LOG_TAG "CoreGL_EGL"
-//#include <dlog.h>
-#define LOGE(...) fprintf(stderr, __VA_ARGS__)
-#define LOGW(...) fprintf(stderr, __VA_ARGS__)
-#define LOGD(...) fprintf(stderr, __VA_ARGS__)
-///////////////////////////////////////
 
 #define COREGL_API           __attribute__((visibility("default")))
 
@@ -39,8 +31,8 @@ coregl_glwrap_init()
 {
 	lib_handle = dlopen(_COREGL_LIB, RTLD_NOW);
 	if (!lib_handle) {
-		LOGE(" \E[40;31;1m%s\E[0m\n\n", dlerror());
-		LOGE(" \E[40;31;1mInvalid library link! (Check linkage of libEGL -> libCOREGL)\E[0m\n");
+		COREGL_ERR("%s", dlerror());
+		COREGL_ERR("Invalid library link! (Check linkage of libEGL -> libCOREGL)");
 		return 0;
 	}
 
@@ -48,8 +40,8 @@ coregl_glwrap_init()
    ovr_##FUNC_NAME = (__typeof__(ovr_##FUNC_NAME))dlsym(lib_handle, "coregl_api_"#FUNC_NAME); \
 	if (ovr_##FUNC_NAME == NULL) \
 	{ \
-		LOGE("\E[40;31;1mCan't find a symbol '%s'!\E[0m\n\n", #FUNC_NAME); \
-		LOGE("\E[40;31;1mInvalid library link! (Check linkage of libEGL -> libCOREGL)\E[0m\n"); \
+		COREGL_ERR("Can't find a symbol '%s'!", #FUNC_NAME); \
+		COREGL_ERR("Invalid library link! (Check linkage of libEGL -> libCOREGL)"); \
 	}
 
 #define _COREGL_EXT_SYMBOL(RET_TYPE, FUNC_NAME, PARAM_LIST)

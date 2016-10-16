@@ -417,45 +417,45 @@ init_modules_tracepath()
 #endif
 
 	if (USE_TRACEPATH) {
-		COREGL_LOG("[CoreGL] \E[40;32;1m<Trace> \E[40;37;1m: ");
+		TRACE("[CoreGL] \E[40;32;1m<Trace> \E[40;37;1m: ");
 
 		if (trace_api_flag == 1) {
-			COREGL_LOG("\E[40;31;1m(API)\E[0m ");
-			if (trace_api_all_flag == 1) COREGL_LOG("\E[40;31;1m(API-ALL)\E[0m ");
-			if (trace_api_frame_flag == 1) COREGL_LOG("\E[40;31;1m(API-FRAME)\E[0m ");
+			TRACE("\E[40;31;1m(API)\E[0m ");
+			if (trace_api_all_flag == 1) TRACE("\E[40;31;1m(API-ALL)\E[0m ");
+			if (trace_api_frame_flag == 1) TRACE("\E[40;31;1m(API-FRAME)\E[0m ");
 		}
 		if (trace_ctx_flag == 1) {
-			COREGL_LOG("\E[40;33;1m(CONTEXT)\E[0m ");
-			if (trace_ctx_force_flag == 1) COREGL_LOG("\E[40;33;1m(CONTEXT-FORCE)\E[0m ");
+			TRACE("\E[40;33;1m(CONTEXT)\E[0m ");
+			if (trace_ctx_force_flag == 1) TRACE("\E[40;33;1m(CONTEXT-FORCE)\E[0m ");
 		}
-		if (trace_state_flag == 1) COREGL_LOG("\E[40;36;1m(STATE)\E[0m ");
+		if (trace_state_flag == 1) TRACE("\E[40;36;1m(STATE)\E[0m ");
 		if (trace_mem_flag == 1) {
-			COREGL_LOG("\E[40;35;1m(MEM)\E[0m ");
-			if (trace_mem_all_flag == 1) COREGL_LOG("\E[40;35;1m(MEM-ALL)\E[0m ");
+			TRACE("\E[40;35;1m(MEM)\E[0m ");
+			if (trace_mem_all_flag == 1) TRACE("\E[40;35;1m(MEM-ALL)\E[0m ");
 		}
 		if (trace_surface_flag == 1) {
-			COREGL_LOG("\E[40;36;1m(SURFACE)\E[0m ");
+			TRACE("\E[40;36;1m(SURFACE)\E[0m ");
 			if (trace_surface_sequence_sort_flag == 1)
-				COREGL_LOG("\E[40;36;1m(SURFACE-SEQUENCE SORT)\E[0m ");
+				TRACE("\E[40;36;1m(SURFACE-SEQUENCE SORT)\E[0m ");
 			if (trace_surface_print_only_flag == 1)
-				COREGL_LOG("\E[40;36;1m(PRINT ONLY)\E[0m ");
+				TRACE("\E[40;36;1m(PRINT ONLY)\E[0m ");
 			if (trace_surface_filter_period_begin != 0 ||
 					trace_surface_filter_period_end != 0)
-				COREGL_LOG("\E[40;36;1m(SURFACE-PERIOD:%d~%d)\E[0m ",
-						   trace_surface_filter_period_begin, trace_surface_filter_period_end);
+				TRACE("\E[40;36;1m(SURFACE-PERIOD:%d~%d)\E[0m ",
+					  trace_surface_filter_period_begin, trace_surface_filter_period_end);
 			if (trace_surface_filter_type == 1)
-				COREGL_LOG("\E[40;36;1m(SURFACE-TYPE:EGL)\E[0m ");
+				TRACE("\E[40;36;1m(SURFACE-TYPE:EGL)\E[0m ");
 			if (trace_surface_filter_type == 2)
-				COREGL_LOG("\E[40;36;1m(SURFACE-TYPE:FBO)\E[0m ");
+				TRACE("\E[40;36;1m(SURFACE-TYPE:FBO)\E[0m ");
 			if (trace_surface_filter_handle != 0)
-				COREGL_LOG("\E[40;36;1m(SURFACE-HANDLE:%p(%ld))\E[0m ",
-						   (void *)trace_surface_filter_handle, (long int)trace_surface_filter_handle);
+				TRACE("\E[40;36;1m(SURFACE-HANDLE:%p(%ld))\E[0m ",
+					  (void *)trace_surface_filter_handle, (long int)trace_surface_filter_handle);
 			if (trace_surface_filter_size_w > 0 && trace_surface_filter_size_h > 0)
-				COREGL_LOG("\E[40;36;1m(SURFACE-SIZE:%dx%d)\E[0m ", trace_surface_filter_size_w,
-						   trace_surface_filter_size_h);
+				TRACE("\E[40;36;1m(SURFACE-SIZE:%dx%d)\E[0m ", trace_surface_filter_size_w,
+					  trace_surface_filter_size_h);
 		}
 
-		COREGL_LOG("\E[40;37;1menabled\E[0m\n");
+		TRACE("\E[40;37;1menabled\E[0m\n");
 	}
 }
 

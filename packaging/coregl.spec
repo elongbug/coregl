@@ -1,3 +1,10 @@
+#CoreGL Feature Option
+
+#CoreGL Log Level 1:Debug, 2:Warning, 3:Error
+%define COREGL_DEFAULT_LOG_LEVEL 1
+#CoreGL Log Output 1: dlog, 0: stdout
+%define COREGL_DLOG_ENABLE 1
+
 Name:			coregl
 Summary:		CoreGL FastPath Optimization
 Version:		0.1.10
@@ -39,7 +46,7 @@ packages that requires OpenGL ES 1.1 or 2.0 acceleration.
 %setup -q -n %{name}-%{version}
 
 %build
-cmake . -DCMAKE_INSTALL_PREFIX=/usr %{?extra_option}
+cmake . -DCMAKE_INSTALL_PREFIX=/usr %{?extra_option} -DCOREGL_DEFAULT_LOG_LEVEL=%{COREGL_DEFAULT_LOG_LEVEL} -DCOREGL_DLOG_ENABLE=%{COREGL_DLOG_ENABLE}
 make %{?jobs:-j%jobs}
 
 %install

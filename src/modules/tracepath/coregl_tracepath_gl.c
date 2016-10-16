@@ -130,8 +130,8 @@ _remove_glbuf_object(Glbuf_Data **glbuf, int obj_idx, const char *obj_type)
 {
 	Glbuf_Data *data = __findhash_glbuf_object(glbuf, obj_idx);
 	if (data == NULL) {
-		COREGL_WRN("\E[40;31;1mError deleting %s object %d. (is not created)\E[0m\n",
-				   obj_type, obj_idx);
+		COREGL_WARN("Error deleting %s object %d. (is not created)",
+					obj_type, obj_idx);
 		return;
 	}
 
@@ -167,7 +167,6 @@ _surface_trace_set(int set, GLint fbname, GLenum attachment,
 	if (set == 1) {
 		switch (atttype) {
 		case GL_TEXTURE:
-			//COREGL_LOG("FBO DUMPING BEGIN = (TEX)0x%X\n", attname);
 		{
 			char name[256];
 			snprintf(name, sizeof(name), "FBOTEX_0x%X", attname);
@@ -176,7 +175,6 @@ _surface_trace_set(int set, GLint fbname, GLenum attachment,
 		}
 		break;
 		case GL_RENDERBUFFER:
-			//COREGL_LOG("FBO DUMPING BEGIN = (RB)0x%X\n", attname);
 		{
 			char name[256];
 			snprintf(name, sizeof(name), "FBORB_0x%X", attname);
@@ -188,7 +186,6 @@ _surface_trace_set(int set, GLint fbname, GLenum attachment,
 	} else {
 		switch (atttype) {
 		case GL_TEXTURE:
-			//COREGL_LOG("FBO DUMPING END = (TEX)0x%X\n", attname);
 		{
 			char name[256];
 			snprintf(name, sizeof(name), "FBOTEX_0x%X", attname);
@@ -197,7 +194,6 @@ _surface_trace_set(int set, GLint fbname, GLenum attachment,
 		}
 		break;
 		case GL_RENDERBUFFER:
-			//COREGL_LOG("FBO DUMPING END = (RB)0x%X\n", attname);
 		{
 			char name[256];
 			snprintf(name, sizeof(name), "FBORB_0x%X", attname);

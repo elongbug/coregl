@@ -221,23 +221,23 @@ init_modules_fastpath()
 	int fastpath_opt = 0;
 	int fastpath_force_off_opt = 0;
 
-	COREGL_LOG("[CoreGL] <Fastpath> : ");
+	COREGL_DBG("<Fastpath> : ");
 
 	fastpath_opt = atoi(get_env_setting("COREGL_FASTPATH"));
 	fastpath_force_off_opt = atoi(get_env_setting("COREGL_FASTPATH_FORCE_OFF"));
 
 	if (fastpath_force_off_opt == 1) {
-		COREGL_LOG("\E[40;31;1m(DISABLED by force option)\E[0m ");
+		COREGL_DBG("DISABLED by force option");
 		fastpath_opt = 0;
 	}
 
 	switch (fastpath_opt) {
 	case 1:
-		COREGL_LOG("(%d) Fastpath enabled...\n", fastpath_opt);
+		COREGL_DBG("(%d) Fastpath enabled...", fastpath_opt);
 		fp_opt = FP_FAST_PATH;
 		break;
 	default:
-		COREGL_LOG("(%d) Default API path enabled...\n", fastpath_opt);
+		COREGL_DBG("(%d) Default API path enabled...", fastpath_opt);
 		fp_opt = FP_NORMAL_PATH;
 		break;
 	}
@@ -261,8 +261,8 @@ deinit_modules_fastpath()
 		current = glctx_list;
 		while (current) {
 			if (current->cstate != NULL) {
-				COREGL_WRN("\E[40;31;1mContext attached to [dpy=%p|rctx=%p] has not been completely destroyed.(leak)\E[0m\n",
-						   current->cstate->rdpy, current->cstate->rctx);
+				COREGL_WARN("Context attached to [dpy=%p|rctx=%p] has not been completely destroyed.(leak)",
+							current->cstate->rdpy, current->cstate->rctx);
 
 				_orig_fastpath_eglMakeCurrent(current->cstate->rdpy, EGL_NO_SURFACE,
 											  EGL_NO_SURFACE, EGL_NO_CONTEXT);
@@ -317,7 +317,7 @@ fastpath_apply_overrides()
 	case FP_NORMAL_PATH:
 		break;
 	default:
-		COREGL_ERR("Invalide GL Override Option!!!\n");
+		COREGL_ERR("Invalide GL Override Option!!!");
 		break;
 	}
 }
@@ -689,7 +689,7 @@ fastpath_apply_overrides_gl(int enable)
 			COREGL_OVERRIDE(fastpath_, glGetSamplerParameterIuiv);
 		}
 	} else {
-		COREGL_LOG("\E[40;35;1m[CoreGL] SKIP GL FASTPATH...\E[0m\n");
+		COREGL_DBG("SKIP GL FASTPATH...");
 	}
 }
 
@@ -826,7 +826,7 @@ fastpath_add_context_state_to_list(const void *option, const int option_len,
 
 	newitm = (GLContext_List *)calloc(1, sizeof(GLContext_List));
 	if (newitm == NULL) {
-		COREGL_ERR("Failed to create context list.\n");
+		COREGL_ERR("Failed to create context list.");
 		goto finish;
 	}
 
@@ -1494,7 +1494,7 @@ fastpath_init_context_states(GLGlueContext *ctx)
 	AST(mutex_lock(&init_context_mutex) == 1);
 
 	if (ctx == NULL) {
-		COREGL_ERR("Context NULL\n");
+		COREGL_ERR("Context NULL");
 		ret = 0;
 		goto finish;
 	}
@@ -1530,7 +1530,7 @@ fastpath_init_context_states(GLGlueContext *ctx)
                         value = valuedata; DEFAULT_STMT; value = valuedata; \
                         if (*((char *)(&value[i])) == 0xaa) \
                         { \
-                            COREGL_WRN("\E[40;31;1mGL-state '"#NAME"' cannot be retrieved\E[0m\n"); \
+                            COREGL_WARN("GL-state '"#NAME"' cannot be retrieved"); \
                             break; \
                         } \
                     } \
@@ -1588,7 +1588,7 @@ fastpath_init_context_states(GLGlueContext *ctx)
                             try_step++; \
                             if (try_step == 2) \
                             { \
-                               COREGL_WRN("\E[40;31;1mGL-state '"#NAME"' cannot be retrieved\E[0m\n"); \
+                               COREGL_WARN("GL-state '"#NAME"' cannot be retrieved"); \
                             } \
                             break; \
                          } \
@@ -1603,7 +1603,7 @@ fastpath_init_context_states(GLGlueContext *ctx)
                       { \
                          if (initial_ctx->NAME[i] != value[i]) \
                          { \
-                            COREGL_WRN("GL-state '"#NAME"'[%d] value ["PRINTF_CHAR(TYPE)"] is different from SPEC-DEFAULT ["PRINTF_CHAR(TYPE)"]\n", i, initial_ctx->NAME[i], value[i]); \
+                            COREGL_WARN("GL-state '"#NAME"'[%d] value ["PRINTF_CHAR(TYPE)"] is different from SPEC-DEFAULT ["PRINTF_CHAR(TYPE)"]", i, initial_ctx->NAME[i], value[i]); \
                          } \
                       } \
                    } \
@@ -1621,35 +1621,35 @@ fastpath_init_context_states(GLGlueContext *ctx)
 # undef _COREGL_START_API
 
 		if (initial_ctx->gl_vertex_attribs_num[0] > MAX_VERTEX_ATTRIBS) {
-			COREGL_WRN("\E[40;31;1mNumber of vertex attrib is too big! (%d-%d)\E[0m\n",
-					   MAX_VERTEX_ATTRIBS, initial_ctx->gl_vertex_attribs_num[0]);
+			COREGL_WARN("Number of vertex attrib is too big! (%d-%d)",
+						MAX_VERTEX_ATTRIBS, initial_ctx->gl_vertex_attribs_num[0]);
 		}
 		if (initial_ctx->gl_tex_units_num[0] > MAX_TEXTURE_UNITS) {
-			COREGL_WRN("\E[40;31;1mNumber of texture unit is too big! (%d-%d)\E[0m\n",
-					   MAX_TEXTURE_UNITS, initial_ctx->gl_tex_units_num[0]);
+			COREGL_WARN("Number of texture unit is too big! (%d-%d)",
+						MAX_TEXTURE_UNITS, initial_ctx->gl_tex_units_num[0]);
 		}
 		if (initial_ctx->gl_transform_feedback_buffer_binding_num[0] >
 				MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS) {
-			COREGL_WRN("\E[40;31;1mNumber of transform feedback separate attrib is too big! (%d-%d)\E[0m\n",
-					   MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
-					   initial_ctx->gl_transform_feedback_buffer_binding_num[0]);
+			COREGL_WARN("Number of transform feedback separate attrib is too big! (%d-%d)",
+						MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS,
+						initial_ctx->gl_transform_feedback_buffer_binding_num[0]);
 		}
 		if (initial_ctx->gl_uniform_buffer_binding_num[0] >
 				MAX_UNIFORM_BUFFER_BINDINGS) {
-			COREGL_WRN("\E[40;31;1mNumber of uniform buffer binding is too big! (%d-%d)\E[0m\n",
-					   MAX_UNIFORM_BUFFER_BINDINGS, initial_ctx->gl_uniform_buffer_binding_num[0]);
+			COREGL_WARN("Number of uniform buffer binding is too big! (%d-%d)",
+						MAX_UNIFORM_BUFFER_BINDINGS, initial_ctx->gl_uniform_buffer_binding_num[0]);
 		}
 		if (initial_ctx->gl_shader_storage_buffer_binding_num[0] >
 				MAX_SHADER_STORAGE_BUFFER_BINDINGS) {
-			COREGL_WRN("\E[40;31;1mNumber of shader storage buffer binding is too big! (%d-%d)\E[0m\n",
-					   MAX_SHADER_STORAGE_BUFFER_BINDINGS,
-					   initial_ctx->gl_shader_storage_buffer_binding_num[0]);
+			COREGL_WARN("Number of shader storage buffer binding is too big! (%d-%d)",
+						MAX_SHADER_STORAGE_BUFFER_BINDINGS,
+						initial_ctx->gl_shader_storage_buffer_binding_num[0]);
 		}
 		if (initial_ctx->gl_atomic_counter_buffer_binding_num[0] >
 				MAX_ATOMIC_COUNTER_BUFFER_BINDING) {
-			COREGL_WRN("\E[40;31;1mNumber of uniform buffer binding is too big! (%d-%d)\E[0m\n",
-					   MAX_ATOMIC_COUNTER_BUFFER_BINDING,
-					   initial_ctx->gl_atomic_counter_buffer_binding_num[0]);
+			COREGL_WARN("Number of uniform buffer binding is too big! (%d-%d)",
+						MAX_ATOMIC_COUNTER_BUFFER_BINDING,
+						initial_ctx->gl_atomic_counter_buffer_binding_num[0]);
 		}
 	}
 
@@ -1703,7 +1703,7 @@ extern void *tracepath_api_trace_end(const char *name, void *hint,
 		int err = _orig_fastpath_glGetError(); \
 		if (err != GL_NO_ERROR) \
 		{ \
-			COREGL_ERR("\E[40;31;1m(GL %p) : %s returns GL error 0x%X\E[0m\n", oldctx->cstate, #func, err); \
+			COREGL_ERR("(GL %p) : %s returns GL error 0x%X", oldctx->cstate, #func, err); \
 			goto finish; \
 		} \
 	}

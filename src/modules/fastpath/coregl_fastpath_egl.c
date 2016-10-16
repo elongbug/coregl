@@ -298,7 +298,7 @@ _pack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay dpy,
 			pack_data->attrib_list.opengl_reset_notification_strategy_ext = attrib[1];
 			break;
 		default:
-			COREGL_WRN("\E[40;31;1mInvalid context attribute.\E[0m\n");
+			COREGL_WARN("Invalid context attribute.");
 			goto finish;
 		}
 		attrib += 2;
@@ -660,13 +660,13 @@ _egl_create_context(EGL_packed_option *real_ctx_option,
 											   attrib_list);
 
 		if (*ctx == EGL_NO_CONTEXT) {
-			COREGL_WRN("\E[40;31;1mFailed creating a egl real context for Fastpath. (Invalid config?)\E[0m\n");
+			COREGL_WARN("Failed creating a egl real context for Fastpath. (Invalid config?)");
 			goto finish;
 		}
 
 		*cstate_new = (GLContextState *)calloc(1, sizeof(GLContextState));
 		if (*cstate_new == NULL) {
-			COREGL_ERR("\E[40;31;1mError creating a new context state. (Memory full)\E[0m\n");
+			COREGL_ERR("Error creating a new context state. (Memory full)");
 			goto finish;
 		}
 		(*cstate_new)->rctx = *ctx;
@@ -702,7 +702,7 @@ fastpath_eglBindAPI(EGLenum api)
 
 	_COREGL_FASTPATH_FUNC_BEGIN();
 	if (fp_opt == FP_UNKNOWN_PATH) {
-		COREGL_ERR("\E[40;31;1mInvalid library link! (CoreGL path option is invalid)\E[0m\n");
+		COREGL_ERR("Invalid library link! (CoreGL path option is invalid)");
 		goto finish;
 	}
 
@@ -738,7 +738,7 @@ fastpath_eglQueryAPI(void)
 
 	_COREGL_FASTPATH_FUNC_BEGIN();
 	if (fp_opt == FP_UNKNOWN_PATH) {
-		COREGL_ERR("\E[40;31;1mInvalid library link! (CoreGL path option is invalid)\E[0m\n");
+		COREGL_ERR("Invalid library link! (CoreGL path option is invalid)");
 		goto finish;
 	}
 
@@ -781,7 +781,7 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 
 	real_ctx_option = (EGL_packed_option *)calloc(1, sizeof(EGL_packed_option));
 	if (real_ctx_option == NULL) {
-		COREGL_ERR("\E[40;31;1mError creating a new GLGlueContext(Memory full 1)\E[0m\n");
+		COREGL_ERR("Error creating a new GLGlueContext(Memory full 1)");
 		goto finish;
 	}
 	cstate = _egl_create_context(real_ctx_option, &cstate_new, &ctx, dpy, config,
@@ -793,7 +793,7 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 	real_ctx_sharable_option = (EGL_packed_sharable_option *)calloc(1,
 							   sizeof(EGL_packed_sharable_option));
 	if (real_ctx_sharable_option == NULL) {
-		COREGL_ERR("\E[40;31;1mError creating a new GLGlueContext(Memory full 2)\E[0m\n");
+		COREGL_ERR("Error creating a new GLGlueContext(Memory full 2)");
 		goto finish;
 	}
 	AST(_pack_egl_context_sharable_option(real_ctx_sharable_option,
@@ -802,7 +802,7 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 	// Allocate a new context
 	newgctx = (GLGlueContext *)calloc(1, sizeof(GLGlueContext));
 	if (newgctx == NULL) {
-		COREGL_ERR("\E[40;31;1mError creating a new GLGlueContext(Memory full 3)\E[0m\n");
+		COREGL_ERR("Error creating a new GLGlueContext(Memory full 3)");
 		goto finish;
 	}
 
@@ -822,7 +822,7 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 		sostate_new = (GL_Shared_Object_State *)calloc(1,
 					  sizeof(GL_Shared_Object_State));
 		if (sostate_new == NULL) {
-			COREGL_ERR("\E[40;31;1mError creating a new GLGlueContext(Memory full 4)\E[0m\n");
+			COREGL_ERR("Error creating a new GLGlueContext(Memory full 4)");
 			goto finish;
 		}
 		fastpath_sostate_init(sostate_new);
@@ -843,7 +843,7 @@ fastpath_eglCreateContext(EGLDisplay dpy, EGLConfig config,
 		// Add glue context to list
 		gctx_list_new = (GLGlueContext_List *)calloc(1, sizeof(GLGlueContext_List));
 		if (gctx_list_new == NULL) {
-			COREGL_ERR("\E[40;31;1mError creating a new GlGlueContext(Memory full 5)\E[0m\n");
+			COREGL_ERR("Error creating a new GlGlueContext(Memory full 5)");
 			goto finish;
 		}
 
@@ -957,7 +957,7 @@ fastpath_eglDestroyContext(EGLDisplay dpy, EGLContext ctx)
 			_remove_context_ref(gctx, &ctx_list_access_mutex);
 		}
 	} else {
-		COREGL_WRN("\E[40;31;1mInvalid destroying context. (no exists)\E[0m\n");
+		COREGL_WARN("Invalid destroying context. (no exists)");
 		ret = EGL_FALSE;
 		goto finish;
 	}
@@ -1111,13 +1111,13 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 
 			if (tstate->cstate != NULL) {
 				if (_bind_context_state(NULL, tstate->cstate, &ctx_list_access_mutex) != 1) {
-					COREGL_WRN("\E[40;31;1mError soft-makecurrent for context deletion\E[0m\n");
+					COREGL_WARN("Error soft-makecurrent for context deletion");
 				}
 				tstate->cstate = NULL;
 			}
 			if (_orig_fastpath_eglMakeCurrent(dpy, draw, read, ctx) != EGL_TRUE) {
-				COREGL_WRN("Error making context [%p] current. (invalid EGL display [%p] or EGL surface [D:%p/R:%p])\n",
-						   ctx, dpy, draw, read);
+				COREGL_WARN("Error making context [%p] current. (invalid EGL display [%p] or EGL surface [D:%p/R:%p])",
+							ctx, dpy, draw, read);
 				ret = EGL_FALSE;
 				goto finish;
 			}
@@ -1134,7 +1134,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 	AST(gctx && (gctx->cstate != NULL));
 
 	if (gctx && (gctx->rdpy != dpy)) {
-		COREGL_WRN("\E[40;31;1mInvalid context (or invalid EGL display)\E[0m\n");
+		COREGL_WARN("Invalid context (or invalid EGL display)");
 		ret = EGL_FALSE;
 		goto finish;
 	}
@@ -1164,7 +1164,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 		AST(cstate_new != NULL);
 
 		if (_bind_context_state(gctx, cstate_new, &ctx_list_access_mutex) != 1) {
-			COREGL_WRN("\E[40;31;1mError soft-makecurrent in Cross-thread usage!\E[0m\n");
+			COREGL_WARN("Error soft-makecurrent in Cross-thread usage!");
 			free(cstate_new);
 			_orig_fastpath_eglDestroyContext(dpy, new_real_ctx);
 			ret = EGL_FALSE;
@@ -1172,7 +1172,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 		}
 
 		// TODO : Setup context state for new real ctx
-		COREGL_WRN("\E[40;31;1mCross-thread usage(makecurrent) can cause a state-broken situation!\E[0m\n");
+		COREGL_WARN("Cross-thread usage(makecurrent) can cause a state-broken situation!");
 
 		_unlink_context_state(gctx, &ctx_list_access_mutex);
 		_link_context_state(gctx, cstate_new);
@@ -1184,7 +1184,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 
 	// Check if the object is correct
 	if (gctx && (gctx->magic != MAGIC_GLFAST)) {
-		COREGL_ERR("\E[40;31;1mGlue-CTX Magic Check Failed!!! (Memory broken?)\E[0m\n");
+		COREGL_ERR("Glue-CTX Magic Check Failed!!! (Memory broken?)");
 		ret = EGL_FALSE;
 		goto finish;
 
@@ -1208,7 +1208,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 		// BB : full makecurrent
 		if (_orig_fastpath_eglMakeCurrent(dpy, draw, read,
 										  gctx->cstate->rctx) != EGL_TRUE) {
-			COREGL_WRN("\E[40;31;1mError making context current with the drawable. (Bad match?)\E[0m\n");
+			COREGL_WARN("Error making context current with the drawable. (Bad match?)");
 			ret = EGL_FALSE;
 			goto finish;
 		}
@@ -1222,14 +1222,14 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 				current_gl_api_version = api_version;
 				if (current_gl_api_version == COREGL_GLAPI_1) {
 					init_export(GL_FALSE, GL_TRUE);
-					COREGL_LOG("[CoreGL] : Default API path reseted...\n");
+					COREGL_DBG("Default API path reseted...");
 				}
 			} else {
 				if (current_gl_api_version != api_version) {
 					// API version becomes 1.x from higher
 					if (api_version == COREGL_GLAPI_1) {
 						init_export(GL_FALSE, GL_TRUE);
-						COREGL_LOG("[CoreGL] : Default API path reseted...\n");
+						COREGL_DBG("Default API path reseted...");
 					}
 					// API version becomes higher from 1.x
 					if (current_gl_api_version == COREGL_GLAPI_1)
@@ -1258,7 +1258,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 	// Initialize context states
 	if (gctx && (gctx->initialized == 0)) {
 		if (fastpath_init_context_states(gctx) != 1) {
-			COREGL_ERR("\E[40;31;1mError intializing context. (Check driver specification)\E[0m\n");
+			COREGL_ERR("Error intializing context. (Check driver specification)");
 			goto finish;
 		}
 	}
@@ -1429,7 +1429,7 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 		case EGL_GL_TEXTURE_3D_KHR:
 		case EGL_GL_RENDERBUFFER_KHR:
 			if (buffer == NULL) {
-				COREGL_ERR("\E[40;31;1m fastpath_eglCreateImageKHR buffer object NULL \E[0m\n");
+				COREGL_ERR("fastpath_eglCreateImageKHR buffer object NULL");
 				real_obj = NULL;
 			} else {
 				real_obj = (EGLClientBuffer)(uintptr_t)fastpath_ostate_get_object(&gctx->ostate,
@@ -1437,7 +1437,7 @@ fastpath_eglCreateImageKHR (EGLDisplay dpy, EGLContext ctx, EGLenum target,
 			}
 			break;
 		default:
-			COREGL_ERR("\E[40;31;1mError Not supported target NULL client buffer\E[0m\n");
+			COREGL_ERR("Error Not supported target NULL client buffer");
 			goto finish;
 		}
 
@@ -1512,7 +1512,7 @@ fastpath_eglGetProcAddress(const char *procname)
 #undef _COREGL_EXT_SYMBOL_FASTPATH_PASS
 #undef _COREGL_EXT_SYMBOL_FASTPATH_BLOCK
 
-		COREGL_ERR("\E[40;31;1mFASTPATH can't support '%s' (will be terminated with Illegal instruction!)\E[0m\n",
+		COREGL_ERR("FASTPATH can't support '%s' (will be terminated with Illegal instruction!)",
 				   procname);
 		assert(0);
 	}

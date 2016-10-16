@@ -3,15 +3,7 @@
 
 # include <GLES/glplatform.h>
 # include "../headers/gl.h"
-
-///////////////////////////////////////
-// Disable dlog for debugging urgent issues //
-//#define LOG_TAG "CoreGL_GLES2"
-//#include <dlog.h>
-#define LOGE(...) fprintf(stderr, __VA_ARGS__)
-#define LOGW(...) fprintf(stderr, __VA_ARGS__)
-#define LOGD(...) fprintf(stderr, __VA_ARGS__)
-///////////////////////////////////////
+# include "../coregl_internal.h"
 
 #define COREGL_API           __attribute__((visibility("default")))
 
@@ -38,8 +30,8 @@ coregl_glwrap_init()
 {
 	lib_handle = dlopen(_COREGL_LIB, RTLD_NOW);
 	if (!lib_handle) {
-		LOGE(" \E[40;31;1m%s\E[0m\n\n", dlerror());
-		LOGE(" \E[40;31;1mInvalid library link! (Check linkage of libEGL -> libCOREGL)\E[0m\n");
+		COREGL_ERR("%s", dlerror());
+		COREGL_ERR("Invalid library link! (Check linkage of libEGL -> libCOREGL)");
 		return 0;
 	}
 
@@ -47,14 +39,14 @@ coregl_glwrap_init()
 	if (set_driver_gl_version)
 		set_driver_gl_version(2);
 	else
-		LOGE("%s\n", dlerror());
+		COREGL_ERR("%s", dlerror());
 
 #define _COREGL_SYMBOL(RET_TYPE, FUNC_NAME, PARAM_LIST) \
    ovr_##FUNC_NAME = (__typeof__(ovr_##FUNC_NAME))dlsym(lib_handle, "coregl_api_"#FUNC_NAME); \
 	if (ovr_##FUNC_NAME == NULL) \
 	{ \
-		LOGE("\E[40;31;1mCan't find a symbol '%s'!\E[0m\n\n", #FUNC_NAME); \
-		LOGE("\E[40;31;1mInvalid library link! (Check linkage of libGLESv2 -> libCOREGL)\E[0m\n"); \
+		COREGL_ERR("Can't find a symbol '%s'!", #FUNC_NAME); \
+		COREGL_ERR("Invalid library link! (Check linkage of libGLESv2 -> libCOREGL)"); \
 	}
 
 #define _COREGL_EXT_SYMBOL(RET_TYPE, FUNC_NAME, PARAM_LIST)
