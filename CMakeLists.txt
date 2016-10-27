@@ -22,14 +22,23 @@ IF(${BUILD_ARCH} MATCHES "aarch64")
 SET(LIB "lib64")
 SET(LIBDIR "/usr/lib64")
 ADD_DEFINITIONS("-D_COREGL_LIB=\"/usr/lib64/libCOREGL.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_EGL_LIB_PATH=\"/usr/lib64/driver/libEGL.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_GLV2_LIB_PATH=\"/usr/lib64/driver/libGLESv2.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_GLV1_LIB_PATH=\"/usr/lib64/driver/libGLESv1_CM.so\"")
 ELSEIF(${BUILD_ARCH} MATCHES "x86_64")
 SET(LIB "lib64")
 SET(LIBDIR "/usr/lib64")
 ADD_DEFINITIONS("-D_COREGL_LIB=\"/usr/lib64/libCOREGL.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_EGL_LIB_PATH=\"/usr/lib64/driver/libEGL.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_GLV2_LIB_PATH=\"/usr/lib64/driver/libGLESv2.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_GLV1_LIB_PATH=\"/usr/lib64/driver/libGLESv1_CM.so\"")
 ELSE(${BUILD_ARCH} MATCHES "aarch64")
 SET(LIB "lib")
 SET(LIBDIR "/usr/lib")
 ADD_DEFINITIONS("-D_COREGL_LIB=\"/usr/lib/libCOREGL.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_EGL_LIB_PATH=\"/usr/lib/driver/libEGL.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_GLV2_LIB_PATH=\"/usr/lib/driver/libGLESv2.so\"")
+ADD_DEFINITIONS("-D_COREGL_VENDOR_GLV1_LIB_PATH=\"/usr/lib/driver/libGLESv1_CM.so\"")
 ENDIF(${BUILD_ARCH} MATCHES "aarch64")
 
 #################################################################
@@ -48,14 +57,6 @@ ADD_DEFINITIONS("-DPREFIX=\"${PREFIX}\"")
 
 EXEC_PROGRAM(date OUTPUT_VARIABLE COMPILE_DATE)
 ADD_DEFINITIONS("-D_COREGL_COMPILE_DATE=\"${COMPILE_DATE}\"")
-
-IF(USE_ADRENO)
-ADD_DEFINITIONS("-D_COREGL_VENDOR_EGL_LIB_PATH=\"/usr/lib/egl/libEGL.so\"")
-ADD_DEFINITIONS("-D_COREGL_VENDOR_GL_LIB_PATH=\"/usr/lib/egl/libGLESv2.so\"")
-ELSE(USE_ADRENO)
-ADD_DEFINITIONS("-D_COREGL_VENDOR_EGL_LIB_PATH=\"${LIBDIR}/driver/libEGL.so\"")
-ADD_DEFINITIONS("-D_COREGL_VENDOR_GL_LIB_PATH=\"${LIBDIR}/driver/libGLESv2.so\"")
-ENDIF(USE_ADRENO)
 
 SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} -fvisibility=hidden")
 SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} -g -O2 -fPIC -Wall -std=c99 -D_COREGL_EMBEDDED_GL")
@@ -113,8 +114,6 @@ SET(GLES2_SRCS_common
 		src/wraps/coregl_gl_common.c
 )
 
-#SET(HEADERS_common src/coregl_export.h src/coregl_fastpath.h src/coregl_fastpath_state.h src/coregl.h src/coregl_internal.h src/coregl_thread_pthread.h src/coregl_wrappath.h)
-
 INCLUDE(FindPkgConfig)
 pkg_check_modules(dlog REQUIRED dlog)
 pkg_check_modules(libpng REQUIRED libpng)
@@ -154,9 +153,3 @@ INSTALL(TARGETS ${COREGL} DESTINATION lib COMPONENT RuntimeLibraries)
 INSTALL(TARGETS ${EGL} DESTINATION lib COMPONENT RuntimeLibraries)
 INSTALL(TARGETS ${GLES1} DESTINATION lib COMPONENT RuntimeLibraries)
 INSTALL(TARGETS ${GLES2} DESTINATION lib COMPONENT RuntimeLibraries)
-
-#FOREACH(hfile ${HEADERS_common})
-#	INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/${hfile} DESTINATION include/coregl)
-#ENDFOREACH(hfile)
-#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/coregl.h DESTINATION include)
-

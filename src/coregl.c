@@ -15,18 +15,6 @@ void               *gl_lib_handle;
 int                 driver_gl_version = 0;
 static int          api_gl_version = COREGL_GLAPI_2;
 
-#ifndef _COREGL_VENDOR_EGL_LIB_PATH
-#define _COREGL_VENDOR_EGL_LIB_PATH "/usr/lib/driver/libEGL.so" /* DEFAULT EGL PATH */
-#endif
-
-#ifndef _COREGL_VENDOR_GLV2_LIB_PATH
-#define _COREGL_VENDOR_GLV2_LIB_PATH "/usr/lib/driver/libGLESv2.so" /* DEFAULT GL PATH */
-#endif
-
-#ifndef _COREGL_VENDOR_GLV1_LIB_PATH
-#define _COREGL_VENDOR_GLV1_LIB_PATH "/usr/lib/driver/libGLESv1_CM.so" /* GLV1 PATH */
-#endif
-
 // Symbol definition for real
 #define _COREGL_SYMBOL(RET_TYPE, FUNC_NAME, PARAM_LIST)     RET_TYPE (*_sym_##FUNC_NAME) PARAM_LIST;
 #include "headers/sym.h"

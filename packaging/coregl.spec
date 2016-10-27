@@ -1,5 +1,3 @@
-%define BYPASS_COREGL 0
-
 Name:			coregl
 Summary:		CoreGL FastPath Optimization
 Version:		0.1.10
@@ -41,10 +39,8 @@ packages that requires OpenGL ES 1.1 or 2.0 acceleration.
 %setup -q -n %{name}-%{version}
 
 %build
-%if "%{BYPASS_COREGL}" != "1"
 cmake . -DCMAKE_INSTALL_PREFIX=/usr %{?extra_option}
 make %{?jobs:-j%jobs}
-%endif
 
 %install
 
