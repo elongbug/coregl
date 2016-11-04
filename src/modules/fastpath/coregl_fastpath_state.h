@@ -298,6 +298,10 @@ GLUE_STATE(GLboolean, gl_color_writemask,
 		   4 * INITIAL_CTX->gl_color_writemask_num[0],
 		   SET_N(4 * INITIAL_CTX->gl_color_writemask_num[0], 1, SET_1(GL_TRUE)),
 		   _sym_glGetBooleanv(GL_COLOR_WRITEMASK, (GLboolean *)value);)
+
+GLUE_STATE(GLboolean, gl_color_writemask_for_glColorMask, 4, 4, SET_4(GL_TRUE, GL_TRUE, GL_TRUE,
+		   GL_TRUE), _sym_glGetBooleanv(GL_COLOR_WRITEMASK, (GLboolean *)value);)
+
 GLUE_STATE(GLclampf, gl_depth_range, 2, 2, SET_2(0.0f, 1.0f),
 		   _sym_glGetFloatv(GL_DEPTH_RANGE, (GLfloat *)value);)
 GLUE_STATE(GLclampf, gl_depth_clear_value, 1, 1, SET_1(1.0f),

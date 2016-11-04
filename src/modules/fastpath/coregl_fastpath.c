@@ -2157,6 +2157,12 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 							   (newctx->gl_color_writemask + i)[3]))
 			}
 		}
+		if STATES_COMPARE(gl_color_writemask_for_glColorMask, 4 * sizeof(GLboolean)) {
+			CHECK_GL_ERROR(_orig_fastpath_glColorMask(newctx->gl_color_writemask_for_glColorMask[0],
+						   newctx->gl_color_writemask_for_glColorMask[1],
+						   newctx->gl_color_writemask_for_glColorMask[2],
+						   newctx->gl_color_writemask_for_glColorMask[3]))
+		}
 		if STATES_COMPARE(gl_depth_range, 2 * sizeof(GLclampf)) {
 			CHECK_GL_ERROR(_orig_fastpath_glDepthRangef(newctx->gl_depth_range[0],
 						   newctx->gl_depth_range[1]))
