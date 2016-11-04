@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <assert.h>
+#include "../../../include_KHR/EGL/eglext.h"
 
 #ifdef COREGL_FASTPATH_TRACE_CONTEXT_INFO
 
@@ -238,7 +239,8 @@ typedef struct {
 	EGLint                        context_minor_version;
 	EGLint                        context_flags;
 	EGLint                        context_opengl_profile_mask;
-	EGLint                        opengl_reset_notification_strategy;
+	EGLint                        opengl_reset_notification_strategy_khr;
+	EGLint                        opengl_reset_notification_strategy_ext;
 } EGL_packed_attrib_list;
 
 typedef struct {
@@ -270,7 +272,8 @@ _pack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay dpy,
 	pack_data->attrib_list.context_minor_version = 0;
 	pack_data->attrib_list.context_flags = EGL_DONT_CARE;
 	pack_data->attrib_list.context_opengl_profile_mask = EGL_DONT_CARE;
-	pack_data->attrib_list.opengl_reset_notification_strategy = EGL_DONT_CARE;
+	pack_data->attrib_list.opengl_reset_notification_strategy_khr = EGL_DONT_CARE;
+	pack_data->attrib_list.opengl_reset_notification_strategy_ext = EGL_DONT_CARE;
 
 	// Apply specified attributes
 	EGLint *attrib = (EGLint *)attrib_list;
@@ -289,7 +292,10 @@ _pack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay dpy,
 			pack_data->attrib_list.context_opengl_profile_mask = attrib[1];
 			break;
 		case EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_KHR:
-			pack_data->attrib_list.opengl_reset_notification_strategy = attrib[1];
+			pack_data->attrib_list.opengl_reset_notification_strategy_khr = attrib[1];
+			break;
+		case EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_EXT:
+			pack_data->attrib_list.opengl_reset_notification_strategy_ext = attrib[1];
 			break;
 		default:
 			COREGL_WRN("\E[40;31;1mInvalid context attribute.\E[0m\n");
@@ -353,13 +359,22 @@ _unpack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay *dpy,
 				pack_data->attrib_list.context_opengl_profile_mask;
 			attrib_list_index += 2;
 		}
-		if (pack_data->attrib_list.opengl_reset_notification_strategy !=
+		if (pack_data->attrib_list.opengl_reset_notification_strategy_khr !=
 				EGL_DONT_CARE) {
 			AST(attrib_list_index + 2 < attrib_list_size);
 			attrib_list[attrib_list_index] =
 				EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_KHR;
 			attrib_list[attrib_list_index + 1] =
-				pack_data->attrib_list.opengl_reset_notification_strategy;
+				pack_data->attrib_list.opengl_reset_notification_strategy_khr;
+			attrib_list_index += 2;
+		}
+		if (pack_data->attrib_list.opengl_reset_notification_strategy_ext !=
+				EGL_DONT_CARE) {
+			AST(attrib_list_index + 2 < attrib_list_size);
+			attrib_list[attrib_list_index] =
+				EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_EXT;
+			attrib_list[attrib_list_index + 1] =
+				pack_data->attrib_list.opengl_reset_notification_strategy_ext;
 			attrib_list_index += 2;
 		}
 

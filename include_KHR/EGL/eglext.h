@@ -60,6 +60,7 @@ extern "C" {
 #define EGL_KHR_cl_event2 1
 typedef void *EGLSyncKHR;
 typedef intptr_t EGLAttribKHR;
+typedef intptr_t EGLAttrib;
 typedef EGLSyncKHR (EGLAPIENTRYP PFNEGLCREATESYNC64KHRPROC) (EGLDisplay dpy, EGLenum type, const EGLAttribKHR *attrib_list);
 #ifdef EGL_EGLEXT_PROTOTYPES
 EGLAPI EGLSyncKHR EGLAPIENTRY eglCreateSync64KHR (EGLDisplay dpy, EGLenum type, const EGLAttribKHR *attrib_list);
