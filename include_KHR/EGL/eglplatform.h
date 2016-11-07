@@ -25,7 +25,7 @@
 */
 
 /* Platform-specific types and definitions for egl.h
- * $Revision: 23432 $ on $Date: 2013-10-09 00:57:24 -0700 (Wed, 09 Oct 2013) $
+ * $Revision: 30994 $ on $Date: 2015-04-30 13:36:48 -0700 (Thu, 30 Apr 2015) $
  *
  * Adopters may modify khrplatform.h and this file to suit their platform.
  * You are encouraged to submit all modifications to the Khronos group so that
@@ -77,7 +77,7 @@ typedef HDC     EGLNativeDisplayType;
 typedef HBITMAP EGLNativePixmapType;
 typedef HWND    EGLNativeWindowType;
 
-#elif defined(__WINSCW__) || defined(__SYMBIAN32__)  /* Symbian */
+#elif defined(__APPLE__) || defined(__WINSCW__) || defined(__SYMBIAN32__)  /* Symbian */
 
 typedef int   EGLNativeDisplayType;
 typedef void *EGLNativeWindowType;
@@ -89,9 +89,9 @@ typedef void *EGLNativePixmapType;
 
 struct egl_native_pixmap_t;
 
-typedef struct ANativeWindow           *EGLNativeWindowType;
-typedef struct egl_native_pixmap_t     *EGLNativePixmapType;
-typedef void                           *EGLNativeDisplayType;
+typedef struct ANativeWindow*           EGLNativeWindowType;
+typedef struct egl_native_pixmap_t*     EGLNativePixmapType;
+typedef void*                           EGLNativeDisplayType;
 
 /* add additional macro checking to verify X11 window system */
 /* #elif defined(__unix__) */
@@ -104,16 +104,16 @@ typedef void                           *EGLNativeDisplayType;
 //typedef Display *EGLNativeDisplayType;
 //typedef Pixmap   EGLNativePixmapType;
 //typedef Window   EGLNativeWindowType;
-typedef int   EGLNativeDisplayType;
-typedef void *EGLNativeWindowType;
-typedef void *EGLNativePixmapType;
+typedef int                            EGLNativeDisplayType;
+typedef void*                          EGLNativePixmapType;
+typedef void*                          EGLNativeWindowType;
 
 #else
 /* enable compilation even for unsupported platforms */
 /* #error "Platform not recognized" */
-typedef void *EGLNativeDisplayType;
-typedef void *EGLNativeWindowType;
-typedef void *EGLNativePixmapType;
+typedef void*                          EGLNativeDisplayType;
+typedef void*                          EGLNativeWindowType;
+typedef void*                          EGLNativePixmapType;
 
 #endif
 
