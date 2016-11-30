@@ -147,6 +147,7 @@ _create_program_object(GL_Object_State *ostate, int is_program,
 			if (poat == NULL) {
 				AST(poat != NULL);
 				fastpath_ostate_remove_object(ostate, GL_OBJECT_TYPE_PROGRAM, ret);
+				return 0;
 			}
 			poat->is_deleting = 0;
 			poat->shader_count = 0;
