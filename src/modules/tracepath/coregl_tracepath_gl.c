@@ -217,6 +217,7 @@ tracepath_fbdump_update(GLint set)
 
 			GET_MY_TSTATE(tstate, get_current_thread_state());
 			AST(tstate != NULL);
+			if (!tstate) return;
 			if (tstate->ctx != NULL) {
 				_surface_trace_set(set, fbname, GL_COLOR_ATTACHMENT0, tstate);
 //				_surface_trace_set(set, fbname, GL_DEPTH_ATTACHMENT, tstate);
