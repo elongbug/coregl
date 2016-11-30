@@ -2021,6 +2021,7 @@ finish:
 
 		GET_MY_TSTATE(tstate, get_current_thread_state());
 		AST(tstate != NULL);
+		if (!tstate) return;
 		if (tstate->ctx != NULL) {
 			for (int i = 0; i < n; i++) {
 				if (renderbuffers[i] == 0) continue;
