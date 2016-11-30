@@ -5574,6 +5574,7 @@ finish:
 
 		GET_MY_TSTATE(tstate, get_current_thread_state());
 		AST(tstate != NULL);
+		if (!tstate) return;
 		if (tstate->ctx != NULL) {
 			int objidx = _COREGL_INT_INIT_VALUE;
 			_orig_tracepath_glGetIntegerv(GL_TEXTURE_BINDING_2D, &objidx);
