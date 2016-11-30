@@ -71,7 +71,7 @@ _dump_context_info(const char *ment, int force_output)
 			GET_MY_TSTATE(cur_tstate_tm, cur_tstate);
 			AST(cur_tstate_tm != NULL);
 
-			if (cur_tstate_tm ! = NULL)
+			if (cur_tstate_tm == NULL)
 				continue;
 
 			TRACE(" %c Thread  [0x%12x] : Surf <D=[%12p] R=[%12p]>",
