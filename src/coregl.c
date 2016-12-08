@@ -111,7 +111,7 @@ _glue_sym_init(void)
 }
 
 static int
-_gl_sym_init(void)
+_gl_sym_init(int init_version)
 {
 
 #define _COREGL_START_API(version) 		api_gl_version = version;
@@ -121,9 +121,14 @@ _gl_sym_init(void)
 #define _COREGL_EXT_SYMBOL_ALIAS(FUNC_NAME, ALIAS_NAME) \
 	FINDGLSYM(gl_lib_handle, _sym_eglGetProcAddress, _sym_##ALIAS_NAME, #FUNC_NAME);
 
-#include "headers/sym_gl1.h"
-#include "headers/sym_gl2.h"
-#include "headers/sym_gl_common.h"
+	if(init_version == COREGL_GLAPI_1) {
+		#include "headers/sym_gl1.h"
+		#include "headers/sym_gl_common.h"
+	}
+	else if(init_version == COREGL_GLAPI_2){
+		#include "headers/sym_gl2.h"
+		#include "headers/sym_gl_common.h"
+	}
 
 #undef _COREGL_EXT_SYMBOL_ALIAS
 #undef _COREGL_SYMBOL
@@ -182,8 +187,14 @@ _gl_lib_init(void)
 				return 0;
 			}
 			COREGL_DBG("Driver GL version 1.1");
+			_gl_sym_init(COREGL_GLAPI_1);
 		}
 	} else if (driver_gl_version == COREGL_GLAPI_2) {
+		// in case of driver library is separated
+		gl_lib_handle = dlopen(_COREGL_VENDOR_GLV1_LIB_PATH, RTLD_LAZY | RTLD_LOCAL);
+		if(gl_lib_handle)
+			_gl_sym_init(COREGL_GLAPI_1);
+
 		gl_lib_handle = dlopen(_COREGL_VENDOR_GLV2_LIB_PATH, RTLD_LAZY | RTLD_LOCAL);
 		if (!gl_lib_handle) {
 			COREGL_ERR("%s", dlerror());
@@ -210,11 +221,12 @@ _gl_lib_init(void)
 			} else {
 				COREGL_DBG("Driver GL version 2.0");
 			}
+
+			_gl_sym_init(COREGL_GLAPI_2);
 		}
 	}
 
-	if (!_glue_sym_init()) return 0;
-	if (!_gl_sym_init()) return 0;
+	_glue_sym_init();
 
 	return 1;
 }
