@@ -12,6 +12,9 @@
 #define _COREGL_END_API_DEFINED_INSIDE
 #endif
 
+/*this size can be get by glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS)
+  but in r4p0, it dose not support GL_MAX_COLOR_ATTACHMENTS */
+#define GL_CLOR_WRITEMASK_NUM 4
 
 #define SET_1(v1)               value[0] = v1;
 #define SET_2(v1, v2)           value[0] = v1; value[1] = v2;
@@ -61,11 +64,6 @@ GLUE_STATE(GLuint, gl_atomic_counter_buffer_binding_num, 1, 1,
 		   _sym_glGetIntegerv(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS,
 							  (GLint *)value); /* DEFAULT NOT EFFECT */,
 		   _sym_glGetIntegerv(GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS, (GLint *)value);)
-
-GLUE_STATE(GLuint, gl_color_writemask_num, 1, 1,
-		   _sym_glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS,
-							  (GLint *)value); /* DEFAULT NOT EFFECT */,
-		   _sym_glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, (GLint *)value);)
 
 GLUE_STATE(GLuint, gl_array_buffer_binding, 1, 1, SET_1(0),
 		   _sym_glGetIntegerv(GL_ARRAY_BUFFER_BINDING, (GLint *)value);)
@@ -294,14 +292,10 @@ GLUE_STATE(GLclampf, gl_color_clear_value, 4, 4, SET_4(0.0f, 0.0f, 0.0f, 0.0f),
 		   _sym_glGetFloatv(GL_COLOR_CLEAR_VALUE, (GLfloat *)value);)
 
 GLUE_STATE(GLboolean, gl_color_writemask,
-		   4 * INITIAL_CTX->gl_color_writemask_num[0],
-		   4 * INITIAL_CTX->gl_color_writemask_num[0],
-		   SET_N(4 * INITIAL_CTX->gl_color_writemask_num[0], 1, SET_1(GL_TRUE)),
+		   4 * GL_CLOR_WRITEMASK_NUM,
+		   4 * GL_CLOR_WRITEMASK_NUM,
+		   SET_N(4 * GL_CLOR_WRITEMASK_NUM, 1, SET_1(GL_TRUE)),
 		   _sym_glGetBooleanv(GL_COLOR_WRITEMASK, (GLboolean *)value);)
-
-GLUE_STATE(GLboolean, gl_color_writemask_for_glColorMask, 4, 4, SET_4(GL_TRUE, GL_TRUE, GL_TRUE,
-		   GL_TRUE), _sym_glGetBooleanv(GL_COLOR_WRITEMASK, (GLboolean *)value);)
-
 GLUE_STATE(GLclampf, gl_depth_range, 2, 2, SET_2(0.0f, 1.0f),
 		   _sym_glGetFloatv(GL_DEPTH_RANGE, (GLfloat *)value);)
 GLUE_STATE(GLclampf, gl_depth_clear_value, 1, 1, SET_1(1.0f),

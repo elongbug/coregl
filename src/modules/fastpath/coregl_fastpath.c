@@ -2148,20 +2148,17 @@ fastpath_make_context_current(GLGlueContext *oldctx, GLGlueContext *newctx)
 	flag = oldctx->_clear_flag2 | newctx->_clear_flag2;
 	if (flag) {
 		if STATES_COMPARE(gl_color_writemask,
-						  4 * newctx->gl_color_writemask_num[0] * sizeof(GLboolean)) {
-			for (i = 0; i < newctx->gl_color_writemask_num[0]; i++) {
-				CHECK_GL_ERROR(_orig_fastpath_glColorMaski(i,
-							   (newctx->gl_color_writemask + i)[0],
-							   (newctx->gl_color_writemask + i)[1],
-							   (newctx->gl_color_writemask + i)[2],
-							   (newctx->gl_color_writemask + i)[3]))
+						  4 * GL_CLOR_WRITEMASK_NUM * sizeof(GLboolean)) {
+			for (i = 0; i < GL_CLOR_WRITEMASK_NUM; i++) {
+				if(NULL != _orig_fastpath_glColorMaski)
+				{
+					CHECK_GL_ERROR(_orig_fastpath_glColorMaski(i,
+								   (newctx->gl_color_writemask + i)[0],
+								   (newctx->gl_color_writemask + i)[1],
+								   (newctx->gl_color_writemask + i)[2],
+								   (newctx->gl_color_writemask + i)[3]))
+				}
 			}
-		}
-		if STATES_COMPARE(gl_color_writemask_for_glColorMask, 4 * sizeof(GLboolean)) {
-			CHECK_GL_ERROR(_orig_fastpath_glColorMask(newctx->gl_color_writemask_for_glColorMask[0],
-						   newctx->gl_color_writemask_for_glColorMask[1],
-						   newctx->gl_color_writemask_for_glColorMask[2],
-						   newctx->gl_color_writemask_for_glColorMask[3]))
 		}
 		if STATES_COMPARE(gl_depth_range, 2 * sizeof(GLclampf)) {
 			CHECK_GL_ERROR(_orig_fastpath_glDepthRangef(newctx->gl_depth_range[0],

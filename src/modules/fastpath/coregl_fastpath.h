@@ -276,8 +276,6 @@ typedef struct _GLGlueContext {
 #define _CLEAR_FLAG2_BIT_gl_depth_func          FLAG_BIT_3
 #define _CLEAR_FLAG2_BIT_gl_depth_writemask     FLAG_BIT_4
 #define _CLEAR_FLAG2_BIT_gl_cull_face_mode      FLAG_BIT_5
-#define _CLEAR_FLAG2_BIT_gl_color_writemask_for_glColorMask     FLAG_BIT_6
-
 
 	unsigned char           _tex_flag1;
 #define _TEX_FLAG1_BIT_gl_active_texture         FLAG_BIT_0
