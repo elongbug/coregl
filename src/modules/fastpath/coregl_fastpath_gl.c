@@ -9096,3 +9096,52 @@ fastpath_glTexBufferEXT(GLenum target, GLenum internalformat, GLuint buffer)
 finish:
 	_COREGL_FASTPATH_FUNC_END();
 }
+
+void
+fastpath_glFramebufferTextureMultiviewOVR(GLenum target, GLenum attachment, GLuint texture,
+                                                          GLint level, GLint baseViewIndex, GLsizei numViews)
+{
+	GLuint real_obj;
+
+	DEFINE_FASTPAH_GL_FUNC();
+	_COREGL_FASTPATH_FUNC_BEGIN();
+	INIT_FASTPATH_GL_FUNC();
+
+	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_VALUE);
+		goto finish;
+	}
+
+	_orig_fastpath_glFramebufferTextureMultiviewOVR(target, attachment, real_obj,
+		                                            level, baseViewIndex, numViews);
+
+	goto finish;
+
+finish:
+	_COREGL_FASTPATH_FUNC_END();
+}
+
+void
+fastpath_glFramebufferTextureMultisampleMultiviewOVR (GLenum target, GLenum attachment,
+                                                          GLuint texture, GLint level, GLsizei samples,
+                                                          GLint baseViewIndex, GLsizei numViews)
+{
+	GLuint real_obj;
+
+	DEFINE_FASTPAH_GL_FUNC();
+	_COREGL_FASTPATH_FUNC_BEGIN();
+	INIT_FASTPATH_GL_FUNC();
+
+	if (GET_REAL_OBJ(GL_OBJECT_TYPE_TEXTURE, texture, &real_obj) != 1) {
+		_set_gl_error(GL_INVALID_VALUE);
+		goto finish;
+	}
+
+	_orig_fastpath_glFramebufferTextureMultisampleMultiviewOVR(target, attachment, real_obj, level,
+		                                                       samples, baseViewIndex, numViews);
+
+	goto finish;
+
+finish:
+	_COREGL_FASTPATH_FUNC_END();
+}

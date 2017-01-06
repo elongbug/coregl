@@ -9173,3 +9173,30 @@ tracepath_glTexBufferEXT(GLenum target, GLenum internalformat, GLuint buffer)
 finish:
 	_COREGL_TRACEPATH_FUNC_END();
 }
+
+void
+tracepath_glFramebufferTextureMultiviewOVR(GLenum target, GLenum attachment,
+                   GLuint texture, GLint level, GLint baseViewIndex, GLsizei numViews)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glFramebufferTextureMultiviewOVR(target, attachment, texture, level,
+		                                             baseViewIndex, numViews);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}
+
+void
+tracepath_glFramebufferTextureMultisampleMultiviewOVR(GLenum target,
+                   GLenum attachment, GLuint texture, GLint level, GLsizei samples,
+                   GLint baseViewIndex, GLsizei numViews)
+{
+	_COREGL_TRACEPATH_FUNC_BEGIN();
+	_orig_tracepath_glFramebufferTextureMultisampleMultiviewOVR(target, attachment, texture, level,
+		                                                        samples, baseViewIndex, numViews);
+	goto finish;
+
+finish:
+	_COREGL_TRACEPATH_FUNC_END();
+}

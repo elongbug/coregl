@@ -549,6 +549,8 @@ fastpath_apply_overrides_gl(int enable)
 		COREGL_OVERRIDE(fastpath_, glSamplerParameterIuivEXT);
 		COREGL_OVERRIDE(fastpath_, glTexBufferRangeEXT);
 		COREGL_OVERRIDE(fastpath_, glTexBufferEXT);
+		COREGL_OVERRIDE(fastpath_, glFramebufferTextureMultiviewOVR);
+		COREGL_OVERRIDE(fastpath_, glFramebufferTextureMultisampleMultiviewOVR);
 		/* Start overriding GLES 3.0 */
 		if (driver_gl_version >= COREGL_GLAPI_3) {
 			COREGL_OVERRIDE(fastpath_, glReadBuffer);

@@ -886,6 +886,12 @@ _COREGL_EXT_SYMBOL(void, glCompressedTexSubImage3DOES, (GLenum target,
 				   GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize,
 				   const GLvoid *data))
 
+_COREGL_EXT_SYMBOL(void, glFramebufferTextureMultiviewOVR, (GLenum target, GLenum attachment,
+                   GLuint texture, GLint level, GLint baseViewIndex, GLsizei numViews))
+_COREGL_EXT_SYMBOL(void, glFramebufferTextureMultisampleMultiviewOVR, (GLenum target,
+                   GLenum attachment, GLuint texture, GLint level, GLsizei samples,
+                   GLint baseViewIndex, GLsizei numViews))
+
 /*
 _COREGL_FASTPATH_SUPPORTED_EXTENSION("GL_ANGLE_framebuffer_blit", 1.1, -1)
 _COREGL_EXT_SYMBOL(void, glBlitFramebufferANGLE, (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter))
