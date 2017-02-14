@@ -243,6 +243,7 @@ typedef struct {
 	EGLint                        context_minor_version;
 	EGLint                        context_flags;
 	EGLint                        context_opengl_profile_mask;
+	EGLint                        opengl_robust_access_ext;
 	EGLint                        opengl_reset_notification_strategy_khr;
 	EGLint                        opengl_reset_notification_strategy_ext;
 } EGL_packed_attrib_list;
@@ -276,6 +277,7 @@ _pack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay dpy,
 	pack_data->attrib_list.context_minor_version = 0;
 	pack_data->attrib_list.context_flags = EGL_DONT_CARE;
 	pack_data->attrib_list.context_opengl_profile_mask = EGL_DONT_CARE;
+	pack_data->attrib_list.opengl_robust_access_ext = EGL_DONT_CARE;
 	pack_data->attrib_list.opengl_reset_notification_strategy_khr = EGL_DONT_CARE;
 	pack_data->attrib_list.opengl_reset_notification_strategy_ext = EGL_DONT_CARE;
 
@@ -294,6 +296,9 @@ _pack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay dpy,
 			break;
 		case EGL_CONTEXT_OPENGL_PROFILE_MASK_KHR:
 			pack_data->attrib_list.context_opengl_profile_mask = attrib[1];
+			break;
+		case EGL_CONTEXT_OPENGL_ROBUST_ACCESS_EXT:
+			pack_data->attrib_list.opengl_robust_access_ext = attrib[1];
 			break;
 		case EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_KHR:
 			pack_data->attrib_list.opengl_reset_notification_strategy_khr = attrib[1];
@@ -361,6 +366,14 @@ _unpack_egl_context_option(EGL_packed_option *pack_data, EGLDisplay *dpy,
 			attrib_list[attrib_list_index] = EGL_CONTEXT_OPENGL_PROFILE_MASK_KHR;
 			attrib_list[attrib_list_index + 1] =
 				pack_data->attrib_list.context_opengl_profile_mask;
+			attrib_list_index += 2;
+		}
+		if (pack_data->attrib_list.opengl_robust_access_ext != EGL_DONT_CARE) {
+			AST(attrib_list_index + 2 < attrib_list_size);
+			attrib_list[attrib_list_index] =
+				EGL_CONTEXT_OPENGL_ROBUST_ACCESS_EXT;
+			attrib_list[attrib_list_index + 1] =
+				pack_data->attrib_list.opengl_robust_access_ext;
 			attrib_list_index += 2;
 		}
 		if (pack_data->attrib_list.opengl_reset_notification_strategy_khr !=
@@ -642,8 +655,8 @@ _egl_create_context(EGL_packed_option *real_ctx_option,
 			current = glctx_list;
 			while (current != NULL) {
 				EGLDisplay cur_dpy = EGL_NO_DISPLAY;
-				EGLint attribs[11];
-				_unpack_egl_context_option(current->option, &cur_dpy, NULL, NULL, attribs, 11);
+				EGLint attribs[15];
+				_unpack_egl_context_option(current->option, &cur_dpy, NULL, NULL, attribs, 15);
 				if (cur_dpy == dpy) {
 					if (attribs[0] == EGL_CONTEXT_MAJOR_VERSION_KHR &&
 							attribs[1] != real_ctx_option->attrib_list.context_major_version) {
