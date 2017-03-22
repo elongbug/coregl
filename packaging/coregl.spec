@@ -51,13 +51,6 @@ make %{?jobs:-j%jobs}
 
 %install
 
-# for license notification
-mkdir -p %{buildroot}/%{TZ_SYS_RO_SHARE}/license
-cp -a %{_builddir}/%{buildsubdir}/COPYING %{buildroot}/%{TZ_SYS_RO_SHARE}/license/%{name}
-cp -a %{_builddir}/%{buildsubdir}/COPYING.MIT %{buildroot}/%{TZ_SYS_RO_SHARE}/license/%{name}.MIT
-cp -a %{_builddir}/%{buildsubdir}/COPYING.SGIFreeSWLicB_2_0 %{buildroot}/%{TZ_SYS_RO_SHARE}/license/%{name}.SGIFreeSWLicB_2_0
-cp -a %{_builddir}/%{buildsubdir}/COPYING.ZLIB %{buildroot}/%{TZ_SYS_RO_SHARE}/license/%{name}.ZLIB
-
 # release pkg
 mkdir -p %{buildroot}%{_libdir}/pkgconfig
 
@@ -112,10 +105,7 @@ rm -rf libGLESv1_CM.so.1
 %{_libdir}/libEGL.so*
 %{_libdir}/libGLESv2.so*
 %{_libdir}/libGLESv1_CM.so*
-%{TZ_SYS_RO_SHARE}/license/%{name}
-%{TZ_SYS_RO_SHARE}/license/%{name}.MIT
-%{TZ_SYS_RO_SHARE}/license/%{name}.SGIFreeSWLicB_2_0
-%{TZ_SYS_RO_SHARE}/license/%{name}.ZLIB
+%license COPYING COPYING.MIT COPYING.SGIFreeSWLicB_2_0 COPYING.ZLIB
 
 %files devel
 %defattr(-,root,root,-)
