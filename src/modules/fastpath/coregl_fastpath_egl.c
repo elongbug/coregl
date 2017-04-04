@@ -1309,7 +1309,7 @@ fastpath_eglMakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read,
 		gctx->surface_attached = 1;
 	}
 
-	if (tstate &&
+	if (tstate && tstate->cstate &&
 			(_bind_context_state(gctx, tstate->cstate, &ctx_list_access_mutex) != 1)) {
 		ret = EGL_FALSE;
 		goto finish;
